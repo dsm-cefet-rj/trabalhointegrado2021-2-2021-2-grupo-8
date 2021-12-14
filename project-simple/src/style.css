@@ -19,6 +19,7 @@
 
 .card p {
   margin: 0px !important;
+  font-size: .7em !important;
 }
 
 .nome-tabela {
@@ -40,17 +41,17 @@
 }
 
 .tarefa-card {
-  min-height: 8em;
-  min-width: 8em;
-  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 30%;
+  min-height: 5em;
+  text-align: center;
+  width: min-content;
   background-color: rgb(252, 252, 170);
   box-shadow: 5px 5px 5px grey;
-  padding: 1%;
-  margin: 1%;
-  max-width: 30%;
+  padding: 5px;
+  margin: 2% 0;
 }
 
 .span-tarefa {
@@ -70,6 +71,7 @@
 .menu {
     text-align: center;
     margin: 20px auto;
+    width: 60%;
 }
 
 .botao-menu {
@@ -89,21 +91,21 @@
 }
 
 .card-membro {
-  padding: 10px !important;
-  width: 90%;
+  padding: 5px !important;
+  width: 48% !important;
   margin: 5px 0px;
 }
 
 .input-descricao {
-  width: 100%;
+  width: 95%;
   min-height: 15em;
   padding: 5px;
   margin: 5px;
 }
 
 .card-evento {
-  width: 45%;
-  margin: 5px;
+  width: 48%;
+  margin-bottom: 5px;
   text-align: center;
   min-height: 15em;
 }
@@ -115,8 +117,9 @@
 }
 
 .btn {
-  min-width: 45% !important;
-  max-width: 80% !important;
+  margin: 5px 0;
+  width: 90% !important;
+  font-size: small !important;
 }
 
 .reuniao {
@@ -146,8 +149,7 @@
 }
 
 .card-equipe-membro {
-  margin: 5px;
-  padding: 3px;
-  width: 22%;
+  width: 24% !important;
+  padding: 5px !important;
   text-align: center;
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import semFoto from "../../assets/sem-foto-homem.jpg";
+import CardAtribuir from "./CardAtribuir";
 
 function AtribuirTarefa() {
   return (
@@ -11,46 +11,9 @@ function AtribuirTarefa() {
       <main className="container">
         <h3 className="text-center my-3">Selecione um membro da equipe</h3>
 
-        <section className="d-flex flex-column align-items-center">
-
-          <div className="container card card-membro">
-            <div className="row">
-              <div className="col">
-                <img className="img-fluid" src={semFoto} alt="foto membro" />
-              </div>
-              <div className="col d-flex flex-column justify-content-evenly">
-                <p className="">Nome</p>
-                <p className="">Cargo</p>
-                <p className="">Data de ingresso</p>
-              </div>
-            </div>
-            <hr />
-            <div className="text-center">
-              <a href="#" className="btn btn-primary">
-                Atribuir Tarefa
-              </a>
-            </div>
-          </div>
+        <section className="d-flex flex-wrap justify-content-evenly">
           
-          <div className="container card card-membro">
-            <div className="row">
-              <div className="col">
-                <img className="img-fluid" src={semFoto} alt="foto membro" />
-              </div>
-              <div className="col d-flex flex-column justify-content-evenly">
-                <p className="">Nome</p>
-                <p className="">Cargo</p>
-                <p className="">Data de ingresso</p>
-              </div>
-            </div>
-            <hr />
-            <div className="text-center">
-              <a href="#" className="btn btn-primary">
-                Atribuir Tarefa
-              </a>
-            </div>
-          </div>
-
+          <CardAtribuir/>
         </section>
       </main>
     </body>
