@@ -17,7 +17,7 @@ import NovoEvento from "./components/NovoEvento/NovoEvento";
 function App() {
   return (
     <div>
-      <GerenciarEventos/>
+      <GerenteTarefa/>
     </div>
   );
 }
