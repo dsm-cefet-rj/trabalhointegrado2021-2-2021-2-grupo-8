@@ -1,5 +1,4 @@
 import React from "react";
-import semFoto from "../../assets/sem-foto-homem.jpg";
 import CardGerenciarEquipe from "./CardGerenciarEquipe";
 
 
