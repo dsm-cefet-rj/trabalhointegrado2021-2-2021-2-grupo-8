@@ -1,5 +1,5 @@
 import React from "react";
-import CardTarefa from "./CardTarefa";
+import CardGerenteTarefa from "./CardGerenteTarefa";
 
 function HomeGerente() {
   return (
@@ -14,10 +14,10 @@ function HomeGerente() {
             <h2>Tarefas paradas</h2>
           </div>
           <div className="tabela-tarefas d-flex flex-wrap justify-content-evenly">
-            <CardTarefa />
-            <CardTarefa />
-            <CardTarefa />
-            <CardTarefa />
+            <CardGerenteTarefa />
+            <CardGerenteTarefa />
+            <CardGerenteTarefa />
+            <CardGerenteTarefa />
           </div>
         </section>
         <section className="mt-4">
@@ -25,10 +25,10 @@ function HomeGerente() {
             <h2>Tarefas em Andamento</h2>
           </div>
           <div className="tabela-tarefas d-flex flex-wrap justify-content-evenly">
-            <CardTarefa />
-            <CardTarefa />
-            <CardTarefa />
-            <CardTarefa />
+            <CardGerenteTarefa />
+            <CardGerenteTarefa />
+            <CardGerenteTarefa />
+            <CardGerenteTarefa />
           </div>
         </section>
         <section className="my-4">
@@ -36,10 +36,10 @@ function HomeGerente() {
             <h2>Minhas Tarefas</h2>
           </div>
           <div className="tabela-tarefas d-flex flex-wrap justify-content-evenly">
-            <CardTarefa />
-            <CardTarefa />
-            <CardTarefa />
-            <CardTarefa />
+            <CardGerenteTarefa />
+            <CardGerenteTarefa />
+            <CardGerenteTarefa />
+            <CardGerenteTarefa />
           </div>
         </section>
         <section className="menu">

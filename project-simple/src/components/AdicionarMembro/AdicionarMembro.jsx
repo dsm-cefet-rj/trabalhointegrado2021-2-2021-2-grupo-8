@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import CardAddMembro from "./CardAddMembro";
 
 function AdicionarMembro() {
+
+  function handleBusca(user) {
+    return user.nome == busca;
+  }
   
   const data = [
     {
@@ -26,6 +30,10 @@ function AdicionarMembro() {
     },
   ];
 
+  let busca = "";
+
+  const [resultado, setResultado] = useState ([])
+
   return (
     <div className="corpo">
       <header className="container cabecalho">
@@ -37,23 +45,28 @@ function AdicionarMembro() {
 
         <section className="container mb-3 text-center">
           <input
-            type="email"
+            type="text"
             className="text-center form-control mb-3"
             placeholder="Buscar usuário"
+            onChange={(e)=>{
+              busca = e.target.value;
+            }}
           />
-          <a href="#" className="btn btn-primary">
+          <a href="#" className="btn btn-primary"
+          onClick={(e)=>
+          setResultado(data.filter(handleBusca))}>
             Buscar
           </a>
         </section>
 
         <section className="d-flex flex-wrap justify-content-evenly">
-          {data.map((d, idx) => {
+          {resultado.map((r, idx) => {
             return (
               <CardAddMembro
                 key={idx}
-                nome={d.nome}
-                cargo={d.cargo}
-                dataIngresso={d.dataIngresso}
+                nome={r.nome}
+                cargo={r.cargo}
+                dataIngresso={r.dataIngresso}
               />
             );
           })}

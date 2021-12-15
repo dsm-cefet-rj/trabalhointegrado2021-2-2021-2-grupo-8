@@ -1,6 +1,13 @@
 import React from "react";
 
 function NovaEquipe() {
+
+  let newTeam =
+    {
+      nome : "",
+      descricao : ""
+    }
+
   return (
     <div className="corpo">
       <header className="cabecalho">
@@ -17,6 +24,10 @@ function NovaEquipe() {
               type="text"
               className="input-novo w-50"
               placeholder="Digite o nome da Equipe"
+              onChange={(e) =>{
+                newTeam.nome = e.target.value;
+                console.log(newTeam.nome)
+              }}
             ></input>
           </label>
 
@@ -26,7 +37,11 @@ function NovaEquipe() {
               className="input-descricao"
               name="descricao"
               placeholder="Digite uma breve descrição sobre a equipe e seus objetivos"
-            ></textarea>
+              onChange={(e) =>{
+                newTeam.descricao = e.target.value;
+                console.log(newTeam.descricao)
+              }}
+            />
           </label>
         </section>
 

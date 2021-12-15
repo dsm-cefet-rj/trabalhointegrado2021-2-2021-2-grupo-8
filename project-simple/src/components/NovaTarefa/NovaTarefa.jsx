@@ -1,6 +1,14 @@
 import React from "react";
 
 function NovaTarefa() {
+
+  let newTask = {
+    nome: "",
+    prazo: "",
+    urgencia: "",
+    descricao: "",
+  }
+
   return (
     <div className="corpo">
       <header className="cabecalho">
@@ -17,6 +25,10 @@ function NovaTarefa() {
               type="text"
               className="input-novo w-50"
               placeholder="Digite o nome da tarefa"
+              onChange={(e) =>{
+                newTask.nome = e.target.value;
+                console.log(newTask.nome)
+              }}
             />
           </label>
 
@@ -27,12 +39,20 @@ function NovaTarefa() {
               type="datetime-local"
               name="prazo"
               id="prazo"
+              onChange={(e) =>{
+                newTask.prazo = e.target.value;
+                console.log(newTask.prazo)
+              }}
             />
           </label>
 
           <label className="mb-4">
             Urgência:
-            <select className="input-novo" name="urgencia" id="urgencia">
+            <select className="input-novo" name="urgencia" id="urgencia"
+            onChange={(e) =>{
+              newTask.urgencia = e.target.value;
+              console.log(newTask.urgencia)
+            }}>
               <option value="#"></option>
               <option value="alta">Alta</option>
               <option value="media">Media</option>
@@ -45,7 +65,11 @@ function NovaTarefa() {
               className="input-descricao"
               name="descricao"
               placeholder="Digite a descrição da tarefa"
-            ></textarea>
+              onChange={(e) =>{
+                newTask.descricao = e.target.value;
+                console.log(newTask.descricao)
+              }}
+            />
           </label>
         </section>
 
