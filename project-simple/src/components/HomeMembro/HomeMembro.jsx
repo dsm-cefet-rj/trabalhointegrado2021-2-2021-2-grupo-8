@@ -1,42 +1,42 @@
 import React from "react";
+import CardMembroTarefa from "./CardMembroTarefa";
 
 function HomeMembro() {
   return (
-    <div classNameName="corpo">
-      <header classNameName="container cabecalho">
-        <h1 classNameName="app-name">Project Simple</h1>
+    <div className="corpo">
+      <header className="container cabecalho">
+        <h1 className="app-name">Project Simple</h1>
       </header>
-      <main classNameName="container principal">
-        <h3 classNameName="text-center my-4">Bem-vindo, usuário</h3>
+      <main className="container principal">
+        <h3 className="text-center my-4">Bem-vindo, usuário</h3>
         <section>
-          <div classNameName="nome-tabela">
+          <div className="nome-tabela">
             <h2>Tarefas disponíveis</h2>
           </div>
-          <div classNameName="tabela-tarefas d-flex flex-wrap justify-content-evenly">
-            <div classNameName="tarefa-card">Montar documento de prototipagem</div>
-            <div classNameName="tarefa-card">Montar telas em HTML</div>
-            <div classNameName="tarefa-card">Tarefa1</div>
-            <div classNameName="tarefa-card">Tarefa1</div>
-            <div classNameName="tarefa-card">Tarefa1</div>
+          <div className="tabela-tarefas d-flex flex-wrap justify-content-evenly">
+            <CardMembroTarefa/>
+            <CardMembroTarefa/>
+            <CardMembroTarefa/>
+            <CardMembroTarefa/>
           </div>
         </section>
 
-        <section classNameName="my-4">
-          <div classNameName="nome-tabela">
+        <section className="my-4">
+          <div className="nome-tabela">
             <h2>Minhas Tarefas</h2>
           </div>
-          <div classNameName="tabela-tarefas d-flex flex-wrap justify-content-evenly">
-            <div classNameName="tarefa-card">Montar documento de prototipagem</div>
-            <div classNameName="tarefa-card">Montar telas em HTML</div>
-            <div classNameName="tarefa-card">Tarefa1</div>
-            <div classNameName="tarefa-card">Tarefa1</div>
-            <div classNameName="tarefa-card">Tarefa1</div>
+          <div className="tabela-tarefas d-flex flex-wrap justify-content-evenly">
+            <div className="tarefa-card">Montar documento de prototipagem</div>
+            <div className="tarefa-card">Montar telas em HTML</div>
+            <div className="tarefa-card">Tarefa1</div>
+            <div className="tarefa-card">Tarefa1</div>
+            <div className="tarefa-card">Tarefa1</div>
           </div>
         </section>
 
-        <section classNameName="menu">
-          <div classNameName="btn btn-primary">Minhas Tarefas</div>
-          <div classNameName="btn btn-primary">Calendário de Eventos</div>
+        <section className="menu">
+          <div className="btn btn-primary">Minhas Tarefas</div>
+          <div className="btn btn-primary">Calendário de Eventos</div>
         </section>
       </main>
     </div>
