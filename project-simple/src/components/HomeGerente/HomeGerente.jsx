@@ -1,8 +1,9 @@
 import React from "react";
+import CardTarefa from "./CardTarefa";
 
 function HomeGerente() {
   return (
-    <body className="corpo">
+    <div className="corpo">
       <header className="container cabecalho">
         <h1 className="app-name">Project Simple</h1>
       </header>
@@ -13,11 +14,10 @@ function HomeGerente() {
             <h2>Tarefas paradas</h2>
           </div>
           <div className="tabela-tarefas d-flex flex-wrap justify-content-evenly">
-            <div className="tarefa-card">documento de prototipagem</div>
-            <div className="tarefa-card">Montar telas em HTML</div>
-            <div className="tarefa-card">Refinar Prototipos HTML</div>
-            <div className="tarefa-card">Montar tabela CRUD</div>
-            <div className="tarefa-card">Validar Requisitos</div>
+            <CardTarefa />
+            <CardTarefa />
+            <CardTarefa />
+            <CardTarefa />
           </div>
         </section>
         <section className="mt-4">
@@ -25,25 +25,21 @@ function HomeGerente() {
             <h2>Tarefas em Andamento</h2>
           </div>
           <div className="tabela-tarefas d-flex flex-wrap justify-content-evenly">
-            <div className="tarefa-card">Montar documento de prototipagem</div>
-            <div className="tarefa-card">Montar telas em HTML</div>
-            <div className="tarefa-card">Refinar Prototipos HTML</div>
-            <div className="tarefa-card">Montar tabela CRUD</div>
-            <div className="tarefa-card">Componentização</div>
+            <CardTarefa />
+            <CardTarefa />
+            <CardTarefa />
+            <CardTarefa />
           </div>
         </section>
-        <section classNameName="my-4">
-          <div classNameName="nome-tabela">
+        <section className="my-4">
+          <div className="nome-tabela">
             <h2>Minhas Tarefas</h2>
           </div>
-          <div classNameName="tabela-tarefas d-flex flex-wrap justify-content-evenly">
-            <div classNameName="tarefa-card">
-              Montar documento de prototipagem
-            </div>
-            <div classNameName="tarefa-card">Montar telas em HTML</div>
-            <div classNameName="tarefa-card">Tarefa1</div>
-            <div classNameName="tarefa-card">Tarefa1</div>
-            <div classNameName="tarefa-card">Tarefa1</div>
+          <div className="tabela-tarefas d-flex flex-wrap justify-content-evenly">
+            <CardTarefa />
+            <CardTarefa />
+            <CardTarefa />
+            <CardTarefa />
           </div>
         </section>
         <section className="menu">
@@ -51,7 +47,7 @@ function HomeGerente() {
           <div className="btn btn-primary">Gerenciar Equipe</div>
         </section>
       </main>
-    </body>
+    </div>
   );
 }
 

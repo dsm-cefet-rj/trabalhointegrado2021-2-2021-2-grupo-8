@@ -3,7 +3,7 @@ import CardGerenciarEventos from "./CardGerenciarEventos";
 
 function GerenciarEventos() {
   return (
-    <body className="corpo">
+    <div className="corpo">
       <header className="container cabecalho">
         <h1 className="app-name">Project Simple</h1>
       </header>
@@ -16,7 +16,7 @@ function GerenciarEventos() {
           <CardGerenciarEventos/>
         </section>
       </main>
-    </body>
+    </div>
   );
 }
 

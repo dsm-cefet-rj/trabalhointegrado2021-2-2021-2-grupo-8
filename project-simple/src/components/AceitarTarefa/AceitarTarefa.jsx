@@ -2,7 +2,7 @@ import React from "react";
 
 function AceitarTarefa() {
   return (
-    <body className="corpo">
+    <div className="corpo">
       <header className="container cabecalho">
         <h1 className="app-name">Project Simple</h1>
       </header>
@@ -33,7 +33,7 @@ function AceitarTarefa() {
           </button>
         </section>
       </main>
-    </body>
+    </div>
   );
 }
 

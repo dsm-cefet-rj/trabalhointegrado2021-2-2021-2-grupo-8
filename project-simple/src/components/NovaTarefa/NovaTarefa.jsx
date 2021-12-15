@@ -2,7 +2,7 @@ import React from "react";
 
 function NovaTarefa() {
   return (
-    <body className="corpo">
+    <div className="corpo">
       <header className="cabecalho">
         <h1 className="app-name">Project Simple</h1>
       </header>
@@ -59,7 +59,7 @@ function NovaTarefa() {
           </button>
         </section>
       </main>
-    </body>
+    </div>
   );
 }
 

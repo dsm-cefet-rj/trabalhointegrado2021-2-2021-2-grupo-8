@@ -3,7 +3,7 @@ import CardEvento from "./CardEvento";
 
 function Eventos() {
   return (
-    <body className="corpo">
+    <div className="corpo">
       <header className="container cabecalho">
         <h1 className="app-name">Project Simple</h1>
       </header>
@@ -18,7 +18,7 @@ function Eventos() {
 
         </section>
       </main>
-    </body>
+    </div>
   );
 }
 

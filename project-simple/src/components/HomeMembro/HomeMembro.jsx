@@ -2,7 +2,7 @@ import React from "react";
 
 function HomeMembro() {
   return (
-    <body classNameName="corpo">
+    <div classNameName="corpo">
       <header classNameName="container cabecalho">
         <h1 classNameName="app-name">Project Simple</h1>
       </header>
@@ -39,7 +39,7 @@ function HomeMembro() {
           <div classNameName="btn btn-primary">Calendário de Eventos</div>
         </section>
       </main>
-    </body>
+    </div>
   );
 }
 

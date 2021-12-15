@@ -4,7 +4,7 @@ import CardGerenciarEquipe from "./CardGerenciarEquipe";
 
 function GerenciarEquipe() {
   return (
-    <body className="corpo">
+    <div className="corpo">
       <header className="container cabecalho">
         <h1 className="app-name">Project Simple</h1>
       </header>
@@ -27,7 +27,7 @@ function GerenciarEquipe() {
           </button>
         </section>
       </main>
-    </body>
+    </div>
   );
 }
 

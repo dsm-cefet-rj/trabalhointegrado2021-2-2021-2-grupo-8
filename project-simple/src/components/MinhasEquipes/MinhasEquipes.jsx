@@ -3,7 +3,7 @@ import semFoto from "../../assets/sem-foto-homem.jpg";
 
 function MinhasEquipes() {
     return (
-<body className="corpo">
+<div className="corpo">
 
 <header className="container cabecalho">
     <h1 className="app-name">Project Simple</h1>
@@ -17,7 +17,7 @@ function MinhasEquipes() {
             <div className="card-header">
                 Nome da Equipe
             </div>
-            <div className="card-body container">
+            <div className="card-div container">
                 <div className="row">
                     <div className="col-5 text-center">
                         <div className="card">
@@ -62,7 +62,7 @@ function MinhasEquipes() {
             <div className="card-header">
                 Nome da Equipe
             </div>
-            <div className="card-body container">
+            <div className="card-div container">
                 <div className="row">
                     <div className="col-5 text-center">
                         <div className="card">
@@ -105,7 +105,7 @@ function MinhasEquipes() {
 
 </main>
 
-</body>
+</div>
     );
 }
 
