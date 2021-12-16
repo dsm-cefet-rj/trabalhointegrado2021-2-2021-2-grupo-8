@@ -1,38 +1,16 @@
 import React, { useState } from "react";
 import CardAddMembro from "./CardAddMembro";
 
-function AdicionarMembro() {
-
-  function handleBusca(user) {
-    return user.nome == busca;
-  }
+function AdicionarMembro({ data }) {
   
-  const data = [
-    {
-      nome: "Edvaldo",
-      cargo: "coordenador",
-      dataIngresso: "13/08/19",
-    },
-    {
-      nome: "Marta",
-      cargo: "dev senior",
-      dataIngresso: "14/02/20",
-    },
-    {
-      nome: "Matheus",
-      cargo: "dev junior",
-      dataIngresso: "17/05/18",
-    },
-    {
-      nome: "Andre",
-      cargo: "dev",
-      dataIngresso: "11/12/20",
-    },
-  ];
-
   let busca = "";
 
-  const [resultado, setResultado] = useState ([])
+  const [resultado, setResultado] = useState([]);
+  
+  const handleBusca = (user) => {
+    const regex = new RegExp(busca, 'i')
+    return (regex.test(user.name) || regex.test(user.id));
+  };
 
   return (
     <div className="corpo">
@@ -48,15 +26,18 @@ function AdicionarMembro() {
             type="text"
             className="text-center form-control mb-3"
             placeholder="Buscar usuário"
-            onChange={(e)=>{
+            onChange={(e) => {
               busca = e.target.value;
             }}
           />
-          <a href="#" className="btn btn-primary"
-          onClick={(e)=>
-          setResultado(data.filter(handleBusca))}>
+          <span
+            className="btn btn-primary"
+            onClick={(e) => {
+              setResultado(data.filter(handleBusca));
+            }}
+          >
             Buscar
-          </a>
+          </span>
         </section>
 
         <section className="d-flex flex-wrap justify-content-evenly">
@@ -64,9 +45,8 @@ function AdicionarMembro() {
             return (
               <CardAddMembro
                 key={idx}
-                nome={r.nome}
-                cargo={r.cargo}
-                dataIngresso={r.dataIngresso}
+                id={r.id}
+                name={r.name}
               />
             );
           })}

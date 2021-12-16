@@ -15,7 +15,7 @@ function MinhasEquipes() {
         </section>
         <hr />
         <section className="lista-equipes d-flex flex-column mt-5">
-          <h3 className="text-center my-3">Equipes em que você é membro</h3>
+          <h3 className="text-center my-3">Outras Equipes</h3>
           <CardMinhaEquipe/>
         </section>
       </main>
