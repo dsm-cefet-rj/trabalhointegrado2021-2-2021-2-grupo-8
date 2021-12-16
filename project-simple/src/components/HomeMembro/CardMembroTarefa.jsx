@@ -2,7 +2,7 @@ import react from 'react';
 
 function CardMembroTarefa(){
     return (
-        <div className="tarefa-card">Tarefa1</div>
+        <div className="tarefa-card">Nome Tarefa</div>
     ); 
 }
 

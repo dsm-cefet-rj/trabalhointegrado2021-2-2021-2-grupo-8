@@ -14,10 +14,10 @@ function HomeMembro() {
             <h2>Tarefas disponíveis</h2>
           </div>
           <div className="tabela-tarefas d-flex flex-wrap justify-content-evenly">
-            <CardMembroTarefa/>
-            <CardMembroTarefa/>
-            <CardMembroTarefa/>
-            <CardMembroTarefa/>
+            <CardMembroTarefa />
+            <CardMembroTarefa />
+            <CardMembroTarefa />
+            <CardMembroTarefa />
           </div>
         </section>
 
@@ -26,11 +26,10 @@ function HomeMembro() {
             <h2>Minhas Tarefas</h2>
           </div>
           <div className="tabela-tarefas d-flex flex-wrap justify-content-evenly">
-            <div className="tarefa-card">Montar documento de prototipagem</div>
-            <div className="tarefa-card">Montar telas em HTML</div>
-            <div className="tarefa-card">Tarefa1</div>
-            <div className="tarefa-card">Tarefa1</div>
-            <div className="tarefa-card">Tarefa1</div>
+            <CardMembroTarefa />
+            <CardMembroTarefa />
+            <CardMembroTarefa />
+            <CardMembroTarefa />
           </div>
         </section>
 

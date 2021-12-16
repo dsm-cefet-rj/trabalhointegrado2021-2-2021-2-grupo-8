@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./App.css";
 import AceitarTarefa from "./components/AceitarTarefa/AceitarTarefa";
 import AdicionarMembro from "./components/AdicionarMembro/AdicionarMembro";
@@ -13,11 +14,30 @@ import MinhasEquipes from "./components/MinhasEquipes/MinhasEquipes";
 import NovaEquipe from "./components/NovaEquipe/NovaEquipe";
 import NovaTarefa from "./components/NovaTarefa/NovaTarefa";
 import NovoEvento from "./components/NovoEvento/NovoEvento";
+import userSheet from "./data/dataUser.json"
 
 function App() {
+
+  const dataUser  = userSheet;
+
+  const [equipes, setEquipes] = useState ("");
+  const [tarefas, setTarefas] = useState ("");
+
+  const newTask = (nome, prazo, urgencia, descricao) => {
+
+    let novaTarefa = {
+      nomeTarefa: nome,
+      prazoTarefa: prazo,
+      urgenciaTarefa: urgencia,
+      descricaoTarefa: descricao,
+    };
+
+    setTarefas ([... tarefas, novaTarefa]);
+  }
+
   return (
     <div>
-      <NovaTarefa/>
+      <AdicionarMembro data = {dataUser} />
     </div>
   );
 }
