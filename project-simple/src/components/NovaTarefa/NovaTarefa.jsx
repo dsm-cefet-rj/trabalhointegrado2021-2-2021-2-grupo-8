@@ -78,7 +78,7 @@ function NovaTarefa( {novaTarefa} ) {
             Atribuir Tarefa
           </button>
 
-          <button type="button" className="btn btn-success" onClick={novaTarefa(newTarefa)}>
+          <button type="button" className="btn btn-success" onClick={novaTarefa(novaTarefa)}>
             Postar Tarefa
           </button>
         </section>

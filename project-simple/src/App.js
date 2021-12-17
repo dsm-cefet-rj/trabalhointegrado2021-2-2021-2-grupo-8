@@ -32,22 +32,10 @@ function App() {
     }));
   }, [login]);
 
-  const newTask = (nome, prazo, urgencia, descricao) => {
-
-    let novaTarefa = {
-      nomeTarefa: nome,
-      prazoTarefa: prazo,
-      urgenciaTarefa: urgencia,
-      descricaoTarefa: descricao,
-    };
-
-    setTarefas ([... tarefas, novaTarefa]);
-  }
-
   return (
     <div>
       {/*<AdicionarMembro dataUser = {dataUser} />*/}
-      <MinhasEquipes equipesGerenciadas = {equipes}  />
+      <MinhasEquipes equipesGerenciadas = {equipes} />
     </div>
   );
 }

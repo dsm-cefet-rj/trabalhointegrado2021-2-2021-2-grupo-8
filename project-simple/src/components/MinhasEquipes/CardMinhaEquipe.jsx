@@ -5,7 +5,7 @@ import userData from "../../data/dataUser.json";
 
 function CardMinhaEquipe({equipe}) {
 
-  let nomeGerente = "";
+  /*let nomeGerente = "";
 
   useEffect (() => {
     userData.filter((user) => {return user.id == equipe.gerente;})
@@ -13,11 +13,7 @@ function CardMinhaEquipe({equipe}) {
   
   const handleNomeGerente = () => {
     userData.filter((user) => {return user.id == equipe.gerente;})
-  }
-  
-  let nomeGerente = handleNomeGerente();
-
-  console.log(nomeGerente);
+  }*/
 
 
   return (
@@ -29,7 +25,7 @@ function CardMinhaEquipe({equipe}) {
             <div className="card">
               <h6 className="mt-2">Gerente</h6>
               <img className="img-fluid p-2" src={semFoto} alt="" />
-              <p className="pb-1">{nomeGerente}</p>
+              <p className="pb-1"></p>
             </div>
           </div>
           <div className="col d-flex flex-column">
