@@ -1,7 +1,5 @@
 import React from "react";
 
-function NovaTarefa( {novaTarefa} ) {
-
   let newTask = {
     nome: "",
     prazo: "",
