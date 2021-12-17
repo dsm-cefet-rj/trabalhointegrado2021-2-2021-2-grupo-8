@@ -1,6 +1,6 @@
 import React from "react";
 
-function NovaEquipe() {
+function NovaEquipe({NovaEquipe}) {
 
   let newTeam =
     {
@@ -46,7 +46,7 @@ function NovaEquipe() {
         </section>
 
         <section className="menu d-flex flex-wrap justify-content-evenly">
-          <button type="button" className="btn btn-success">
+          <button type="button" className="btn btn-success" onClick={NovaEquipe(newTeam)}>
             Criar Equipe
           </button>
         </section>

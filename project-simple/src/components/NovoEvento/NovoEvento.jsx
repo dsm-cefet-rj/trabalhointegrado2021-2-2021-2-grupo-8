@@ -1,6 +1,6 @@
 import React from "react";
 
-function NovoEvento() {
+function NovoEvento({NovoEvento}) {
 
     let newEvent = {
       nome: "",
@@ -88,7 +88,7 @@ function NovoEvento() {
         </section>
 
         <section className="menu">
-          <button type="button" className="btn btn-success">
+          <button type="button" className="btn btn-success" onClick={NovoEvento(newEvent)}>
             Criar Evento
           </button>
         </section>
