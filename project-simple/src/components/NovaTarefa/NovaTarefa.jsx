@@ -1,6 +1,6 @@
 import React from "react";
 
-function NovaTarefa() {
+function NovaTarefa({NovaTarefa}) {
 
   let newTask = {
     nome: "",

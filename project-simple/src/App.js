@@ -40,9 +40,11 @@ function App() {
       urgenciaTarefa: urgencia,
       descricaoTarefa: descricao,
     };
-
-    setTarefas ([... tarefas, novaTarefa]);
+  
+    setTarefas ([...tarefas, novaTarefa]);
   }
+
+
 
   return (
     <div>

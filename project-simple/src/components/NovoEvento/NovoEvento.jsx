@@ -1,6 +1,16 @@
 import React from "react";
 
 function NovoEvento() {
+
+    let newEvent = {
+      nome: "",
+      inicio:"",
+      fim:"",
+      urgencia:"",
+      descricao: ""
+    }
+
+
   return (
     <div className="corpo">
       <header className="cabecalho">
@@ -17,6 +27,10 @@ function NovoEvento() {
               type="text"
               className="input-novo w-50"
               placeholder="Digite o nome do evento"
+              onChange={(e)=>{
+                newEvent.nome = e.target.value;
+                console.log(newEvent.nome)
+              }}
             />
           </label>
 
@@ -26,6 +40,10 @@ function NovoEvento() {
               className="input-novo"
               type="datetime-local"
               name="inicio-evento"
+              onChange={(e)=>{
+                newEvent.inicio = e.target.value;
+                console.log(newEvent.inicio)
+              }}
             />
           </label>
 
@@ -35,12 +53,19 @@ function NovoEvento() {
               className="input-novo"
               type="datetime-local"
               name="inicio-evento"
+              onChange={(e)=>{
+                newEvent.fim = e.target.value;
+                console.log(newEvent.fim)
+              }}
             />
           </label>
 
           <label className="mb-4">
             Importância:
-            <select className="input-novo" name="urgencia" id="urgencia">
+            <select className="input-novo" name="urgencia" id="urgencia" onChange={(e)=>{
+                newEvent.urgencia = e.target.value;
+                console.log(newEvent.urgencia)
+              }}>
               <option value="#"></option>
               <option value="alta">Alta</option>
               <option value="media">Media</option>
@@ -54,6 +79,10 @@ function NovoEvento() {
               className="input-descricao"
               name="descricao"
               placeholder="Digite a descrição do evento"
+              onChange={(e)=>{
+                newEvent.descricao = e.target.value;
+                console.log(newEvent.descricao)
+              }}
             ></textarea>
           </label>
         </section>
