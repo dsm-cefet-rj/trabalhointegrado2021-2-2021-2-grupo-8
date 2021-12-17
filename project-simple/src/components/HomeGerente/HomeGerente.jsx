@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import CardGerenteTarefa from "./CardGerenteTarefa";
 
 function HomeGerente() {
+
+  const [tarefas, setTarefas] = useState([]);
+
+  const novaTarefa = (newTask) => {
+    setTarefas([...tarefas, newTask]);
+  } 
+
   return (
     <div className="corpo">
       <header className="container cabecalho">
