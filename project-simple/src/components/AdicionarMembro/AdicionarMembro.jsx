@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import CardAddMembro from "./CardAddMembro";
 
-function AdicionarMembro({ data }) {
+function AdicionarMembro({ dataUser }) {
   
   let busca = "";
 
   const [resultado, setResultado] = useState([]);
+
+  console.log(dataUser);
   
   const handleBusca = (user) => {
     const regex = new RegExp(busca, 'i')
@@ -33,7 +35,7 @@ function AdicionarMembro({ data }) {
           <span
             className="btn btn-primary"
             onClick={(e) => {
-              setResultado(data.filter(handleBusca));
+              setResultado(dataUser.filter(handleBusca));
             }}
           >
             Buscar

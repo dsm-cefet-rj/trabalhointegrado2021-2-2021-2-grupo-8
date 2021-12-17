@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import AceitarTarefa from "./components/AceitarTarefa/AceitarTarefa";
 import AdicionarMembro from "./components/AdicionarMembro/AdicionarMembro";
@@ -15,13 +15,22 @@ import NovaEquipe from "./components/NovaEquipe/NovaEquipe";
 import NovaTarefa from "./components/NovaTarefa/NovaTarefa";
 import NovoEvento from "./components/NovoEvento/NovoEvento";
 import userSheet from "./data/dataUser.json"
+import teamsSheet from "./data/dataTeams.json"
 
 function App() {
 
   const dataUser  = userSheet;
+  const dataTeams = teamsSheet;
 
-  const [equipes, setEquipes] = useState ("");
-  const [tarefas, setTarefas] = useState ("");
+  const [login, setLogin] = useState({id:1061})
+  const [equipes, setEquipes] = useState ([]);
+  const [tarefas, setTarefas] = useState ([]);
+
+  useEffect (() => {
+    setEquipes (teamsSheet.filter((equipe) => {
+      return equipe.gerente == login.id;
+    }));
+  }, [login]);
 
   const newTask = (nome, prazo, urgencia, descricao) => {
 
@@ -37,7 +46,8 @@ function App() {
 
   return (
     <div>
-      <AdicionarMembro data = {dataUser} />
+      {/*<AdicionarMembro dataUser = {dataUser} />*/}
+      <MinhasEquipes equipesGerenciadas = {equipes}  />
     </div>
   );
 }

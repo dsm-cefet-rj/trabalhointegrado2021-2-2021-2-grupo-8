@@ -1,8 +1,16 @@
 import React from "react";
 import semFoto from "../../assets/sem-foto-homem.jpg";
 import MembroMinhaEquipe from "./MembroMinhaEquipe";
+import userData from "../../data/dataUser.json";
 
-function CardMinhaEquipe() {
+function CardMinhaEquipe({equipe}) {
+
+  const nomeGerente = () => {
+    userData.filter((user) => {return user.id == equipe.gerente;})
+  }
+
+  console.log (nomeGerente);
+
   return (
     <div className="card card-equipe">
       <div className="card-header">Nome da Equipe</div>
@@ -12,7 +20,7 @@ function CardMinhaEquipe() {
             <div className="card">
               <h6 className="mt-2">Gerente</h6>
               <img className="img-fluid p-2" src={semFoto} alt="" />
-              <p className="pb-1">Nome do gerente</p>
+              <p className="pb-1">{nomeGerente}</p>
             </div>
           </div>
           <div className="col d-flex flex-column">

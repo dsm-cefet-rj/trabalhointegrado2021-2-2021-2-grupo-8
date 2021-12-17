@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CardMinhaEquipe from "./CardMinhaEquipe";
 
-function MinhasEquipes() {
+function MinhasEquipes({ equipesGerenciadas, outrasEquipes }) {
+  console.log(equipesGerenciadas);
+
   return (
     <div className="corpo">
       <header className="container cabecalho">
@@ -11,12 +13,13 @@ function MinhasEquipes() {
       <main className="container">
         <section className="lista-equipes d-flex flex-column">
           <h3 className="text-center my-3">Equipes que você gerencia</h3>
-          <CardMinhaEquipe/>
+          {equipesGerenciadas.map((e, idx) => {
+            return <CardMinhaEquipe key={idx} equipe = {e} />;
+          })}
         </section>
         <hr />
         <section className="lista-equipes d-flex flex-column mt-5">
           <h3 className="text-center my-3">Outras Equipes</h3>
-          <CardMinhaEquipe/>
         </section>
       </main>
     </div>
