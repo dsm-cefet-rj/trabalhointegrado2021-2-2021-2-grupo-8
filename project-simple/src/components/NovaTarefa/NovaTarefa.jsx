@@ -1,6 +1,6 @@
 import React from "react";
 
-function NovaTarefa({NovaTarefa}) {
+function NovaTarefa( {novaTarefa} ) {
 
   let newTask = {
     nome: "",
@@ -78,7 +78,7 @@ function NovaTarefa({NovaTarefa}) {
             Atribuir Tarefa
           </button>
 
-          <button type="button" className="btn btn-success">
+          <button type="button" className="btn btn-success" onClick={novaTarefa(novaTarefa)}>
             Postar Tarefa
           </button>
         </section>
