@@ -22,9 +22,10 @@ function App() {
   const dataUser  = userSheet;
   const dataTeams = teamsSheet;
 
-  const [login, setLogin] = useState({id:1061})
+  const [login, setLogin] = useState({id:1061});
   const [equipes, setEquipes] = useState ([]);
   const [tarefas, setTarefas] = useState ([]);
+  const [eventos, setEventos] = useState ([]);
 
   useEffect (() => {
     setEquipes (teamsSheet.filter((equipe) => {
@@ -32,10 +33,18 @@ function App() {
     }));
   }, [login]);
 
+  const criarEvento = newEvent => {
+    console.log("Chamei a funcao")
+    setEventos([...eventos, newEvent]);
+  }
+
+  console.log(eventos);
+
   return (
     <div>
-      {/*<AdicionarMembro dataUser = {dataUser} />*/}
-      <MinhasEquipes equipesGerenciadas = {equipes} />
+      {/*<AdicionarMembro dataUser = {dataUser} />
+      <MinhasEquipes equipesGerenciadas = {equipes} />*/}
+      <NovoEvento criarEvento = {criarEvento} />
     </div>
   );
 }

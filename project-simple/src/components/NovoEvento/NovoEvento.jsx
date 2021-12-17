@@ -1,14 +1,19 @@
 import React from "react";
 
-function NovoEvento({NovoEvento}) {
+function NovoEvento({criarEvento}) {
 
-    let newEvent = {
+  let newEvent = {
       nome: "",
       inicio:"",
       fim:"",
       urgencia:"",
       descricao: ""
     }
+
+  const handleCriarEvento = () => {
+    console.log("Chamei a funcao 1");
+    criarEvento(newEvent);
+  }
 
 
   return (
@@ -27,7 +32,7 @@ function NovoEvento({NovoEvento}) {
               type="text"
               className="input-novo w-50"
               placeholder="Digite o nome do evento"
-              onChange={(e)=>{
+              onChange={(e) => {
                 newEvent.nome = e.target.value;
                 console.log(newEvent.nome)
               }}
@@ -88,7 +93,7 @@ function NovoEvento({NovoEvento}) {
         </section>
 
         <section className="menu">
-          <button type="button" className="btn btn-success" onClick={NovoEvento(newEvent)}>
+          <button type="button" className="btn btn-success" onClick={handleCriarEvento} >
             Criar Evento
           </button>
         </section>
