@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import semFoto from "../../assets/sem-foto-homem.jpg";
 import MembroMinhaEquipe from "./MembroMinhaEquipe";
 import userData from "../../data/dataUser.json";
 
 function CardMinhaEquipe({equipe}) {
 
-  const nomeGerente = () => {
+  let nomeGerente = "";
+
+  useEffect (() => {
+    userData.filter((user) => {return user.id == equipe.gerente;})
+  })
+  
+  const handleNomeGerente = () => {
     userData.filter((user) => {return user.id == equipe.gerente;})
   }
+  
+  let nomeGerente = handleNomeGerente();
 
-  console.log (nomeGerente);
+  console.log(nomeGerente);
+
 
   return (
     <div className="card card-equipe">
