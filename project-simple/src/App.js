@@ -14,37 +14,54 @@ import MinhasEquipes from "./components/MinhasEquipes/MinhasEquipes";
 import NovaEquipe from "./components/NovaEquipe/NovaEquipe";
 import NovaTarefa from "./components/NovaTarefa/NovaTarefa";
 import NovoEvento from "./components/NovoEvento/NovoEvento";
-import userSheet from "./data/dataUser.json"
-import teamsSheet from "./data/dataTeams.json"
+import userSheet from "./data/dataUser.json";
+import teamsSheet from "./data/dataTeams.json";
+import membersSheet from "./data/dataMembers.json";
 
 function App() {
 
-  const dataUser  = userSheet;
-  const dataTeams = teamsSheet;
+  const [login, setLogin] = useState({ id: 1061 });
+  const [equipesGerenciadas, setEquipesGerenciadas] = useState([]);
+  const [outrasEquipes, setOutrasEquipes] = useState([]);
+  const [tarefas, setTarefas] = useState([]);
+  const [eventos, setEventos] = useState([]);
 
-  const [login, setLogin] = useState({id:1061});
-  const [equipes, setEquipes] = useState ([]);
-  const [tarefas, setTarefas] = useState ([]);
-  const [eventos, setEventos] = useState ([]);
+  useEffect(() => {
+    setEquipesGerenciadas(
+      teamsSheet.filter((equipe) => {
+        return equipe.gerente === login.id;
+      })
+    );
 
-  useEffect (() => {
-    setEquipes (teamsSheet.filter((equipe) => {
-      return equipe.gerente == login.id;
-    }));
+    const membroEquipe = membersSheet.filter((element) => {
+      return element.idUser === login.id;
+    });
+
+    let arrayOutrasEquipes = [];
+
+    membroEquipe.forEach((element) => {
+      const equipe = teamsSheet.filter((e) => {
+        return e.id === element.idTeam;
+      });
+      arrayOutrasEquipes.push(equipe[0]);
+    });
+
+    setOutrasEquipes(arrayOutrasEquipes);
   }, [login]);
 
-  const criarEvento = newEvent => {
-    console.log("Chamei a funcao")
+  const criarEvento = (newEvent) => {
+    console.log("Chamei a funcao");
     setEventos([...eventos, newEvent]);
-  }
-
-  console.log(eventos);
+  };
 
   return (
     <div>
-      {/*<AdicionarMembro dataUser = {dataUser} />
-      <MinhasEquipes equipesGerenciadas = {equipes} />*/}
-      <NovoEvento criarEvento = {criarEvento} />
+      {/*<AdicionarMembro dataUser = {dataUser} />*/}
+      <MinhasEquipes
+        equipesGerenciadas={equipesGerenciadas}
+        outrasEquipes={outrasEquipes}
+      />
+      {/*<NovoEvento criarEvento = {criarEvento} />*/}
     </div>
   );
 }

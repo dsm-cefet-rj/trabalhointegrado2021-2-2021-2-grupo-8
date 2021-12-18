@@ -1,23 +1,5 @@
 [	
 	{
-		"id": 1,
-		"name": "Arthur Duarte",
-		"phone": "(21) 96859-2445",
-		"email": "duartearthur42@gmai.com"
-	},
-	{
-		"id": 2,
-		"name": "Nickolas Barbosa",
-		"phone": "(21) 98601-7773",
-		"email": "nickolasbarbosa@gmail.com"
-	},
-	{
-		"id": 3,
-		"name": "Vinicius Paraizo",
-		"phone": "(21) 98444-5918",
-		"email": "viniciusparaizo@gmail.com"
-	},
-	{
 		"id": 1000,
 		"name": "Regina Solis",
 		"phone": "(87) 96284-8742",
@@ -616,5 +598,23 @@
 		"name": "Tobias Miller",
 		"phone": "(51) 92587-1776",
 		"email": "in@google.com"
+	},
+	{
+		"id": 1100,
+		"name": "Arthur Duarte",
+		"phone": "(21) 96859-2445",
+		"email": "duartearthur42@gmai.com"
+	},
+	{
+		"id": 1101,
+		"name": "Nickolas Barbosa",
+		"phone": "(21) 98601-7773",
+		"email": "nickolasbarbosa@gmail.com"
+	},
+	{
+		"id": 1102,
+		"name": "Vinicius Paraizo",
+		"phone": "(21) 98444-5918",
+		"email": "viniciusparaizo@gmail.com"
 	}
 ]
