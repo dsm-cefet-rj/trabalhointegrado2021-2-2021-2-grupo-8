@@ -5,7 +5,7 @@ import membersSheet from "../../data/dataMembers.json";
 
 function MinhasEquipes({ equipesGerenciadas, outrasEquipes }) {
 
-  const mapEquipe = (equipe, idx) => {
+  const mapEquipe = (equipe) => {
     const gerente = userData.filter((user) => {
       return user.id === equipe.gerente;
     });
@@ -24,14 +24,14 @@ function MinhasEquipes({ equipesGerenciadas, outrasEquipes }) {
     });
 
     return (
-      <CardMinhaEquipe
-        key={equipe.id}
-        equipe={equipe}
-        nomeGerente={gerente[0].name}
-        membros={membros}
-      />
+        <CardMinhaEquipe
+          key={equipe.id}
+          equipe={equipe}
+          nomeGerente={gerente[0].name}
+          membros={membros}
+        />
     );
-  }
+  };
 
   return (
     <div className="corpo">
@@ -42,12 +42,12 @@ function MinhasEquipes({ equipesGerenciadas, outrasEquipes }) {
       <main className="container">
         <section className="lista-equipes d-flex flex-column">
           <h3 className="text-center my-3">Equipes que você gerencia</h3>
-          {equipesGerenciadas.map(mapEquipe)}
+          {equipesGerenciadas.slice(0, 2).map(mapEquipe)}
         </section>
         <hr />
         <section className="lista-equipes d-flex flex-column mt-5">
           <h3 className="text-center my-3">Outras Equipes</h3>
-          {outrasEquipes.map(mapEquipe)}
+          {outrasEquipes.slice(0, 2).map(mapEquipe)}
         </section>
       </main>
     </div>

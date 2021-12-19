@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import semFoto from "../../assets/sem-foto-homem.jpg";
 import MembroMinhaEquipe from "./MembroMinhaEquipe";
 
@@ -6,7 +7,9 @@ function CardMinhaEquipe({ equipe, nomeGerente, membros }) {
 
   return (
     <div className="card card-equipe">
-      <div className="card-header"> {equipe.name} </div>
+      <Link key={equipe.id} to={equipe.id + '/home'}>
+        <div className="card-header"> {equipe.name} </div>
+      </Link>
       <div className="card-div container">
         <div className="row mt-2">
           <div className="col-5 text-center">
@@ -25,8 +28,8 @@ function CardMinhaEquipe({ equipe, nomeGerente, membros }) {
         <hr />
         <div className="row d-flex justify-content-evenly mb-2">
           <h5 className="mb-3">Membros</h5>
-          {membros.map((membro, idx) => {
-            return <MembroMinhaEquipe key={idx} membro={membro} />;
+          {membros.map((membro) => {
+            return <MembroMinhaEquipe key={membro.id} membro={membro} />;
           })}
         </div>
       </div>
