@@ -3,7 +3,11 @@ import CardMinhaEquipe from "./CardMinhaEquipe";
 import userData from "../../data/dataUser.json";
 import membersSheet from "../../data/dataMembers.json";
 
-function MinhasEquipes({ equipesGerenciadas, outrasEquipes }) {
+function MinhasEquipes({ equipes, setEquipeAtiva }) {
+
+  const handleEquipeAtiva = (gerente, info, membros) => {
+    setEquipeAtiva(gerente, info, membros);
+  }
 
   const mapEquipe = (equipe) => {
     const gerente = userData.filter((user) => {
@@ -27,8 +31,9 @@ function MinhasEquipes({ equipesGerenciadas, outrasEquipes }) {
         <CardMinhaEquipe
           key={equipe.id}
           equipe={equipe}
-          nomeGerente={gerente[0].name}
+          gerente={gerente[0]}
           membros={membros}
+          setEquipeAtiva={handleEquipeAtiva}
         />
     );
   };
@@ -42,12 +47,12 @@ function MinhasEquipes({ equipesGerenciadas, outrasEquipes }) {
       <main className="container">
         <section className="lista-equipes d-flex flex-column">
           <h3 className="text-center my-3">Equipes que você gerencia</h3>
-          {equipesGerenciadas.slice(0, 2).map(mapEquipe)}
+          {equipes.gerenciadas.slice(0, 2).map(mapEquipe)}
         </section>
         <hr />
         <section className="lista-equipes d-flex flex-column mt-5">
           <h3 className="text-center my-3">Outras Equipes</h3>
-          {outrasEquipes.slice(0, 2).map(mapEquipe)}
+          {equipes.outras.slice(0, 2).map(mapEquipe)}
         </section>
       </main>
     </div>

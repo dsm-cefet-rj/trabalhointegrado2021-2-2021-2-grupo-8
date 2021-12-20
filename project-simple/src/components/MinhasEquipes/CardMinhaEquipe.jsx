@@ -3,12 +3,20 @@ import { Link } from "react-router-dom";
 import semFoto from "../../assets/sem-foto-homem.jpg";
 import MembroMinhaEquipe from "./MembroMinhaEquipe";
 
-function CardMinhaEquipe({ equipe, nomeGerente, membros }) {
+function CardMinhaEquipe({ equipe, gerente, membros, setEquipeAtiva }) {
+
+  const handlerClick = () =>{
+    setEquipeAtiva(gerente, equipe, membros);
+  }
 
   return (
     <div className="card card-equipe">
-      <Link key={equipe.id} to={equipe.id + '/home'}>
-        <div className="card-header"> {equipe.name} </div>
+      <Link
+        key={equipe.id}
+        to={equipe.id + "/home"}
+        state={{ team: equipe, mananger: gerente, members: membros }}
+      >
+        <div className="card-header" onClick={handlerClick}> {equipe.name} </div>
       </Link>
       <div className="card-div container">
         <div className="row mt-2">
@@ -16,7 +24,7 @@ function CardMinhaEquipe({ equipe, nomeGerente, membros }) {
             <div className="card">
               <h6 className="mt-2">Gerente</h6>
               <img className="img-fluid p-2" src={semFoto} alt="" />
-              <p className="pb-1">{nomeGerente}</p>
+              <p className="pb-1">{gerente.name}</p>
             </div>
           </div>
           <div className="col d-flex flex-column">

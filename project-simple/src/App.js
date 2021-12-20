@@ -2,13 +2,10 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AdicionarMembro from "./components/AdicionarMembro/AdicionarMembro";
-import AtribuirTarefa from "./components/AtribuirTarefa/AtribuirTarefa";
 import Eventos from "./components/Eventos/Eventos";
 import GerenciarEquipe from "./components/GerenciarEquipe/GerenciarEquipe";
 import GerenciarEventos from "./components/GerenciarEventos/GerenciarEventos";
-import GerenteTarefa from "./components/GerenteTarefa/GerenteTarefa";
 import Home from "./components/Home/Home";
-import MembroTarefa from "./components/MembroTarefa/MembroTarefa";
 import MinhasEquipes from "./components/MinhasEquipes/MinhasEquipes";
 import NovaEquipe from "./components/NovaEquipe/NovaEquipe";
 import NovaTarefa from "./components/NovaTarefa/NovaTarefa";
@@ -21,44 +18,83 @@ import eventsSheet from "./data/dataEvents.json";
 import Tarefa from "./components/Tarefa/Tarefa";
 
 function App() {
-
   const [login, setLogin] = useState({ id: 1061 });
-  const [equipesGerenciadas, setEquipesGerenciadas] = useState([]);
-  const [outrasEquipes, setOutrasEquipes] = useState([]);
-  const [tarefas, setTarefas] = useState({
-    paradas: [],
-    andamento: [],
-    minhas: [],
+  const [equipes, setEquipes] = useState({
+    gerenciadas: [],
+    outras: [],
   });
-  const [eventos, setEventos] = useState([]);
+
+  const [equipeAtiva, setEquipeAtiva] = useState({
+    info: {},
+    gerente: {},
+    isGerente: -1,
+    membros: [],
+    eventos: [],
+    tarefas: [],
+  });
 
   useEffect(() => {
-    setEquipesGerenciadas(
-      teamsSheet.filter((equipe) => {
-        return equipe.gerente === login.id;
-      })
-    );
+    let gerenciadas = teamsSheet.filter((equipe) => {
+      return equipe.gerente === login.id;
+    });
 
     const membroEquipe = membersSheet.filter((element) => {
       return element.idUser === login.id;
     });
 
-    let arrayOutrasEquipes = [];
+    let outras = [];
 
     membroEquipe.forEach((element) => {
       const equipe = teamsSheet.filter((e) => {
         return e.id === element.idTeam;
       });
-      arrayOutrasEquipes.push(equipe[0]);
+      outras.push(equipe[0]);
     });
 
-    setOutrasEquipes(arrayOutrasEquipes);
+    setEquipes({
+      gerenciadas: gerenciadas,
+      outras: outras,
+    });
   }, [login]);
 
+  const handleEquipeAtiva = (gerente, info, membros) => {
+    let e = equipeAtiva;
+    e.gerente = gerente;
+    e.info = info;
+    e.membros = membros;
+    e.tarefas = tasksSheet.filter((t) => {
+      return info.id === t.idTeam;
+    });
 
-  const criarEvento = (newEvent) => {
-    console.log("Chamei a funcao");
-    setEventos([...eventos, newEvent]);
+    const isGerente = () => {
+      if (login.id == info.gerente) return 1;
+      else return 0;
+    };
+
+    e.isGerente = isGerente();
+
+    setEquipeAtiva(e);
+  };
+
+  const handleAtribuirTarefa = (tarefa, idMembro) => {
+    let novaTarefa = tarefa;
+    novaTarefa.idResponsavel = idMembro;
+
+    let tarefas = [...equipeAtiva.tarefas];
+
+    tarefas.splice(
+      tarefas.findIndex((t) => {
+        return t.idTask === tarefa.idTask;
+      }),
+      1
+    );
+
+    tarefas.push(novaTarefa);
+
+    let novoEstado = Object.assign({}, equipeAtiva);
+    novoEstado.tarefas = tarefas;
+
+    setEquipeAtiva(novoEstado);
   };
 
   return (
@@ -68,13 +104,22 @@ function App() {
           path="/"
           element={
             <MinhasEquipes
-              equipesGerenciadas={equipesGerenciadas}
-              outrasEquipes={outrasEquipes}
+              equipes={equipes}
+              setEquipeAtiva={handleEquipeAtiva}
             />
           }
         />
-        <Route path="/:idTeam/home" element={<Home login={login} />}/>
-        <Route path="/:idTeam/task/:idTask" element={<Tarefa login={login}/>}/>
+        <Route
+          path="/:idTeam/home"
+          element={<Home login={login} equipe={equipeAtiva} />}
+        />
+
+        <Route
+          path="/:idTeam/task/:idTask"
+          element={
+            <Tarefa login={login} atribuirTarefa={handleAtribuirTarefa} />
+          }
+        />
       </Routes>
 
       {/*<AdicionarMembro dataUser = {dataUser} />*/

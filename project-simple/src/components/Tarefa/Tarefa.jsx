@@ -1,37 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import MenuMembro from "./MenuMembro";
+import { useLocation } from "react-router-dom";
 import MenuGerente from "./MenuGerente";
-import tasksSheet from "../../data/dataTasks.json";
-import teamsSheet from "../../data/dataTeams.json";
+import MenuTarefa from "./MenuTarefa";
 
-function Tarefa({ login }) {
-  const { idTask, idTeam } = useParams();
+function Tarefa({login, atribuirTarefa}) {
+  
+  const location = useLocation();
+  const {tarefa, gerente} = location.state;
 
-  const [tarefa, setTarefa] = useState();
-
-  useEffect(() => {
-    const tarefaAtiva = tasksSheet.filter((t) => {
-      return idTask == t.idTask;
-    });
-    setTarefa(tarefaAtiva[0]);
-  }, [idTask]);
-
-  const renderMenu = () => {
-    const equipe = teamsSheet.filter((e) => {
-      return idTeam == e.id;
-    });
-    console.log(equipe[0]);
-    if(equipe[0].gerente == login.id){
-      return <MenuGerente/>
-    } else {
-      return <MenuMembro/>;
-    }
-  };
-
-  console.log(login);
-
-  if (typeof tarefa != "undefined" && tarefa.idTeam == idTeam) {
+const handleAtribuirTarefa = (t, id) => {
+  atribuirTarefa(t, id);
+}
+  
     return (
       <div className="corpo">
         <header className="container cabecalho">
@@ -62,18 +42,13 @@ function Tarefa({ login }) {
             </div>
           </section>
 
-          {renderMenu()}
-          
+          <MenuTarefa login={login} tarefa={tarefa} atribuirTarefa={handleAtribuirTarefa}/>
+          <MenuGerente isGerente={gerente}/>
+
         </main>
       </div>
     );
-  } else {
-    return (
-      <div>
-        <p>Nenhuma Equipe Selecionada</p>
-      </div>
-    );
-  }
+  
 }
 
 export default Tarefa;
