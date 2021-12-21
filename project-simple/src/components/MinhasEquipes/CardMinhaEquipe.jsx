@@ -4,19 +4,22 @@ import semFoto from "../../assets/sem-foto-homem.jpg";
 import MembroMinhaEquipe from "./MembroMinhaEquipe";
 
 function CardMinhaEquipe({ equipe, gerente, membros, setEquipeAtiva }) {
-
-  const handlerClick = () =>{
+  const handlerClick = () => {
     setEquipeAtiva(gerente, equipe, membros);
-  }
+  };
 
   return (
     <div className="card card-equipe">
       <Link
+        style={{ textDecoration: "none", color: "black" }}
         key={equipe.id}
         to={equipe.id + "/home"}
         state={{ team: equipe, mananger: gerente, members: membros }}
       >
-        <div className="card-header" onClick={handlerClick}> {equipe.name} </div>
+        <div className="card-header" onClick={handlerClick}>
+          {" "}
+          {equipe.name}{" "}
+        </div>
       </Link>
       <div className="card-div container">
         <div className="row mt-2">

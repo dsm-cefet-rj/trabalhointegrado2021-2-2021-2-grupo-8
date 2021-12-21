@@ -154,3 +154,7 @@
   text-align: center;
   font-size: small;
 }
+
+.hide {
+  visibility: hidden;
+}

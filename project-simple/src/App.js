@@ -16,6 +16,7 @@ import membersSheet from "./data/dataMembers.json";
 import tasksSheet from "./data/dataTasks.json";
 import eventsSheet from "./data/dataEvents.json";
 import Tarefa from "./components/Tarefa/Tarefa";
+import FormTarefa from "./components/Tarefa/FormTarefa";
 
 function App() {
   const [login, setLogin] = useState({ id: 1061 });
@@ -76,6 +77,22 @@ function App() {
     setEquipeAtiva(e);
   };
 
+  const handleExcluirTarefa = (tarefa) => {
+    let tarefas = [...equipeAtiva.tarefas];
+
+    tarefas.splice(
+      tarefas.findIndex((t) => {
+        return t.idTask === tarefa.idTask;
+      }),
+      1
+    );
+
+    let novoEstado = Object.assign({}, equipeAtiva);
+    novoEstado.tarefas = tarefas;
+
+    setEquipeAtiva(novoEstado);
+  };
+
   const handleAtribuirTarefa = (tarefa, idMembro) => {
     let novaTarefa = tarefa;
     novaTarefa.idResponsavel = idMembro;
@@ -97,6 +114,27 @@ function App() {
     setEquipeAtiva(novoEstado);
   };
 
+  const handleDevolverTarefa = (tarefa) => {
+    let novaTarefa = tarefa;
+    novaTarefa.idResponsavel = 0;
+
+    let tarefas = [...equipeAtiva.tarefas];
+
+    tarefas.splice(
+      tarefas.findIndex((t) => {
+        return t.idTask === tarefa.idTask;
+      }),
+      1
+    );
+
+    tarefas.push(novaTarefa);
+
+    let novoEstado = Object.assign({}, equipeAtiva);
+    novoEstado.tarefas = tarefas;
+
+    setEquipeAtiva(novoEstado);
+  }
+
   return (
     <Router>
       <Routes>
@@ -117,9 +155,16 @@ function App() {
         <Route
           path="/:idTeam/task/:idTask"
           element={
-            <Tarefa login={login} atribuirTarefa={handleAtribuirTarefa} />
+            <Tarefa
+              login={login}
+              atribuirTarefa={handleAtribuirTarefa}
+              excluirTarefa={handleExcluirTarefa}
+              devolverTarefa={handleDevolverTarefa}
+            />
           }
         />
+
+        <Route path="/:idTeam/task/:idTask/form" element={<FormTarefa />} />
       </Routes>
 
       {/*<AdicionarMembro dataUser = {dataUser} />*/

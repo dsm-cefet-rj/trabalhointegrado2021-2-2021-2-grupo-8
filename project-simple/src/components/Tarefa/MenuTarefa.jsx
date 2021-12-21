@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-function MenuTarefa({ login, tarefa, atribuirTarefa }) {
+function MenuTarefa({ login, tarefa, atribuirTarefa, devolverTarefa }) {
   const [minha, setMinha] = useState(-1);
 
   useEffect(() => {
     if (tarefa.idResponsavel == login.id) setMinha(1);
     else setMinha(0);
-  }, [tarefa]);
+  }, [tarefa, login.id]);
 
   const handleAceitarTarefa = () => {
     atribuirTarefa(tarefa, login.id);
+  };
+
+  const handleDevolverTarefa = () => {
+    devolverTarefa(tarefa);
   };
 
   if (!minha) {
@@ -20,7 +24,6 @@ function MenuTarefa({ login, tarefa, atribuirTarefa }) {
           <button
             type="button"
             className="btn btn-success"
-            id="accept-task"
             onClick={handleAceitarTarefa}
           >
             Aceitar tarefa
@@ -31,25 +34,26 @@ function MenuTarefa({ login, tarefa, atribuirTarefa }) {
   } else {
     return (
       <section className="menu">
-        
+        <Link to="form">
           <button
             type="button"
             className="btn btn-success"
-            id="accept-task"
-            onClick={handleAceitarTarefa}
+            
           >
             Finalizar tarefa
           </button>
-        
-       
+        </Link>
+
+        <Link to={"/" + tarefa.idTeam + "/home"}>
           <button
             type="button"
             className="btn btn-warning"
-            id="accept-task"
-            onClick={handleAceitarTarefa}
+            onClick={handleDevolverTarefa}
           >
-            Reportar Problema
+            Devolver Tarefa
           </button>
+        </Link>
+        
         
       </section>
     );

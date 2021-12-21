@@ -1,23 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-function MenuGerente({ isGerente }) {
-  if (isGerente) {
-    return (
-      <section className="menu">
-        <button type="button" className="btn btn-primary" id="accept-task">
-          Editar tarefa
-        </button>
-        <button type="button" className="btn btn-primary" id="accept-task">
-          Atribuir tarefa
-        </button>
-        <button type="button" className="btn btn-danger" id="accept-task">
+function MenuGerente({ tarefa, isGerente, excluirTarefa }) {
+  const [display, setDisplay] = useState("");
+
+  useEffect(() => {
+    isGerente ? setDisplay("") : setDisplay("hide");
+  }, [isGerente]);
+
+  const handleExcluirTarefa = () => {
+    excluirTarefa(tarefa);
+  };
+
+  return (
+    <section className={`menu ${display}`}>
+      <button type="button" className="btn btn-primary" id="accept-task">
+        Atribuir tarefa
+      </button>
+      <Link to={"/" + tarefa.idTeam + "/home"}>
+        <button
+          type="button"
+          className="btn btn-danger"
+          id="accept-task"
+          onClick={handleExcluirTarefa}
+        >
           Excluir tarefa
         </button>
-      </section>
-    );
-  } else {
-      return <></>;
-  }
+      </Link>
+      
+    </section>
+  );
 }
-
 export default MenuGerente;

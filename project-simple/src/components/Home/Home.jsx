@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import MenuHome from "./MenuHome";
-import tasksSheet from "../../data/dataTasks.json";
-import eventsSheet from "../../data/dataEvents.json";
 import QuadroTarefas from "./QuadroTarefas";
-import Tarefa from "../Tarefa/Tarefa";
 
 function Home({ login, equipe }) {
   const [equipeAtiva, setEquipeAtiva] = useState({});
@@ -24,7 +20,7 @@ function Home({ login, equipe }) {
       });
 
       const tarefasAndamento = equipe.tarefas.filter((t) => {
-        return t.idResponsavel != 0;
+        return t.idResponsavel != 0 && t.idResponsavel != login.id;
       });
 
       const minhasTarefas = equipe.tarefas.filter((t) => {
@@ -58,7 +54,7 @@ function Home({ login, equipe }) {
             atribuirTarefa={atribuirTarefa}
           />
 
-          <MenuHome gerente={equipeAtiva.isGerente} equipe={equipeAtiva} />
+          <MenuHome isGerente={equipeAtiva.isGerente} equipe={equipeAtiva} />
         </main>
       </div>
     );

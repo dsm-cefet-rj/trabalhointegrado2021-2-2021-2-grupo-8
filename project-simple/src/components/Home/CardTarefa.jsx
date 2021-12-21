@@ -5,6 +5,7 @@ function CardTarefa({ tarefa, gerente }) {
   return (
     <div key={tarefa.idTask} className="tarefa-card">
       <Link
+        style={{ textDecoration: "none", color: "black" }}
         key={tarefa.idTask}
         to={"/" + tarefa.idTeam + "/task/" + tarefa.idTask}
         state={{ tarefa: tarefa, gerente: gerente }}
