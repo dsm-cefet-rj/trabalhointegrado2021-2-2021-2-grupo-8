@@ -53,7 +53,7 @@ function Home({ login, equipe }) {
             atribuirTarefa={atribuirTarefa}
           />
 
-          <MenuHome isGerente={equipeAtiva.isGerente} equipe={equipeAtiva} />
+          <MenuHome isGerente={equipeAtiva.isGerente} idTeam={equipe.info.id} />
         </main>
       </div>
     );
