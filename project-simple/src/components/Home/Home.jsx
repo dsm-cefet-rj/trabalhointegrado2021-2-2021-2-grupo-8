@@ -14,7 +14,6 @@ function Home({ login, equipe }) {
     setEquipeAtiva(equipe);
 
     setTarefas(() => {
-
       const tarefasParadas = equipe.tarefas.filter((t) => {
         return t.idResponsavel == 0;
       });

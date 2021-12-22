@@ -1,14 +1,28 @@
-import React, { useState } from "react";
-import CardAddMembro from "./CardAddMembro";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import semFoto from "../../assets/sem-foto-homem.jpg";
 
-function AdicionarMembro({ members }) {
+function AtribuirTarefa({ equipe, atribuirTarefa }) {
   let busca = "";
 
   const [resultado, setResultado] = useState([]);
+  const [membros, setMembros] = useState([]);
+
+  const location = useLocation();
+  const { tarefa, isGerente } = location.state;
+
+  useEffect(() => {
+    setMembros(equipe.membros);
+    setResultado(equipe.membros);
+  }, [equipe]);
 
   const handleBusca = (user) => {
     const regex = new RegExp(busca, "i");
     return regex.test(user.name) || regex.test(user.id);
+  };
+
+  const handleAtribuirTarefa = (id) => {
+    atribuirTarefa(tarefa, id);
   };
 
   return (
@@ -31,8 +45,8 @@ function AdicionarMembro({ members }) {
           />
           <span
             className="btn btn-primary"
-            onClick={(e) => {
-              setResultado(dataUser.filter(handleBusca));
+            onClick={() => {
+              setResultado(membros.filter(handleBusca));
             }}
           >
             Buscar
@@ -42,7 +56,7 @@ function AdicionarMembro({ members }) {
         <section className="d-flex flex-wrap justify-content-evenly">
           {resultado.map((r) => {
             return (
-              <div className="card card-membro">
+              <div className="card card-membro" key={r.id}>
                 <img className="img-fluid" src={semFoto} alt="foto membro" />
 
                 <div className="col d-flex flex-column justify-content-evenly mt-2">
@@ -50,9 +64,16 @@ function AdicionarMembro({ members }) {
                   <p className="">{r.name}</p>
                 </div>
                 <hr />
-                <div className="text-center">
-                  <span className="btn btn-success">Adicionar Membro</span>
-                </div>
+                <Link to={"/" + equipe.id + "/home"}>
+                  <div className="text-center">
+                    <span
+                      className="btn btn-success"
+                      onClick={() => handleAtribuirTarefa(r.id)}
+                    >
+                      Atribuir
+                    </span>
+                  </div>
+                </Link>
               </div>
             );
           })}
@@ -62,4 +83,4 @@ function AdicionarMembro({ members }) {
   );
 }
 
-export default AdicionarMembro;
+export default AtribuirTarefa;

@@ -9,7 +9,7 @@ function QuadroTarefas({ tarefas, gerente, atribuirTarefa }) {
     if (gerente) setGerencia(1);
     else setGerencia(0);
     setArrayTarefas(tarefas);
-  }, [tarefas]);
+  }, [tarefas, gerente]);
 
   if (gerencia) {
     return (

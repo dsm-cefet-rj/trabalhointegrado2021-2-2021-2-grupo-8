@@ -17,6 +17,7 @@ import tasksSheet from "./data/dataTasks.json";
 import eventsSheet from "./data/dataEvents.json";
 import Tarefa from "./components/Tarefa/Tarefa";
 import FormTarefa from "./components/Tarefa/FormTarefa";
+import AtribuirTarefa from "./components/Tarefa/AtribuirTarefa";
 
 function App() {
   const [login, setLogin] = useState({ id: 1061 });
@@ -133,7 +134,7 @@ function App() {
     novoEstado.tarefas = tarefas;
 
     setEquipeAtiva(novoEstado);
-  }
+  };
 
   return (
     <Router>
@@ -157,14 +158,22 @@ function App() {
           element={
             <Tarefa
               login={login}
+              equipe={equipeAtiva}
               atribuirTarefa={handleAtribuirTarefa}
               excluirTarefa={handleExcluirTarefa}
               devolverTarefa={handleDevolverTarefa}
             />
           }
         />
-
-        <Route path="/:idTeam/task/:idTask/form" element={<FormTarefa />} />
+        <Route
+          path="/:idTeam/task/:idTask/atribuir"
+          element={
+            <AtribuirTarefa
+            equipe={equipeAtiva}
+            atribuirTarefa={handleAtribuirTarefa}
+            />
+          }
+        />
       </Routes>
 
       {/*<AdicionarMembro dataUser = {dataUser} />*/

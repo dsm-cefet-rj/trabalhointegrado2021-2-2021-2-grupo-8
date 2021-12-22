@@ -47,12 +47,12 @@ function MinhasEquipes({ equipes, setEquipeAtiva }) {
       <main className="container">
         <section className="lista-equipes d-flex flex-column">
           <h3 className="text-center my-3">Equipes que você gerencia</h3>
-          {equipes.gerenciadas.slice(0, 2).map(mapEquipe)}
+          {equipes.gerenciadas.map(mapEquipe)}
         </section>
         <hr />
         <section className="lista-equipes d-flex flex-column mt-5">
           <h3 className="text-center my-3">Outras Equipes</h3>
-          {equipes.outras.slice(0, 2).map(mapEquipe)}
+          {equipes.outras.map(mapEquipe)}
         </section>
       </main>
     </div>
