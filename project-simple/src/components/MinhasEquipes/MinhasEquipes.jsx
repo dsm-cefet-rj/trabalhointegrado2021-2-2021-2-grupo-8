@@ -2,11 +2,12 @@ import React from "react";
 import CardMinhaEquipe from "./CardMinhaEquipe";
 import userData from "../../data/dataUser.json";
 import membersSheet from "../../data/dataMembers.json";
+import eventsSheet from "../../data/dataEvents.json";
 
 function MinhasEquipes({ equipes, setEquipeAtiva }) {
 
-  const handleEquipeAtiva = (gerente, info, membros) => {
-    setEquipeAtiva(gerente, info, membros);
+  const handleEquipeAtiva = (gerente, info, membros, eventos) => {
+    setEquipeAtiva(gerente, info, membros, eventos);
   }
 
   const mapEquipe = (equipe) => {
@@ -17,6 +18,10 @@ function MinhasEquipes({ equipes, setEquipeAtiva }) {
     const membroEquipe = membersSheet.filter((entrada) => {
       return entrada.idTeam === equipe.id;
     });
+
+    const eventos = eventsSheet.filter((e)=>{
+      return e.idTeam === equipe.id
+    })
 
     let membros = [];
 
@@ -33,6 +38,7 @@ function MinhasEquipes({ equipes, setEquipeAtiva }) {
           equipe={equipe}
           gerente={gerente[0]}
           membros={membros}
+          eventos={eventos}
           setEquipeAtiva={handleEquipeAtiva}
         />
     );

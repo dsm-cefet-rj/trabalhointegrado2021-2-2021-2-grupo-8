@@ -59,11 +59,12 @@ function App() {
     });
   }, [login]);
 
-  const handleEquipeAtiva = (gerente, info, membros) => {
-    let e = equipeAtiva;
+  const handleEquipeAtiva = (gerente, info, membros, eventos) => {
+    let e = Object.assign({}, equipeAtiva);
     e.gerente = gerente;
     e.info = info;
     e.membros = membros;
+    e.eventos = eventos;
     e.tarefas = tasksSheet.filter((t) => {
       return info.id === t.idTeam;
     });
@@ -136,6 +137,7 @@ function App() {
     setEquipeAtiva(novoEstado);
   };
 
+  console.log(equipeAtiva)
   return (
     <Router>
       <Routes>
@@ -174,10 +176,16 @@ function App() {
             />
           }
         />
+        
+        <Route
+          path="/:idTeam/eventos"
+          element={
+            <Eventos eventos={equipeAtiva.eventos}/>
+          }
+        />
+
       </Routes>
 
-      {/*<AdicionarMembro dataUser = {dataUser} />*/
-      /*<NovoEvento criarEvento = {criarEvento} />*/}
     </Router>
   );
 }

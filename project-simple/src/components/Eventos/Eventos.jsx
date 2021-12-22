@@ -1,7 +1,11 @@
 import React from "react";
-import CardEvento from "./CardEvento";
+import { useNavigate } from "react-router-dom";
 
-function Eventos() {
+
+function Eventos({eventos}) {
+
+  const navigate = useNavigate();
+
   return (
     <div className="corpo">
       <header className="container cabecalho">
@@ -11,13 +15,38 @@ function Eventos() {
       <main className="container">
         <h3 className="text-center my-3">Próximos Eventos</h3>
         <section className="d-flex flex-wrap justify-content-evenly">
-
-        <CardEvento/>
-        <CardEvento/>
-        <CardEvento/>
+      
+        {
+          eventos.map( e =>{
+            return(
+              <div className="card card-evento">
+                <div className="card-header ">{e.name}</div>
+                <div className="card-body">
+                    <p className="card-text">Início: {e.dataInicio} às {e.horaInicio}</p>
+                    <p className="card-text">Fim: {e.dataFim} às {e.horaFim}</p>
+                    <br />
+                    <p className="card-text">{e.descricao}</p>
+                </div>
+              </div>
+              
+            );
+          })
+        }
 
         </section>
+        <div className="menu">
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              Voltar
+            </button>
+        </div>
       </main>
+      
     </div>
   );
 }

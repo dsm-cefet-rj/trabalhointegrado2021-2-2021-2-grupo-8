@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import semFoto from "../../assets/sem-foto-homem.jpg";
 import MembroMinhaEquipe from "./MembroMinhaEquipe";
 
-function CardMinhaEquipe({ equipe, gerente, membros, setEquipeAtiva }) {
+function CardMinhaEquipe({ equipe, gerente, membros, setEquipeAtiva, eventos }) {
   const handlerClick = () => {
-    setEquipeAtiva(gerente, equipe, membros);
+    setEquipeAtiva(gerente, equipe, membros, eventos);
   };
 
   return (
