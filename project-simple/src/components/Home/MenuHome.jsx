@@ -16,11 +16,11 @@ function MenuHome({ isGerente, idTeam }) {
         <Link to={"/"+ idTeam +"/eventos"}>
           <span className="btn btn-primary">Eventos</span>
         </Link>
-        <Link to={"/"}>
-          <span className="btn btn-primary">Minhas Equipes</span>
-        </Link>
-        <Link className={`${display}`} to={"/gerenciarEquipe"}>
+        <Link className={`${display}`} to={"/"+ idTeam + "/gerenciarEquipe"}>
           <span className="btn btn-primary">Gerenciar Equipe</span>
+        </Link>
+        <Link to={"/"}>
+          <span className="btn btn-secondary">Minhas Equipes</span>
         </Link>
       </section>
     );

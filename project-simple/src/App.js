@@ -137,7 +137,20 @@ function App() {
     setEquipeAtiva(novoEstado);
   };
 
-  console.log(equipeAtiva)
+  const handleExcluirMembro = (membro) => {
+    let membros = [...equipeAtiva.membros];
+    membros.splice(
+      membros.findIndex((m) => {
+        return membro.id === m.id;
+      }),
+      1
+    );
+    
+    let novoEstado = Object.assign({}, equipeAtiva);
+    novoEstado.membros = membros;
+    setEquipeAtiva(novoEstado);
+  };
+
   return (
     <Router>
       <Routes>
@@ -171,25 +184,28 @@ function App() {
           path="/:idTeam/task/:idTask/atribuir"
           element={
             <AtribuirTarefa
-            equipe={equipeAtiva}
-            atribuirTarefa={handleAtribuirTarefa}
+              equipe={equipeAtiva}
+              atribuirTarefa={handleAtribuirTarefa}
             />
           }
         />
-        
+
         <Route
           path="/:idTeam/eventos"
+          element={<Eventos eventos={equipeAtiva.eventos} />}
+        />
+
+        <Route
+          path="/:idTeam/gerenciarEquipe"
           element={
-            <Eventos eventos={equipeAtiva.eventos}/>
+            <GerenciarEquipe
+              membros={equipeAtiva.membros}
+              excluirMembro={handleExcluirMembro}
+            />
           }
         />
-
-        <Route path="/gerenciarEquipe" element={<GerenciarEquipe/>}
-        />
       </Routes>
-
     </Router>
-    
   );
 }
 

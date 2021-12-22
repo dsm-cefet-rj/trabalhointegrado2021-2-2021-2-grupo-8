@@ -19,16 +19,9 @@ function CardGerenciarEquipe() {
             </div>
             <hr />
             <div className="text-center">
-                <p>
-                <a href="#" className="btn btn-success">
-                    Atribuir Tarefa
-                </a>
-                </p>
-                <p>
                 <span className="btn btn-danger" onClick={handleExcluirMembro}>
                     Excluir Membro
                 </span>
-                </p>
             </div>
         </div>
 
