@@ -20,9 +20,9 @@ function CardGerenciarEquipe() {
             <hr />
             <div className="text-center">
                 <p>
-                {/*<a href="#" className="btn btn-success">
+                <a href="#" className="btn btn-success">
                     Atribuir Tarefa
-    </a>*/}
+                </a>
                 </p>
                 <p>
                 <span className="btn btn-danger" onClick={handleExcluirMembro}>

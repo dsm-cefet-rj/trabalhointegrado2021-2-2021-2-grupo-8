@@ -19,15 +19,25 @@ function Eventos({eventos}) {
         {
           eventos.map( e =>{
             return(
-              <div className="card card-evento">
-                <div className="card-header ">{e.name}</div>
-                <div className="card-body">
-                    <p className="card-text">Início: {e.dataInicio} às {e.horaInicio}</p>
-                    <p className="card-text">Fim: {e.dataFim} às {e.horaFim}</p>
-                    <br />
-                    <p className="card-text">{e.descricao}</p>
+              
+                <div className="card card-evento mb-3">
+                  <div className="card-header ">{e.name}</div>
+                  <div className="card-body">
+                      <p className="card-text">Início: {e.dataInicio} às {e.horaInicio}</p>
+                      <p className="card-text">Fim: {e.dataFim} às {e.horaFim}</p>
+                      <br />
+                      <p className="card-text">{e.descricao}</p>
+                  </div>
+                  
+                  <div className="text-center">
+                      <p>
+                      <span className="btn btn-danger mb-3">
+                          Excluir Evento
+                      </span>
+                      </p>
+                  </div>
+                  
                 </div>
-              </div>
               
             );
           })

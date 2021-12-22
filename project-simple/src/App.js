@@ -184,9 +184,12 @@ function App() {
           }
         />
 
+        <Route path="/gerenciarEquipe" element={<GerenciarEquipe/>}
+        />
       </Routes>
 
     </Router>
+    
   );
 }
 

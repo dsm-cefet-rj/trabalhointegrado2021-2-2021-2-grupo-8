@@ -19,7 +19,7 @@ function MenuHome({ isGerente, idTeam }) {
         <Link to={"/"}>
           <span className="btn btn-primary">Minhas Equipes</span>
         </Link>
-        <Link className={`${display}`} to={"/"+idTeam+"/gerenciarEquipe"}>
+        <Link className={`${display}`} to={"/gerenciarEquipe"}>
           <span className="btn btn-primary">Gerenciar Equipe</span>
         </Link>
       </section>
