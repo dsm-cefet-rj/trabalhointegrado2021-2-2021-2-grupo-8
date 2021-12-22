@@ -2,10 +2,12 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 
-function Eventos({eventos}) {
-
+function Eventos({eventos, excluirEvento}) {
   const navigate = useNavigate();
 
+  const handleExcluirEvento = (e) => {
+    excluirEvento(e)
+  }
   return (
     <div className="corpo">
       <header className="container cabecalho">
@@ -16,10 +18,8 @@ function Eventos({eventos}) {
         <h3 className="text-center my-3">Próximos Eventos</h3>
         <section className="d-flex flex-wrap justify-content-evenly">
       
-        {
-          eventos.map( e =>{
+        {eventos.map((e) =>{
             return(
-              
                 <div className="card card-evento mb-3">
                   <div className="card-header ">{e.name}</div>
                   <div className="card-body">
@@ -31,7 +31,7 @@ function Eventos({eventos}) {
                   
                   <div className="text-center">
                       <p>
-                      <span className="btn btn-danger mb-3">
+                      <span className="btn btn-danger mb-3" onClick={()=>{handleExcluirEvento(e)}}>
                           Excluir Evento
                       </span>
                       </p>

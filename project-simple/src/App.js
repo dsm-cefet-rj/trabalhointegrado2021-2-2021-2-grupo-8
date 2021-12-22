@@ -146,10 +146,25 @@ function App() {
       1
     );
     
+    
+
     let novoEstado = Object.assign({}, equipeAtiva);
     novoEstado.membros = membros;
     setEquipeAtiva(novoEstado);
   };
+
+  const handleExcluirEvento = (evento) =>{
+    let eventos = [...equipeAtiva.eventos];
+    eventos.splice(
+      eventos.findIndex((e)=>{
+        return evento.idEvent === e.idEvent;
+      }),1
+    );
+
+    let novoEstado = Object.assign({}, equipeAtiva);
+    novoEstado.eventos = eventos;
+    setEquipeAtiva(novoEstado);
+  }
 
   return (
     <Router>
@@ -192,7 +207,8 @@ function App() {
 
         <Route
           path="/:idTeam/eventos"
-          element={<Eventos eventos={equipeAtiva.eventos} />}
+          element={<Eventos eventos={equipeAtiva.eventos}
+          excluirEvento={handleExcluirEvento}/>}
         />
 
         <Route
