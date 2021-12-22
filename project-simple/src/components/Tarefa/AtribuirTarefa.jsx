@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import semFoto from "../../assets/sem-foto-homem.jpg";
 
 function AtribuirTarefa({ equipe, atribuirTarefa }) {
+
+  const navigate = useNavigate();
+
   let busca = "";
 
   const [resultado, setResultado] = useState([]);
@@ -56,12 +59,15 @@ function AtribuirTarefa({ equipe, atribuirTarefa }) {
         <section className="d-flex flex-wrap justify-content-evenly">
           {resultado.map((r) => {
             return (
-              <div className="card card-membro" key={r.id}>
+              <div
+                className="card card-membro d-flex justify-content-center"
+                key={r.id}
+              >
                 <img className="img-fluid" src={semFoto} alt="foto membro" />
 
-                <div className="col d-flex flex-column justify-content-evenly mt-2">
-                  <p className="">{r.id}</p>
-                  <p className="">{r.name}</p>
+                <div className="mt-2">
+                  <p className="text-center">{r.id}</p>
+                  <p className="text-center">{r.name}</p>
                 </div>
                 <hr />
                 <Link to={"/" + equipe.id + "/home"}>
@@ -77,6 +83,18 @@ function AtribuirTarefa({ equipe, atribuirTarefa }) {
               </div>
             );
           })}
+        </section>
+
+        <section className="menu">
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={() => {
+              navigate(-2);
+            }}
+          >
+            Voltar
+          </button>
         </section>
       </main>
     </div>

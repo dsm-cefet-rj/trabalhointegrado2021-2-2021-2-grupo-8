@@ -13,12 +13,15 @@ function MenuHome({ isGerente, idTeam }) {
   
     return (
       <section className="menu">
+        <Link to={"/"+ idTeam +"/novaTarefa"}>
+          <span className="btn btn-primary">Criar Tarefa</span>
+        </Link>
         <Link to={"/"+ idTeam +"/eventos"}>
           <span className="btn btn-primary">Eventos</span>
         </Link>
         <Link className={`${display}`} to={"/"+ idTeam + "/gerenciarEquipe"}>
           <span className="btn btn-primary">Gerenciar Equipe</span>
-        </Link>
+        </Link>  
         <Link to={"/"}>
           <span className="btn btn-secondary">Minhas Equipes</span>
         </Link>

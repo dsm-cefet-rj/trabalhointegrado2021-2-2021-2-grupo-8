@@ -40,7 +40,7 @@ function MenuTarefa({ login, tarefa, atribuirTarefa, devolverTarefa }) {
   } else {
     return (
       <section className="menu">
-        <Link to="form">
+        <Link to={"/" + tarefa.idTeam + "/home"}>
           <button type="button" className="btn btn-success">
             Finalizar tarefa
           </button>

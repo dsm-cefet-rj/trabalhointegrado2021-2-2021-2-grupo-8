@@ -77,8 +77,8 @@ function Tarefa({
                 {tarefa.descricao}
               </span>
             </div>
-            <div className="d-flex justify-content-center">
-              <div className={`card card-membro ${display}`}>
+            <div className= {`d-flex justify-content-center mt-2 ${display}`}>
+              <div className="card card-membro">
                 <p className="text-center">Responsável</p>
                 <img className="img-fluid" src={semFoto} alt="foto membro" />
                 <p className="text-center">{responsavel.id}</p>

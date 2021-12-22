@@ -8,7 +8,7 @@ import GerenciarEventos from "./components/GerenciarEventos/GerenciarEventos";
 import Home from "./components/Home/Home";
 import MinhasEquipes from "./components/MinhasEquipes/MinhasEquipes";
 import NovaEquipe from "./components/NovaEquipe/NovaEquipe";
-import NovaTarefa from "./components/NovaTarefa/NovaTarefa";
+import NovaTarefa from "./components/Tarefa/NovaTarefa";
 import NovoEvento from "./components/NovoEvento/NovoEvento";
 import userSheet from "./data/dataUser.json";
 import teamsSheet from "./data/dataTeams.json";
@@ -63,6 +63,7 @@ function App() {
     let e = Object.assign({}, equipeAtiva);
     e.gerente = gerente;
     e.info = info;
+    membros.push(gerente);
     e.membros = membros;
     e.eventos = eventos;
     e.tarefas = tasksSheet.filter((t) => {
@@ -137,6 +138,18 @@ function App() {
     setEquipeAtiva(novoEstado);
   };
 
+  const handleAddTarefa = (novaTarefa) => {
+    const lastId = tasksSheet.slice(-1)[0].idTask;
+    novaTarefa.idTeam = equipeAtiva.info.id;
+    novaTarefa.idTask = lastId + 1;
+
+    console.log(novaTarefa);
+    let novoEstado = Object.assign({}, equipeAtiva);
+    novoEstado.tarefas.push(novaTarefa);
+
+    setEquipeAtiva(novoEstado);
+  }
+
   const handleExcluirMembro = (membro) => {
     let membros = [...equipeAtiva.membros];
     membros.splice(
@@ -146,8 +159,6 @@ function App() {
       1
     );
     
-    
-
     let novoEstado = Object.assign({}, equipeAtiva);
     novoEstado.membros = membros;
     setEquipeAtiva(novoEstado);
@@ -217,6 +228,16 @@ function App() {
             <GerenciarEquipe
               membros={equipeAtiva.membros}
               excluirMembro={handleExcluirMembro}
+            />
+          }
+        />
+
+        <Route
+          path="/:idTeam/novaTarefa"
+          element={
+            <NovaTarefa
+            addTarefa = {handleAddTarefa}
+            idTeam = {equipeAtiva.info.id}
             />
           }
         />
