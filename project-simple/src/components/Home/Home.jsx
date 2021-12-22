@@ -32,12 +32,7 @@ function Home({ login, equipe }) {
         minhas: minhasTarefas,
       };
     });
-  }, [equipe]);
-
-  const atribuirTarefa = (tarefa) => {
-    console.log("Atribui");
-    console.log(tarefa);
-  };
+  }, [equipe, login]);
 
   if (typeof equipeAtiva != "undefined") {
     return (
@@ -50,10 +45,9 @@ function Home({ login, equipe }) {
           <QuadroTarefas
             tarefas={tarefas}
             gerente={equipeAtiva.isGerente}
-            atribuirTarefa={atribuirTarefa}
           />
 
-          <MenuHome isGerente={equipeAtiva.isGerente} idTeam={equipe.info.id} />
+          <MenuHome isGerente={equipeAtiva.isGerente} idTeam={equipe.info.id}/>
         </main>
       </div>
     );
