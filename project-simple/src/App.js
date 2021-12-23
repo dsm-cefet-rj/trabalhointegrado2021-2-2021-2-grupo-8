@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import AdicionarMembro from "./components/AdicionarMembro/AdicionarMembro";
+import AdicionarMembro from "./components/MinhasEquipes/AdicionarMembro";
 import Eventos from "./components/Eventos/Eventos";
-import GerenciarEquipe from "./components/GerenciarEquipe/GerenciarEquipe";
-import GerenciarEventos from "./components/GerenciarEventos/GerenciarEventos";
+import GerenciarEquipe from "./components/MinhasEquipes/GerenciarEquipe";
 import Home from "./components/Home/Home";
 import MinhasEquipes from "./components/MinhasEquipes/MinhasEquipes";
-import NovaEquipe from "./components/NovaEquipe/NovaEquipe";
 import NovaTarefa from "./components/Tarefa/NovaTarefa";
 import NovoEvento from "./components/Eventos/NovoEvento";
-import userSheet from "./data/dataUser.json";
 import teamsSheet from "./data/dataTeams.json";
 import membersSheet from "./data/dataMembers.json";
 import tasksSheet from "./data/dataTasks.json";
@@ -18,6 +15,7 @@ import eventsSheet from "./data/dataEvents.json";
 import Tarefa from "./components/Tarefa/Tarefa";
 import FormTarefa from "./components/Tarefa/FormTarefa";
 import AtribuirTarefa from "./components/Tarefa/AtribuirTarefa";
+import NovaEquipe from "./components/MinhasEquipes/NovaEquipe";
 
 function App() {
   const [login, setLogin] = useState({ id: 1061 });
@@ -63,7 +61,6 @@ function App() {
     let e = Object.assign({}, equipeAtiva);
     e.gerente = gerente;
     e.info = info;
-    membros.push(gerente);
     e.membros = membros;
     e.eventos = eventos;
     e.tarefas = tasksSheet.filter((t) => {
@@ -100,19 +97,16 @@ function App() {
     let novaTarefa = tarefa;
     novaTarefa.idResponsavel = idMembro;
 
-    let tarefas = [...equipeAtiva.tarefas];
+    let novoEstado = Object.assign({}, equipeAtiva);
 
-    tarefas.splice(
-      tarefas.findIndex((t) => {
+    novoEstado.tarefas.splice(
+      novoEstado.tarefas.findIndex((t) => {
         return t.idTask === tarefa.idTask;
       }),
       1
     );
 
-    tarefas.push(novaTarefa);
-
-    let novoEstado = Object.assign({}, equipeAtiva);
-    novoEstado.tarefas = tarefas;
+    novoEstado.tarefas.push(novaTarefa);
 
     setEquipeAtiva(novoEstado);
   };
@@ -142,28 +136,18 @@ function App() {
     const lastId = tasksSheet.slice(-1)[0].idTask;
     novaTarefa.idTeam = equipeAtiva.info.id;
     novaTarefa.idTask = lastId + 1;
-
-    console.log(novaTarefa);
+    
     let novoEstado = Object.assign({}, equipeAtiva);
     novoEstado.tarefas.push(novaTarefa);
 
     setEquipeAtiva(novoEstado);
   };
 
-  const handleAddEvento = (novoEvento) => {
-    const lastId = eventsSheet.slice(-1)[0].idEvent;
-    novoEvento.idTeam = equipeAtiva.info.id;
-    novoEvento.idEvent = lastId + 1;
-
-    console.log(novoEvento)
-
-    let novoEstado = Object.assign({}, equipeAtiva);
-    novoEstado.eventos.push(novoEvento);
-    setEquipeAtiva(novoEstado);
-
-  }
-
   const handleExcluirMembro = (membro) => {
+    equipeAtiva.tarefas.forEach((t) => {
+      if (t.idResponsavel == membro.id) handleDevolverTarefa(t);
+    });
+
     let membros = [...equipeAtiva.membros];
     membros.splice(
       membros.findIndex((m) => {
@@ -172,10 +156,33 @@ function App() {
       1
     );
 
-    
-
     let novoEstado = Object.assign({}, equipeAtiva);
     novoEstado.membros = membros;
+    setEquipeAtiva(novoEstado);
+  };
+
+  const handleAddMembro = (membro) => {
+    let novoEstado = Object.assign({}, equipeAtiva);
+    novoEstado.membros.push(membro);
+    setEquipeAtiva(novoEstado);
+  };
+
+  const handleNovaEquipe = (newTeam) => {
+    const lastId = teamsSheet.slice(-1)[0].id;
+    newTeam.id = lastId + 1;
+
+    let novoEstado = Object.assign({}, equipes);
+    novoEstado.gerenciadas.push(newTeam);
+    setEquipes(novoEstado);
+  }
+
+  const handleAddEvento = (novoEvento) => {
+    const lastId = eventsSheet.slice(-1)[0].idEvent;
+    novoEvento.idTeam = equipeAtiva.info.id;
+    novoEvento.idEvent = lastId + 1;
+
+    let novoEstado = Object.assign({}, equipeAtiva);
+    novoEstado.eventos.push(novoEvento);
     setEquipeAtiva(novoEstado);
   };
 
@@ -233,11 +240,35 @@ function App() {
         />
 
         <Route
+          path="/:idTeam/novaTarefa"
+          element={
+            <NovaTarefa
+              addTarefa={handleAddTarefa}
+              idTeam={equipeAtiva.info.id}
+            />
+          }
+        />
+
+        <Route
           path="/:idTeam/eventos"
-          element={<Eventos eventos={equipeAtiva.eventos}
-          idTeam={equipeAtiva.info.id}
-          idEvent={equipeAtiva.idEvent}
-          excluirEvento={handleExcluirEvento}/>}
+          element={
+            <Eventos
+              eventos={equipeAtiva.eventos}
+              idTeam={equipeAtiva.info.id}
+              idEvent={equipeAtiva.idEvent}
+              excluirEvento={handleExcluirEvento}
+            />
+          }
+        />
+
+        <Route
+          path="/:idTeam/eventos/novoEvento"
+          element={
+            <NovoEvento
+              addEvento={handleAddEvento}
+              idTeam={equipeAtiva.info.id}
+            />
+          }
         />
 
         <Route
@@ -251,24 +282,25 @@ function App() {
         />
 
         <Route
-          path="/:idTeam/novaTarefa"
+          path="/:idTeam/gerenciarEquipe/addMembro"
           element={
-            <NovaTarefa
-              addTarefa={handleAddTarefa}
-              idTeam={equipeAtiva.info.id}
+            <AdicionarMembro
+              addMembro={handleAddMembro}
+              membros={equipeAtiva.membros}
             />
           }
         />
+
         <Route
-          path="/:idTeam/eventos/novoEvento"
+          path="/novaEquipe"
           element={
-            <NovoEvento
-            addEvento = {handleAddEvento}
-            idTeam = {equipeAtiva.info.id}
+            <NovaEquipe
+              login={login}
+              novaEquipe = {handleNovaEquipe}
             />
           }
         />
-        </Routes>
+      </Routes>
     </Router>
   );
 }

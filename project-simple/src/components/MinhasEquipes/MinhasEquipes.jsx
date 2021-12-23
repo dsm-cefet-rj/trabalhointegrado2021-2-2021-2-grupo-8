@@ -1,14 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import CardMinhaEquipe from "./CardMinhaEquipe";
 import userData from "../../data/dataUser.json";
 import membersSheet from "../../data/dataMembers.json";
 import eventsSheet from "../../data/dataEvents.json";
 
 function MinhasEquipes({ equipes, setEquipeAtiva }) {
-
   const handleEquipeAtiva = (gerente, info, membros, eventos) => {
     setEquipeAtiva(gerente, info, membros, eventos);
-  }
+  };
 
   const mapEquipe = (equipe) => {
     const gerente = userData.filter((user) => {
@@ -19,9 +19,9 @@ function MinhasEquipes({ equipes, setEquipeAtiva }) {
       return entrada.idTeam === equipe.id;
     });
 
-    const eventos = eventsSheet.filter((e)=>{
-      return e.idTeam === equipe.id
-    })
+    const eventos = eventsSheet.filter((e) => {
+      return e.idTeam === equipe.id;
+    });
 
     let membros = [];
 
@@ -33,14 +33,14 @@ function MinhasEquipes({ equipes, setEquipeAtiva }) {
     });
 
     return (
-        <CardMinhaEquipe
-          key={equipe.id}
-          equipe={equipe}
-          gerente={gerente[0]}
-          membros={membros}
-          eventos={eventos}
-          setEquipeAtiva={handleEquipeAtiva}
-        />
+      <CardMinhaEquipe
+        key={equipe.id}
+        equipe={equipe}
+        gerente={gerente[0]}
+        membros={membros}
+        eventos={eventos}
+        setEquipeAtiva={handleEquipeAtiva}
+      />
     );
   };
 
@@ -54,6 +54,11 @@ function MinhasEquipes({ equipes, setEquipeAtiva }) {
         <section className="lista-equipes d-flex flex-column">
           <h3 className="text-center my-3">Equipes que você gerencia</h3>
           {equipes.gerenciadas.map(mapEquipe)}
+        </section>
+        <section className="menu">
+          <Link to={"/novaEquipe"}>
+            <span className="btn btn-primary">Criar Nova Equipe</span>
+          </Link>
         </section>
         <hr />
         <section className="lista-equipes d-flex flex-column mt-5">

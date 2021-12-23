@@ -1,14 +1,14 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import semFoto from "../../assets/sem-foto-homem.jpg";
 
 function GerenciarEquipe({ membros, excluirMembro }) {
   const navigate = useNavigate();
 
   const handleExcluirMembro = (m) => {
-    excluirMembro(m)
-  }
-  
+    excluirMembro(m);
+  };
+
   return (
     <div className="corpo">
       <header className="container cabecalho">
@@ -33,7 +33,9 @@ function GerenciarEquipe({ membros, excluirMembro }) {
                 <div className="text-center">
                   <span
                     className="btn btn-danger"
-                    onClick={() => {handleExcluirMembro(m)}}
+                    onClick={() => {
+                      handleExcluirMembro(m);
+                    }}
                   >
                     Excluir Membro
                   </span>
@@ -44,9 +46,11 @@ function GerenciarEquipe({ membros, excluirMembro }) {
         </section>
 
         <section className="menu">
-          <button type="button" className="btn btn-primary">
-            Adicionar membro
-          </button>
+          <Link to={"addMembro"}>
+            <button type="button" className="btn btn-primary">
+              Adicionar membro
+            </button>
+          </Link>
           <button
             type="button"
             className="btn btn-secondary"

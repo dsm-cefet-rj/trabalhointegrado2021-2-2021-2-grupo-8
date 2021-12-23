@@ -70,7 +70,7 @@
 
 .menu {
     text-align: center;
-    margin: 20px auto;
+    margin: 10px auto;
     width: 60%;
 }
 
@@ -80,7 +80,7 @@
     background-color: rgb(173, 173, 173);
     color: rgb(236, 236, 236);
     font-size: large;
-    margin: 20px 0;
+    margin: 20px 0; 
 }
 
 .back-button{
@@ -117,7 +117,7 @@
 }
 
 .btn {
-  margin: 5px 0;
+  margin: 5px 0 !important;
   width: 90% !important;
   font-size: small !important;
 }
@@ -132,7 +132,7 @@
   color: azure;
 }
 
-.birthday {
+.aniversario {
   background-color: green !important;
   color: azure;
 }

@@ -6,17 +6,19 @@ function AtribuirTarefa({ equipe, atribuirTarefa }) {
 
   const navigate = useNavigate();
 
-  let busca = "";
-
   const [resultado, setResultado] = useState([]);
   const [membros, setMembros] = useState([]);
 
   const location = useLocation();
   const { tarefa } = location.state;
 
+  let busca = "";
+
   useEffect(() => {
-    setMembros(equipe.membros);
-    setResultado(equipe.membros);
+    let m = [... equipe.membros]
+    m.push(equipe.gerente);
+    setMembros(m);
+    setResultado(m);
   }, [equipe]);
 
   const handleBusca = (user) => {

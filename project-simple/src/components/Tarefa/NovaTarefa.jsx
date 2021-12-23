@@ -132,7 +132,7 @@ function NovaTarefa({ addTarefa, idTeam }) {
         </section>
 
         <section className="menu">
-          <Link to={"/" + idTeam + "/novaTarefa"}>
+          <Link to={"/" + idTeam + "/home"}>
             <button
               type="button"
               className="btn btn-success"

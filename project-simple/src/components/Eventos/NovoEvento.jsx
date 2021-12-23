@@ -91,19 +91,6 @@ function NovoEvento({addEvento, idTeam}) {
               />
             </label>
 
-            <label>
-              Descrição:
-              <textarea
-                className="input-descricao"
-                name="descricao"
-                placeholder="Digite a descrição do evento"
-                onChange={(e)=>{
-                  newEvent.descricao = e.target.value;
-                  
-                }}
-              ></textarea>
-            </label>
-
             <label className="mb-4">
               Importância:
               <select className="input-novo" name="importancia" id="importancia" onChange={(e)=>{
@@ -122,14 +109,26 @@ function NovoEvento({addEvento, idTeam}) {
                   newEvent.tipo = e.target.value;
                 }}>
                 <option value="#"></option>
-                <option value="Reunião">Reunião</option>
-                <option value="Deadline">Deadline</option>
-                <option value="Aniversário">Aniversário</option>
+                <option value="reuniao">Reunião</option>
+                <option value="deadline">Deadline</option>
+                <option value="aniversario">Aniversário</option>
+                <option value="outro">Outro</option>
               </select>
           </label>
+
+          <label>
+              Descrição:
+              <textarea
+                className="input-descricao"
+                name="descricao"
+                placeholder="Digite a descrição do evento"
+                onChange={(e)=>{
+                  newEvent.descricao = e.target.value;
+                  
+                }}
+              ></textarea>
+            </label>
         </section>
-          
-        
 
         <section className="menu">
         <Link to={"/" + idTeam + "/eventos/novoEvento"}>

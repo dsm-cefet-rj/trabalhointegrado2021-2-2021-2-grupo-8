@@ -77,12 +77,18 @@ function Tarefa({
                 {tarefa.descricao}
               </span>
             </div>
-            <div className= {`d-flex justify-content-center mt-2 ${display}`}>
+            <div className={`d-flex justify-content-center mt-2 ${display}`}>
               <div className="card card-membro">
-                <p className="text-center">Responsável</p>
+                <p className="text-center py-1">Responsável</p>
                 <img className="img-fluid" src={semFoto} alt="foto membro" />
-                <p className="text-center">{responsavel.id}</p>
-                <p className="text-center">{responsavel.name}</p>
+                <div className="my-2">
+                  <p className="text-center">{responsavel.id}</p>
+                  <p className="text-center">{responsavel.name}</p>
+                  <hr />
+                  <p className="text-center">Contatos:</p>
+                  <p className="text-center">{responsavel.email}</p>
+                  <p className="text-center">{responsavel.phone}</p>
+                </div>
               </div>
             </div>
           </section>
