@@ -148,7 +148,7 @@ function App() {
     novoEstado.tarefas.push(novaTarefa);
 
     setEquipeAtiva(novoEstado);
-  }
+  };
 
   const handleExcluirMembro = (membro) => {
     let membros = [...equipeAtiva.membros];
@@ -158,24 +158,27 @@ function App() {
       }),
       1
     );
+
     
+
     let novoEstado = Object.assign({}, equipeAtiva);
     novoEstado.membros = membros;
     setEquipeAtiva(novoEstado);
   };
 
-  const handleExcluirEvento = (evento) =>{
+  const handleExcluirEvento = (evento) => {
     let eventos = [...equipeAtiva.eventos];
     eventos.splice(
-      eventos.findIndex((e)=>{
+      eventos.findIndex((e) => {
         return evento.idEvent === e.idEvent;
-      }),1
+      }),
+      1
     );
 
     let novoEstado = Object.assign({}, equipeAtiva);
     novoEstado.eventos = eventos;
     setEquipeAtiva(novoEstado);
-  }
+  };
 
   return (
     <Router>
@@ -218,8 +221,13 @@ function App() {
 
         <Route
           path="/:idTeam/eventos"
-          element={<Eventos eventos={equipeAtiva.eventos}
-          excluirEvento={handleExcluirEvento}/>}
+          element={
+            <Eventos
+              eventos={equipeAtiva.eventos}
+              isGerente={equipeAtiva.isGerente}
+              excluirEvento={handleExcluirEvento}
+            />
+          }
         />
 
         <Route
@@ -236,8 +244,8 @@ function App() {
           path="/:idTeam/novaTarefa"
           element={
             <NovaTarefa
-            addTarefa = {handleAddTarefa}
-            idTeam = {equipeAtiva.info.id}
+              addTarefa={handleAddTarefa}
+              idTeam={equipeAtiva.info.id}
             />
           }
         />
