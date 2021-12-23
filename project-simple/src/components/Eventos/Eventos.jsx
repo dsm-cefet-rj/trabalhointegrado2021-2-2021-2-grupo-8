@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-function Eventos({eventos, excluirEvento, idTeam, idEvent}) {
+function Eventos({ eventos, excluirEvento, isGerente }) {
   const navigate = useNavigate();
-  
+
+  const [display, setDisplay] = useState("");
+
+  useEffect(() => {
+    isGerente ? setDisplay("") : setDisplay("hide");
+  }, [isGerente]);
+
+
   const handleExcluirEvento = (e) => {
-    excluirEvento(e)
-  }
+    excluirEvento(e);
+  };
   return (
     <div className="corpo">
       <header className="container cabecalho">
@@ -16,7 +23,7 @@ function Eventos({eventos, excluirEvento, idTeam, idEvent}) {
 
       <main className="container">
         <h3 className="text-center my-3">Próximos Eventos</h3>
-        <section className="d-flex flex-wrap justify-content-evenly">
+        <section className="d-flex flex-wrap justify-content-evenly"
       
         {eventos.map((e) =>{
             return(
@@ -32,20 +39,19 @@ function Eventos({eventos, excluirEvento, idTeam, idEvent}) {
                       
                   </div>
                   
-                  <div className="text-center">
-                      <p>
-                      <span className="btn btn-danger mb-3" onClick={()=>{handleExcluirEvento(e)}}>
-                          Excluir Evento
-                      </span>
-                      </p>
-                  </div>
+                    <span
+                      className="btn btn-danger mb-3 "
+                      onClick={() => {
+                        handleExcluirEvento(e);
+                      }}
+                    >
+                      Excluir Evento
+                    </span>
                   
                 </div>
-              
+              </div>
             );
-          })
-        }
-
+          })}
         </section>
 
 
@@ -71,9 +77,9 @@ function Eventos({eventos, excluirEvento, idTeam, idEvent}) {
             >
               Voltar
             </button>
+
         </div>
       </main>
-      
     </div>
   );
 }
