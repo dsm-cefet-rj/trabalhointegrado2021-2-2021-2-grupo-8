@@ -9,7 +9,7 @@ import Home from "./components/Home/Home";
 import MinhasEquipes from "./components/MinhasEquipes/MinhasEquipes";
 import NovaEquipe from "./components/NovaEquipe/NovaEquipe";
 import NovaTarefa from "./components/Tarefa/NovaTarefa";
-import NovoEvento from "./components/NovoEvento/NovoEvento";
+import NovoEvento from "./components/Eventos/NovoEvento";
 import userSheet from "./data/dataUser.json";
 import teamsSheet from "./data/dataTeams.json";
 import membersSheet from "./data/dataMembers.json";
@@ -150,6 +150,19 @@ function App() {
     setEquipeAtiva(novoEstado);
   }
 
+  const handleAddEvento = (novoEvento) => {
+    const lastId = eventsSheet.slice(-1)[0].idEvent;
+    novoEvento.idTeam = equipeAtiva.info.id;
+    novoEvento.idEvent = lastId + 1;
+
+    console.log(novoEvento)
+
+    let novoEstado = Object.assign({}, equipeAtiva);
+    novoEstado.eventos.push(novoEvento);
+    setEquipeAtiva(novoEstado);
+
+  }
+
   const handleExcluirMembro = (membro) => {
     let membros = [...equipeAtiva.membros];
     membros.splice(
@@ -219,6 +232,8 @@ function App() {
         <Route
           path="/:idTeam/eventos"
           element={<Eventos eventos={equipeAtiva.eventos}
+          idTeam={equipeAtiva.info.id}
+          idEvent={equipeAtiva.idEvent}
           excluirEvento={handleExcluirEvento}/>}
         />
 
@@ -241,7 +256,16 @@ function App() {
             />
           }
         />
-      </Routes>
+        <Route
+          path="/:idTeam/eventos/novoEvento"
+          element={
+            <NovoEvento
+            addEvento = {handleAddEvento}
+            idTeam = {equipeAtiva.info.id}
+            />
+          }
+        />
+        </Routes>
     </Router>
   );
 }

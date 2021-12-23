@@ -2,9 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 
-function Eventos({eventos, excluirEvento}) {
+function Eventos({eventos, excluirEvento, idTeam, idEvent}) {
   const navigate = useNavigate();
-
+  
   const handleExcluirEvento = (e) => {
     excluirEvento(e)
   }
@@ -20,13 +20,16 @@ function Eventos({eventos, excluirEvento}) {
       
         {eventos.map((e) =>{
             return(
-                <div className="card card-evento mb-3">
+                <div className="card card-evento mb-3" key={idEvent}>
                   <div className="card-header ">{e.name}</div>
                   <div className="card-body">
                       <p className="card-text">Início: {e.dataInicio} às {e.horaInicio}</p>
                       <p className="card-text">Fim: {e.dataFim} às {e.horaFim}</p>
                       <br />
                       <p className="card-text">{e.descricao}</p>
+                      <p className="card-text">{e.importancia}</p>
+                      <p className="card-text">{e.tipo}</p>
+                      
                   </div>
                   
                   <div className="text-center">
@@ -44,7 +47,21 @@ function Eventos({eventos, excluirEvento}) {
         }
 
         </section>
+
+
+
         <div className="menu">
+
+            <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={() => {
+                  navigate("/"+idTeam+"/eventos/novoEvento");
+                }}
+            >
+                Criar Evento
+            </button>
+
             <button
               type="button"
               className="btn btn-secondary"
