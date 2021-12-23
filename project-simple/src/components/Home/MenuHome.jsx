@@ -12,8 +12,8 @@ function MenuHome({ isGerente, idTeam }) {
 
   
     return (
-      <section className="menu">
-        <Link to={"/"+ idTeam +"/novaTarefa"}>
+      <section className="menu ">
+        <Link className={`${display}`} to={"/"+ idTeam +"/novaTarefa"}>
           <span className="btn btn-primary">Criar Tarefa</span>
         </Link>
         <Link to={"/"+ idTeam +"/eventos"}>

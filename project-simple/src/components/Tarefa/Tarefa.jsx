@@ -148,6 +148,7 @@ function Tarefa({
             tarefa={tarefa}
             atribuirTarefa={handleAtribuirTarefa}
             devolverTarefa={handleDevolverTarefa}
+            finalizarTarefa={handleExcluirTarefa}
           />
           <MenuGerente
             isGerente={gerente}

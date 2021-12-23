@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-function MenuTarefa({ login, tarefa, atribuirTarefa, devolverTarefa }) {
+function MenuTarefa({ login, tarefa, atribuirTarefa, devolverTarefa, finalizarTarefa }) {
   const navigate = useNavigate();
 
   const [minha, setMinha] = useState(-1);
@@ -23,6 +23,10 @@ function MenuTarefa({ login, tarefa, atribuirTarefa, devolverTarefa }) {
     devolverTarefa(tarefa);
   };
 
+  const handleFinalizarTarefa = () => {
+    finalizarTarefa(tarefa);
+  };
+
   if (!minha) {
     return (
       <section className={`menu ${display}`}>
@@ -41,7 +45,11 @@ function MenuTarefa({ login, tarefa, atribuirTarefa, devolverTarefa }) {
     return (
       <section className="menu">
         <Link to={"/" + tarefa.idTeam + "/home"}>
-          <button type="button" className="btn btn-success">
+          <button
+            type="button"
+            className="btn btn-success"
+            onClick={handleFinalizarTarefa}
+          >
             Finalizar tarefa
           </button>
         </Link>

@@ -12,7 +12,7 @@ function AtribuirTarefa({ equipe, atribuirTarefa }) {
   const [membros, setMembros] = useState([]);
 
   const location = useLocation();
-  const { tarefa, isGerente } = location.state;
+  const { tarefa } = location.state;
 
   useEffect(() => {
     setMembros(equipe.membros);
