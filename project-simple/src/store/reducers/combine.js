@@ -1,7 +1,6 @@
-import { combineReducers } from "@reduxjs/toolkit";
-import EventosSlice from './EventosSlice'
+import { combineReducers } from 'redux';
+import {eventosSlice} from './EventosSlice'
 
 export default combineReducers({
-    EventosSlice,
-    
+    eventosSlice
 })
