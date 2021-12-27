@@ -1,7 +1,9 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
-import eventsSheet from '../data/dbEvents.json'
-import App from '../App'
+import eventsSheet from '../../data/dbEvents.json'
+import App from '../../App'
 import { useState } from 'react'
+import actionsEventos from '../actions/eventos'
+
 
 let initialEvents = []
 
@@ -22,13 +24,6 @@ const fetchEventos = createAsyncThunk('eventos/fetchEventos', async()=>{
 //     tipo:""
 // });
 
-function addEventosReducer(eventos, novoEvento){
-    const lastId = eventsSheet.slice(-1)[0].idEvent;
-    // novoEvento.idTeam = equipeAtiva.info.id;
-    novoEvento.idEvent = lastId + 1;
-    
-    return eventos;
-}
 
 
 
@@ -37,6 +32,6 @@ const eventosSlice = createSlice({
    name: 'eventos',
    initialState: initialEvents,
    reducers: {
-       addEvento: (state, action) => addEventosReducer(state,action.payload)
+       addEvento: (state, action) => actionsEventos(state,action.payload)
    } 
 });
