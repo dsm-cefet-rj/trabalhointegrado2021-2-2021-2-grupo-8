@@ -1,12 +1,7 @@
 import { createStore } from 'redux';
-
-function reducer(state, action){
-    return 0;
-}
-console.log('teste')
+import { combineReducers } from './reducers/combine';
 
 
-
-const store = createStore(reducer);
+const store = createStore(combineReducers);
 
 export default store;
