@@ -30,6 +30,9 @@ function addEventosReducer(eventos, novoEvento){
     return eventos;
 }
 
+
+
+
 const eventosSlice = createSlice({
    name: 'eventos',
    initialState: initialEvents,

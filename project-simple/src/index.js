@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import App from './App';
 import {Provider} from 'react-redux'
 ReactDOM.render(
-  // <Provider store={}>
+  // <Provider store={store}>
     <React.StrictMode>
       <App />
     </React.StrictMode>
