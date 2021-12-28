@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function CardTarefa({ tarefa, gerente }) {
+function CardTarefa({ tarefa }) {
   return (
     <Link
       key={tarefa.idTask}
@@ -9,11 +9,12 @@ function CardTarefa({ tarefa, gerente }) {
       style={{ textDecoration: "none", color: "black" }}
       key={tarefa.idTask}
       to={"/" + tarefa.idTeam + "/task/" + tarefa.idTask}
-      state={{ tarefa: tarefa, gerente: gerente }}
+      state={{ tarefa: tarefa }}
     >
       {tarefa.name}
     </Link>
   );
 }
+
 
 export default CardTarefa;

@@ -10,36 +10,27 @@ import NovaTarefa from "./components/Tarefa/NovaTarefa";
 import NovoEvento from "./components/Eventos/NovoEvento";
 import teamsSheet from "./data/dataTeams.json";
 import membersSheet from "./data/dataMembers.json";
-import tasksSheet from "./data/dataTasks.json";
 import eventsSheet from "./data/dataEvents.json";
 import Tarefa from "./components/Tarefa/Tarefa";
 import FormTarefa from "./components/Tarefa/FormTarefa";
 import AtribuirTarefa from "./components/Tarefa/AtribuirTarefa";
 import NovaEquipe from "./components/MinhasEquipes/NovaEquipe";
+import { useDispatch, useSelector } from "react-redux";
+import { setMyTeams } from "./storeConfig/minhasEquipesSlice";
 
 function App() {
-  const [login, setLogin] = useState({ id: 1061 });
-  const [equipes, setEquipes] = useState({
-    gerenciadas: [],
-    outras: [],
-  });
 
-  const [equipeAtiva, setEquipeAtiva] = useState({
-    info: {},
-    gerente: {},
-    isGerente: -1,
-    membros: [],
-    eventos: [],
-    tarefas: [],
-  });
+  const dispatch = useDispatch();
+  const login = useSelector(state => state.loggedUser.id)
+  const equipeAtiva = useSelector(state => state.equipeAtiva)
 
   useEffect(() => {
     let gerenciadas = teamsSheet.filter((equipe) => {
-      return equipe.gerente === login.id;
+      return equipe.gerente === login;
     });
 
     const membroEquipe = membersSheet.filter((element) => {
-      return element.idUser === login.id;
+      return element.idUser === login;
     });
 
     let outras = [];
@@ -51,103 +42,16 @@ function App() {
       outras.push(equipe[0]);
     });
 
-    setEquipes({
-      gerenciadas: gerenciadas,
-      outras: outras,
-    });
+    dispatch(
+      setMyTeams({
+        gerenciadas: gerenciadas,
+        outras: outras,
+      })
+    );
+    
   }, [login]);
 
-  const handleEquipeAtiva = (gerente, info, membros, eventos) => {
-    let e = Object.assign({}, equipeAtiva);
-    e.gerente = gerente;
-    e.info = info;
-    e.membros = membros;
-    e.eventos = eventos;
-    e.tarefas = tasksSheet.filter((t) => {
-      return info.id === t.idTeam;
-    });
-
-    const isGerente = () => {
-      if (login.id == info.gerente) return 1;
-      else return 0;
-    };
-
-    e.isGerente = isGerente();
-
-    setEquipeAtiva(e);
-  };
-
-  const handleExcluirTarefa = (tarefa) => {
-    let tarefas = [...equipeAtiva.tarefas];
-
-    tarefas.splice(
-      tarefas.findIndex((t) => {
-        return t.idTask === tarefa.idTask;
-      }),
-      1
-    );
-
-    let novoEstado = Object.assign({}, equipeAtiva);
-    novoEstado.tarefas = tarefas;
-
-    setEquipeAtiva(novoEstado);
-  };
-
-  const handleAtribuirTarefa = (tarefa, idMembro) => {
-    let novaTarefa = tarefa;
-    novaTarefa.idResponsavel = idMembro;
-
-    let novoEstado = Object.assign({}, equipeAtiva);
-
-    novoEstado.tarefas.splice(
-      novoEstado.tarefas.findIndex((t) => {
-        return t.idTask === tarefa.idTask;
-      }),
-      1
-    );
-
-    novoEstado.tarefas.push(novaTarefa);
-
-    setEquipeAtiva(novoEstado);
-  };
-
-  const handleDevolverTarefa = (tarefa) => {
-    let novaTarefa = tarefa;
-    novaTarefa.idResponsavel = 0;
-
-    let tarefas = [...equipeAtiva.tarefas];
-
-    tarefas.splice(
-      tarefas.findIndex((t) => {
-        return t.idTask === tarefa.idTask;
-      }),
-      1
-    );
-
-    tarefas.push(novaTarefa);
-
-    let novoEstado = Object.assign({}, equipeAtiva);
-    novoEstado.tarefas = tarefas;
-
-    setEquipeAtiva(novoEstado);
-  };
-
-  const handleAddTarefa = (novaTarefa) => {
-    const lastId = tasksSheet.slice(-1)[0].idTask;
-    novaTarefa.idTeam = equipeAtiva.info.id;
-    novaTarefa.idTask = lastId + 1;
-    
-    let novoEstado = Object.assign({}, equipeAtiva);
-    novoEstado.tarefas.push(novaTarefa);
-
-    setEquipeAtiva(novoEstado);
-  };
-
   const handleExcluirMembro = (membro) => {
-    equipeAtiva.tarefas.forEach((t) => {
-      if (t.idResponsavel == membro.id) handleDevolverTarefa(t);
-    });
-
     let membros = [...equipeAtiva.membros];
     membros.splice(
       membros.findIndex((m) => {
@@ -158,23 +62,19 @@ function App() {
 
     let novoEstado = Object.assign({}, equipeAtiva);
     novoEstado.membros = membros;
-    setEquipeAtiva(novoEstado);
+
   };
 
   const handleAddMembro = (membro) => {
     let novoEstado = Object.assign({}, equipeAtiva);
     novoEstado.membros.push(membro);
-    setEquipeAtiva(novoEstado);
+
   };
 
   const handleNovaEquipe = (newTeam) => {
     const lastId = teamsSheet.slice(-1)[0].id;
     newTeam.id = lastId + 1;
-
-    let novoEstado = Object.assign({}, equipes);
-    novoEstado.gerenciadas.push(newTeam);
-    setEquipes(novoEstado);
-  }
+  };
 
   const handleAddEvento = (novoEvento) => {
     const lastId = eventsSheet.slice(-1)[0].idEvent;
@@ -183,7 +83,7 @@ function App() {
 
     let novoEstado = Object.assign({}, equipeAtiva);
     novoEstado.eventos.push(novoEvento);
-    setEquipeAtiva(novoEstado);
+ 
   };
 
   const handleExcluirEvento = (evento) => {
@@ -197,7 +97,7 @@ function App() {
 
     let novoEstado = Object.assign({}, equipeAtiva);
     novoEstado.eventos = eventos;
-    setEquipeAtiva(novoEstado);
+
   };
 
   return (
@@ -205,47 +105,30 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={
-            <MinhasEquipes
-              equipes={equipes}
-              setEquipeAtiva={handleEquipeAtiva}
-            />
-          }
+          element={<MinhasEquipes/>}
         />
         <Route
           path="/:idTeam/home"
-          element={<Home login={login} equipe={equipeAtiva} />}
+          element={<Home/>}
         />
 
         <Route
           path="/:idTeam/task/:idTask"
           element={
-            <Tarefa
-              login={login}
-              equipe={equipeAtiva}
-              atribuirTarefa={handleAtribuirTarefa}
-              excluirTarefa={handleExcluirTarefa}
-              devolverTarefa={handleDevolverTarefa}
-            />
+            <Tarefa/>
           }
         />
         <Route
           path="/:idTeam/task/:idTask/atribuir"
           element={
-            <AtribuirTarefa
-              equipe={equipeAtiva}
-              atribuirTarefa={handleAtribuirTarefa}
-            />
+            <AtribuirTarefa/>
           }
         />
 
         <Route
           path="/:idTeam/novaTarefa"
           element={
-            <NovaTarefa
-              addTarefa={handleAddTarefa}
-              idTeam={equipeAtiva.info.id}
-            />
+            <NovaTarefa/>
           }
         />
 
@@ -293,12 +176,7 @@ function App() {
 
         <Route
           path="/novaEquipe"
-          element={
-            <NovaEquipe
-              login={login}
-              novaEquipe = {handleNovaEquipe}
-            />
-          }
+          element={<NovaEquipe login={login} novaEquipe={handleNovaEquipe} />}
         />
       </Routes>
     </Router>

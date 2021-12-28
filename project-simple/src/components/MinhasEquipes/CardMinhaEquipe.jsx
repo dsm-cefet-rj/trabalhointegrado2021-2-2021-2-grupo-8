@@ -2,23 +2,40 @@ import React from "react";
 import { Link } from "react-router-dom";
 import semFoto from "../../assets/sem-foto-homem.jpg";
 import MembroMinhaEquipe from "./MembroMinhaEquipe";
+import tasksSheet from "../../data/dataTasks.json";
+import eventsSheet from "../../data/dataEvents.json";
+import { setEquipeAtiva } from "../../storeConfig/equipeAtivaSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-function CardMinhaEquipe({ equipe, gerente, membros, setEquipeAtiva, eventos }) {
-  const handlerClick = () => {
-    setEquipeAtiva(gerente, equipe, membros, eventos);
+function CardMinhaEquipe({ equipe, gerente, membros }) {
+  const loggedUser = useSelector((state) => state.loggedUser);
+  const equipeAtiva = useSelector((state) => state.equipeAtiva);
+  const dispatch = useDispatch();
+
+  const handleEquipeAtiva = () => {
+    let e = { ...equipeAtiva };
+    e.eventos = eventsSheet.filter((event) => {
+      return event.idTeam === equipe.id;
+    });
+    e.gerente = gerente;
+    e.info = equipe;
+    e.membros = membros;
+    e.tarefas = tasksSheet.filter((t) => {
+      return equipe.id === t.idTeam;
+    });
+    e.isGerente = loggedUser.id == equipe.gerente ? 1 : 0;
+
+    dispatch(setEquipeAtiva(e));
   };
 
   return (
     <div className="card card-equipe">
       <Link
         style={{ textDecoration: "none", color: "black" }}
-        key={equipe.id}
         to={equipe.id + "/home"}
-        state={{ team: equipe, mananger: gerente, members: membros }}
       >
-        <div className="card-header" onClick={handlerClick}>
-          {" "}
-          {equipe.name}{" "}
+        <div className="card-header" onClick={handleEquipeAtiva}>
+          {equipe.name}
         </div>
       </Link>
       <div className="card-div container">
