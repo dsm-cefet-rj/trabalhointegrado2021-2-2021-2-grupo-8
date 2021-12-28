@@ -1,3 +1,4 @@
+
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
@@ -7,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import App from "./App";
 import store from "./storeConfig/store";
 
+
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
@@ -14,4 +16,5 @@ ReactDOM.render(
     </React.StrictMode>,
   </Provider>,
   document.getElementById("root")
+
 );
