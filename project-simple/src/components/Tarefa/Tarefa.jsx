@@ -1,83 +1,64 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import semFoto from "../../assets/sem-foto-homem.jpg";
-import MenuGerente from "./MenuGerente";
 import MenuTarefa from "./MenuTarefa";
 
-function Tarefa({
-  login,
-  equipe,
-  atribuirTarefa,
-  excluirTarefa,
-  devolverTarefa,
-}) {
+function Tarefa() {
   const navigate = useNavigate();
 
   const location = useLocation();
-  const { tarefa, gerente } = location.state;
+  const { tarefa } = location.state;
 
-  const [display, setDisplay] = useState("");
+  const equipeAtiva = useSelector((state) => state.equipeAtiva);
+  const loggedUser = useSelector((state) => state.loggedUser);
+
+  const [display, setDisplay] = useState("hide");
   const [responsavel, setResponsavel] = useState({});
 
   useEffect(() => {
+    const members = [...equipeAtiva.membros]
+    members.push(equipeAtiva.gerente);
     if (tarefa.idResponsavel != 0) {
-      const r = equipe.membros.filter((m) => {
-        return m.id == tarefa.idResponsavel;
-      });
-      setResponsavel(r[0]);
+      setResponsavel(members.find(m => m.id == tarefa.idResponsavel));
+      setDisplay("");
     }
 
-    if (!gerente || tarefa.responsavel) {
+    if (!equipeAtiva.isGerente) {
       setDisplay("hide");
     }
-  }, [equipe]);
+  }, [equipeAtiva, tarefa]);
 
-  const handleAtribuirTarefa = (t, id) => {
-    atribuirTarefa(t, id);
-  };
+  return (
+    <div className="corpo">
+      <header className="container cabecalho">
+        <h1 className="app-name">Project Simple</h1>
+      </header>
 
-  const handleExcluirTarefa = (t) => {
-    excluirTarefa(t);
-  };
+      <main className="container">
+        <h3 className="text-center my-4">{tarefa.name}</h3>
 
-  const handleDevolverTarefa = (t) => {
-    devolverTarefa(t);
-  };
-
-  if (
-    tarefa.idResponsavel != 0 &&
-    tarefa.idResponsavel != login.id &&
-    gerente
-  ) {
-    return (
-      <div className="corpo">
-        <header className="container cabecalho">
-          <h1 className="app-name">Project Simple</h1>
-        </header>
-
-        <main className="container">
-          <h3 className="text-center my-4">{tarefa.name}</h3>
-
-          <section className="container">
-            <div className="text-center">
-              <label className="d-inline-block mb-3">
-                Prazo:
-                <span className="span-tarefa mx-1">
-                  {tarefa.dataPrazo + " " + tarefa.horaPrazo}
-                </span>
-              </label>
-              <label className="d-inline-block mb-3">
-                Urgência:
-                <span className="span-tarefa mx-1">{tarefa.urgencia}</span>
-              </label>
-            </div>
-            <div className="mt-2">
-              <label className="mb-1">Descrição:</label>
-              <span className="span-tarefa descricao-tarefa">
-                {tarefa.descricao}
+        <section className="container">
+          <div className="text-center">
+            <label className="d-inline-block mb-3">
+              Prazo:
+              <span className="span-tarefa mx-1">
+                {tarefa.dataPrazo + " " + tarefa.horaPrazo}
               </span>
-            </div>
-            <div className={`d-flex justify-content-center mt-2 ${display}`}>
+            </label>
+            <label className="d-inline-block mb-3">
+              Urgência:
+              <span className="span-tarefa mx-1">{tarefa.urgencia}</span>
+            </label>
+          </div>
+          <div className="mt-2">
+            <label className="mb-1">Descrição:</label>
+            <span className="span-tarefa descricao-tarefa">
+              {tarefa.descricao}
+            </span>
+          </div>
+          <div className={`${display}`}>
+            <div className="d-flex justify-content-center mt-2">
               <div className="card card-membro">
                 <p className="text-center py-1">Responsável</p>
                 <img className="img-fluid" src={semFoto} alt="foto membro" />
@@ -91,91 +72,28 @@ function Tarefa({
                 </div>
               </div>
             </div>
-          </section>
-
-          <MenuTarefa
-            login={login}
-            tarefa={tarefa}
-            atribuirTarefa={handleAtribuirTarefa}
-            devolverTarefa={handleDevolverTarefa}
-          />
-          <MenuGerente
-            isGerente={gerente}
-            tarefa={tarefa}
-            excluirTarefa={handleExcluirTarefa}
-          />
-          <div className="menu">
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={() => {
-                navigate(-1);
-              }}
-            >
-              Voltar
-            </button>
           </div>
-        </main>
-      </div>
-    );
-  } else {
-    return (
-      <div className="corpo">
-        <header className="container cabecalho">
-          <h1 className="app-name">Project Simple</h1>
-        </header>
+        </section>
 
-        <main className="container">
-          <h3 className="text-center my-4">{tarefa.name}</h3>
+        <MenuTarefa
+          login={loggedUser}
+          tarefa={tarefa}
+        />
 
-          <section className="container">
-            <div className="text-center">
-              <label className="d-inline-block mb-3">
-                Prazo:
-                <span className="span-tarefa mx-1">
-                  {tarefa.dataPrazo + " " + tarefa.horaPrazo}
-                </span>
-              </label>
-              <label className="d-inline-block mb-3">
-                Urgência:
-                <span className="span-tarefa mx-1">{tarefa.urgencia}</span>
-              </label>
-            </div>
-            <div className="d-flex flex-column mt-2">
-              <label className="mb-1">Descrição:</label>
-              <span className="span-tarefa descricao-tarefa">
-                {tarefa.descricao}
-              </span>
-            </div>
-          </section>
-
-          <MenuTarefa
-            login={login}
-            tarefa={tarefa}
-            atribuirTarefa={handleAtribuirTarefa}
-            devolverTarefa={handleDevolverTarefa}
-            finalizarTarefa={handleExcluirTarefa}
-          />
-          <MenuGerente
-            isGerente={gerente}
-            tarefa={tarefa}
-            excluirTarefa={handleExcluirTarefa}
-          />
-          <div className="menu">
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={() => {
-                navigate(-1);
-              }}
-            >
-              Voltar
-            </button>
-          </div>
-        </main>
-      </div>
-    );
-  }
+        <div className="menu">
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            Voltar
+          </button>
+        </div>
+      </main>
+    </div>
+  );
 }
 
 export default Tarefa;

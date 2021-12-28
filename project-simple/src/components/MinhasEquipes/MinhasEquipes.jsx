@@ -3,12 +3,15 @@ import { Link } from "react-router-dom";
 import CardMinhaEquipe from "./CardMinhaEquipe";
 import userData from "../../data/dataUser.json";
 import membersSheet from "../../data/dataMembers.json";
-import eventsSheet from "../../data/dataEvents.json";
+import { useSelector } from "react-redux";
 
-function MinhasEquipes({ equipes, setEquipeAtiva }) {
-  const handleEquipeAtiva = (gerente, info, membros, eventos) => {
-    setEquipeAtiva(gerente, info, membros, eventos);
-  };
+
+
+function MinhasEquipes() {
+
+  const minhasEquipes = useSelector(state => state.minhasEquipes)
+
+  console.log(minhasEquipes)
 
   const mapEquipe = (equipe) => {
     const gerente = userData.filter((user) => {
@@ -17,10 +20,6 @@ function MinhasEquipes({ equipes, setEquipeAtiva }) {
 
     const membroEquipe = membersSheet.filter((entrada) => {
       return entrada.idTeam === equipe.id;
-    });
-
-    const eventos = eventsSheet.filter((e) => {
-      return e.idTeam === equipe.id;
     });
 
     let membros = [];
@@ -38,8 +37,6 @@ function MinhasEquipes({ equipes, setEquipeAtiva }) {
         equipe={equipe}
         gerente={gerente[0]}
         membros={membros}
-        eventos={eventos}
-        setEquipeAtiva={handleEquipeAtiva}
       />
     );
   };
@@ -53,7 +50,7 @@ function MinhasEquipes({ equipes, setEquipeAtiva }) {
       <main className="container">
         <section className="lista-equipes d-flex flex-column">
           <h3 className="text-center my-3">Equipes que você gerencia</h3>
-          {equipes.gerenciadas.map(mapEquipe)}
+          {minhasEquipes.gerenciadas.map(mapEquipe)}
         </section>
         <section className="menu">
           <Link to={"/novaEquipe"}>
@@ -63,7 +60,7 @@ function MinhasEquipes({ equipes, setEquipeAtiva }) {
         <hr />
         <section className="lista-equipes d-flex flex-column mt-5">
           <h3 className="text-center my-3">Outras Equipes</h3>
-          {equipes.outras.map(mapEquipe)}
+          {minhasEquipes.outras.map(mapEquipe)}
         </section>
       </main>
     </div>

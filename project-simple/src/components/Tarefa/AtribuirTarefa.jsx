@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import semFoto from "../../assets/sem-foto-homem.jpg";
+import { atribuirTarefa } from "../../storeConfig/equipeAtivaSlice";
 
-function AtribuirTarefa({ equipe, atribuirTarefa }) {
+function AtribuirTarefa() {
 
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  const equipeAtiva = useSelector(state => state.equipeAtiva)
 
   const [resultado, setResultado] = useState([]);
   const [membros, setMembros] = useState([]);
@@ -15,19 +20,21 @@ function AtribuirTarefa({ equipe, atribuirTarefa }) {
   let busca = "";
 
   useEffect(() => {
-    let m = [... equipe.membros]
-    m.push(equipe.gerente);
-    setMembros(m);
-    setResultado(m);
-  }, [equipe]);
+    let members = [... equipeAtiva.membros]
+    members.push(equipeAtiva.gerente);
+    setMembros(members);
+    setResultado(members);
+  }, [equipeAtiva]);
 
   const handleBusca = (user) => {
     const regex = new RegExp(busca, "i");
     return regex.test(user.name) || regex.test(user.id);
   };
 
-  const handleAtribuirTarefa = (id) => {
-    atribuirTarefa(tarefa, id);
+  const handleAtribuirTarefa = (idUser) => {
+    const novaTarefa = { ...tarefa };
+    novaTarefa.idResponsavel = idUser;
+    dispatch(atribuirTarefa(novaTarefa));
   };
 
   return (
@@ -50,7 +57,7 @@ function AtribuirTarefa({ equipe, atribuirTarefa }) {
           />
           <span
             className="btn btn-primary"
-            onClick={() => {
+            onClick={(e) => {
               setResultado(membros.filter(handleBusca));
             }}
           >
@@ -72,7 +79,7 @@ function AtribuirTarefa({ equipe, atribuirTarefa }) {
                   <p className="text-center">{r.name}</p>
                 </div>
                 <hr />
-                <Link to={"/" + equipe.id + "/home"}>
+                <Link to={"/" + equipeAtiva.id + "/home"}>
                   <div className="text-center">
                     <span
                       className="btn btn-success"

@@ -1,63 +1,47 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setTarefas } from "../../storeConfig/tarefasSlice";
 import MenuHome from "./MenuHome";
 import QuadroTarefas from "./QuadroTarefas";
 
-function Home({ login, equipe }) {
-  const [equipeAtiva, setEquipeAtiva] = useState({});
-  const [tarefas, setTarefas] = useState({
-    paradas: [],
-    andamento: [],
-    minhas: [],
-  });
+function Home() {
+  const equipeAtiva = useSelector((state) => state.equipeAtiva);
+  const loggedUser = useSelector((state) => state.loggedUser);
+  const tarefas = useSelector((state) => state.tarefas);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setEquipeAtiva(equipe);
-
-    setTarefas(() => {
-      const tarefasParadas = equipe.tarefas.filter((t) => {
-        return t.idResponsavel == 0;
-      });
-
-      const tarefasAndamento = equipe.tarefas.filter((t) => {
-        return t.idResponsavel != 0 && t.idResponsavel != login.id;
-      });
-
-      const minhasTarefas = equipe.tarefas.filter((t) => {
-        return t.idResponsavel == login.id;
-      });
-
-      return {
-        paradas: tarefasParadas,
-        andamento: tarefasAndamento,
-        minhas: minhasTarefas,
-      };
+    let tasks = { ...tarefas };
+    tasks.paradas = equipeAtiva.tarefas.filter((t) => {
+      return t.idResponsavel == 0;
     });
-  }, [equipe, login]);
 
-  if (typeof equipeAtiva != "undefined") {
-    return (
-      <div className="corpo">
-        <header className="container cabecalho">
-          <h1 className="app-name">Project Simple</h1>
-        </header>
-        <main className="container">
-          <h3 className="text-center my-4">{"Equipe " + equipe.info.name}</h3>
-          <QuadroTarefas
-            tarefas={tarefas}
-            gerente={equipeAtiva.isGerente}
-          />
+    tasks.andamento = equipeAtiva.tarefas.filter((t) => {
+      return t.idResponsavel != 0 && t.idResponsavel != loggedUser.id;
+    });
 
-          <MenuHome isGerente={equipeAtiva.isGerente} idTeam={equipe.info.id}/>
-        </main>
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <p>Nenhuma Equipe Selecionada</p>
-      </div>
-    );
-  }
+    tasks.minhas = equipeAtiva.tarefas.filter((t) => {
+      return t.idResponsavel == loggedUser.id;
+    });
+
+    dispatch(setTarefas(tasks));
+  }, [equipeAtiva]);
+
+  return (
+    <div className="corpo">
+      <header className="container cabecalho">
+        <h1 className="app-name">Project Simple</h1>
+      </header>
+      <main className="container">
+        <h3 className="text-center my-4">
+          {"Equipe " + equipeAtiva.info.name}
+        </h3>
+        <QuadroTarefas/>
+
+        <MenuHome/>
+      </main>
+    </div>
+  );
 }
 
 export default Home;

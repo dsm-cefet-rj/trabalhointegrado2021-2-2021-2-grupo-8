@@ -1,8 +1,14 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { addTarefa } from "../../storeConfig/equipeAtivaSlice";
+import tasksSheet from "../../data/dataTasks.json";
 
-function NovaTarefa({ addTarefa, idTeam }) {
+function NovaTarefa() {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch()
+  const idTeam = useSelector(state => state.equipeAtiva.info.id)
 
   let novaTarefa = {
     idTask: 0,
@@ -63,8 +69,9 @@ function NovaTarefa({ addTarefa, idTeam }) {
     novaTarefa.horaPrazo = timeConvert(hora);
   };
 
-  const handleAddTarefa = () => {
-    addTarefa(novaTarefa);
+  const handleAddTarefa = (idUser) => {
+    console.log(tasksSheet[-1]);
+    //dispatch(addTarefa(novaTarefa));
   };
 
   return (
