@@ -2,6 +2,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { addTeam } from "../../storeConfig/minhasEquipesSlice";
+import teamsSheet from "../../data/dataTeams.json";
+
 
 function NovaEquipe() {
   const dispatch = useDispatch();
@@ -33,6 +35,7 @@ function NovaEquipe() {
   };
 
   const handleNovaEquipe = () => {
+  
     let data = new Date();
     let hoje =
       getMonthName(data.getMonth()) +

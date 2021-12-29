@@ -58,20 +58,6 @@ function App() {
 
     let novoEstado = Object.assign({}, equipeAtiva);
     novoEstado.eventos.push(novoEvento);
-  };
-
-  const handleExcluirEvento = (evento) => {
-    let eventos = [...equipeAtiva.eventos];
-    eventos.splice(
-      eventos.findIndex((e) => {
-        return evento.idEvent === e.idEvent;
-      }),
-      1
-    );
-
-    let novoEstado = Object.assign({}, equipeAtiva);
-    novoEstado.eventos = eventos;
-  };
 
   return (
     <Router>
@@ -87,17 +73,7 @@ function App() {
 
         <Route path="/:idTeam/novaTarefa" element={<NovaTarefa />} />
 
-        <Route
-          path="/:idTeam/eventos"
-          element={
-            <Eventos
-              eventos={equipeAtiva.eventos}
-              idTeam={equipeAtiva.info.id}
-              idEvent={equipeAtiva.idEvent}
-              excluirEvento={handleExcluirEvento}
-            />
-          }
-        />
+        <Route path="/:idTeam/eventos" element={<Eventos />} />
 
         <Route
           path="/:idTeam/eventos/novoEvento"

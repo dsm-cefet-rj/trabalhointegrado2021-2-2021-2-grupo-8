@@ -49,17 +49,15 @@ export const equipeAtiva = createSlice({
         1
       );
     },
-    criarEquipe: (state, { payload }) => {
-      console.log(payload);
-    },
-    excluirEquipe: (state, { payload }) => {
-      console.log(payload);
-    },
     addEvento: (state, { payload }) => {
       console.log(payload);
     },
     excluirEvento: (state, { payload }) => {
-      console.log(payload);
+      state.eventos.splice(
+        state.eventos.findIndex((e) => payload.idEvent == e.idEvent),
+        1
+      );
+
     },
   },
 });

@@ -6,7 +6,10 @@ import { addTarefa, excluirMembro, excluirTarefa } from "../../storeConfig/equip
 import { deleteTeam } from "../../storeConfig/minhasEquipesSlice";
 
 function GerenciarEquipe() {
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const equipeAtiva = useSelector((state) => state.equipeAtiva);
 
   const dispatch = useDispatch();
 
@@ -27,7 +30,7 @@ function GerenciarEquipe() {
   };
 
   const handleExcluirEquipe = () => {
-    dispatch(deleteTeam(equipeAtiva))
+    dispatch(deleteTeam(equipeAtiva));
   }
 
   return (
