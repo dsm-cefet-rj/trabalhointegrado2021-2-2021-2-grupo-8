@@ -11,10 +11,6 @@ function GerenciarEquipe() {
   const dispatch = useDispatch();
   const equipeAtiva = useSelector((state) => state.equipeAtiva);
 
-  const dispatch = useDispatch();
-
-  const equipeAtiva = useSelector((state) => state.equipeAtiva);
-
   const handleExcluirMembro = (m) => {
     let tasks = [...equipeAtiva.tarefas];
     tasks.forEach(t => {
