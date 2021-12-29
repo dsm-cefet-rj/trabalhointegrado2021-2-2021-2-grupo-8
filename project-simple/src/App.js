@@ -17,7 +17,6 @@ import AtribuirTarefa from "./components/Tarefa/AtribuirTarefa";
 import NovaEquipe from "./components/MinhasEquipes/NovaEquipe";
 import { useDispatch, useSelector } from "react-redux";
 import { setMyTeams } from "./storeConfig/minhasEquipesSlice";
-import api from "./api/api";
 
 function App() {
   const dispatch = useDispatch();

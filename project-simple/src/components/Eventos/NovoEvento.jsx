@@ -2,7 +2,6 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { addEvento } from "../../storeConfig/equipeAtivaSlice";
-import eventsSheet from "../../data/dataEvents.json"
 
 
 function NovoEvento() {
@@ -27,7 +26,7 @@ function NovoEvento() {
 
   const handleAddEvento = () => {
     newEvent.idTeam = equipeAtiva.info.id
-    newEvent.idEvent = eventsSheet.at(-1).idEvent + 1;
+    newEvent.idEvent = equipeAtiva.eventos.at(-1).idEvent + 1;
 
     dispatch(addEvento(newEvent))
     navigate(-1)

@@ -45,6 +45,7 @@ function NovaEquipe() {
       data.getFullYear();
     newTeam.dataCriacao = hoje;
     newTeam.gerente = login.id;
+    newTeam.id = teamsSheet.at(-1).id + 1;
     dispatch(addTeam(newTeam));
   };
 
@@ -66,7 +67,6 @@ function NovaEquipe() {
               placeholder="Digite o nome da Equipe"
               onChange={(e) => {
                 newTeam.name = e.target.value;
-                console.log(newTeam.name);
               }}
             ></input>
           </label>
@@ -79,7 +79,6 @@ function NovaEquipe() {
               placeholder="Digite uma breve descrição sobre a equipe e seus objetivos"
               onChange={(e) => {
                 newTeam.descricao = e.target.value;
-                console.log(newTeam.descricao);
               }}
             />
           </label>

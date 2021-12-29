@@ -48,12 +48,12 @@ function MinhasEquipes() {
       <main className="container">
         <section className="lista-equipes d-flex flex-column">
           <h3 className="text-center my-3">Equipes que você gerencia</h3>
-          {minhasEquipes.gerenciadas.map(mapEquipe)}
-        </section>
-        <section className="menu">
+          <section className="menu">
           <Link to={"/novaEquipe"}>
             <span className="btn btn-primary">Criar Nova Equipe</span>
           </Link>
+        </section>
+          {minhasEquipes.gerenciadas.map(mapEquipe)}
         </section>
         <hr />
         <section className="lista-equipes d-flex flex-column mt-5">

@@ -12,7 +12,7 @@ export const minhasEquipesSlice = createSlice({
       state.outras = payload.outras;
     },
     addTeam: (state, { payload }) => {
-     console.log(payload);
+     state.gerenciadas.push(payload);
     },
     deleteTeam: (state, { payload }) => {
       state.gerenciadas.splice(state.gerenciadas.findIndex(e => payload.info.id == e.id),1);

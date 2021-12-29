@@ -2,13 +2,12 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { addTarefa } from "../../storeConfig/equipeAtivaSlice";
-import tasksSheet from "../../data/dataTasks.json";
 
 function NovaTarefa() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch()
-  const idTeam = useSelector(state => state.equipeAtiva.info.id)
+  const equipeAtiva = useSelector(state => state.equipeAtiva)
 
   let novaTarefa = {
     idTask: 0,
@@ -70,7 +69,7 @@ function NovaTarefa() {
   };
 
   const handleAddTarefa = (idUser) => {
-    novaTarefa.id = tasksSheet.at(-1).idTask + 1;
+    novaTarefa.idTask = equipeAtiva.tarefas.at(-1).idTask + 1;
     dispatch(addTarefa(novaTarefa));
   };
 
@@ -139,7 +138,7 @@ function NovaTarefa() {
         </section>
 
         <section className="menu">
-          <Link to={"/" + idTeam + "/home"}>
+          <Link to={"/" + equipeAtiva.info.id + "/home"}>
             <button
               type="button"
               className="btn btn-success"
