@@ -22,10 +22,8 @@ import api from "./api/api";
 function App() {
   const dispatch = useDispatch();
   const login = useSelector((state) => state.loggedUser.id);
-  const equipeAtiva = useSelector((state) => state.equipeAtiva);
 
   useEffect(() => {
-
     let gerenciadas = teamsSheet.filter((equipe) => {
       return equipe.gerente === login;
     });
@@ -51,14 +49,6 @@ function App() {
     );
   }, [login]);
 
-  const handleAddEvento = (novoEvento) => {
-    const lastId = eventsSheet.slice(-1)[0].idEvent;
-    novoEvento.idTeam = equipeAtiva.info.id;
-    novoEvento.idEvent = lastId + 1;
-
-    let novoEstado = Object.assign({}, equipeAtiva);
-    novoEstado.eventos.push(novoEvento);
-
   return (
     <Router>
       <Routes>
@@ -75,15 +65,7 @@ function App() {
 
         <Route path="/:idTeam/eventos" element={<Eventos />} />
 
-        <Route
-          path="/:idTeam/eventos/novoEvento"
-          element={
-            <NovoEvento
-              addEvento={handleAddEvento}
-              idTeam={equipeAtiva.info.id}
-            />
-          }
-        />
+        <Route path="/:idTeam/eventos/novoEvento" element={<NovoEvento />} />
 
         <Route path="/:idTeam/gerenciarEquipe" element={<GerenciarEquipe />} />
 

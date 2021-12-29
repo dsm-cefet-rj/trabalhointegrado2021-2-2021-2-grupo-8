@@ -50,7 +50,7 @@ export const equipeAtiva = createSlice({
       );
     },
     addEvento: (state, { payload }) => {
-      console.log(payload);
+      state.eventos.push(payload);
     },
     excluirEvento: (state, { payload }) => {
       state.eventos.splice(
