@@ -17,6 +17,7 @@ import AtribuirTarefa from "./components/Tarefa/AtribuirTarefa";
 import NovaEquipe from "./components/MinhasEquipes/NovaEquipe";
 import { useDispatch, useSelector } from "react-redux";
 import { setMyTeams } from "./storeConfig/minhasEquipesSlice";
+import api from "./api/api";
 
 function App() {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ function App() {
   const equipeAtiva = useSelector((state) => state.equipeAtiva);
 
   useEffect(() => {
+
     let gerenciadas = teamsSheet.filter((equipe) => {
       return equipe.gerente === login;
     });
@@ -56,7 +58,6 @@ function App() {
 
     let novoEstado = Object.assign({}, equipeAtiva);
     novoEstado.eventos.push(novoEvento);
-  };
 
   return (
     <Router>

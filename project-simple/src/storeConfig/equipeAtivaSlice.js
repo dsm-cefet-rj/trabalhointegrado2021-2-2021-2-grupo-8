@@ -57,6 +57,7 @@ export const equipeAtiva = createSlice({
         state.eventos.findIndex((e) => payload.idEvent == e.idEvent),
         1
       );
+
     },
   },
 });
@@ -70,6 +71,8 @@ export const {
   addTarefa,
   addMebro,
   excluirMembro,
+  criarEquipe,
+  excluirEquipe,
   addEvento,
   excluirEvento,
 } = equipeAtiva.actions;

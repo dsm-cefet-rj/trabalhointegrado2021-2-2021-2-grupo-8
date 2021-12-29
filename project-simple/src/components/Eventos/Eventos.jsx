@@ -61,7 +61,9 @@ function Eventos() {
         </section>
 
         <section className="menu">
+        
           <Link to={"/" + equipeAtiva.info.id + "/eventos/novoEvento"}>
+
             <button type="button" className="btn btn-primary">
               Criar Evento
             </button>
