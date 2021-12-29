@@ -1,10 +1,14 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { addEvento } from "../../storeConfig/equipeAtivaSlice";
 
 
-function NovoEvento({addEvento, idTeam}) {
+function NovoEvento() {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const idTeam = useSelector(state => state.equipeAtiva.info.id)
 
   let newEvent = {
       name: "",
@@ -21,11 +25,7 @@ function NovoEvento({addEvento, idTeam}) {
 
 
   const handleAddEvento = () => {
-    addEvento(newEvent);
-  }
-
-  const addEventeAndNavigate = () =>{
-    handleAddEvento();
+    dispatch(addEvento(newEvent))
     navigate(-1)
   }
 
@@ -135,7 +135,7 @@ function NovoEvento({addEvento, idTeam}) {
             <button
               type="button"
               className="btn btn-success"
-              onClick={addEventeAndNavigate}
+              onClick={handleAddEvento}
             >
               Criar Evento
             </button>

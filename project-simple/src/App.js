@@ -19,10 +19,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMyTeams } from "./storeConfig/minhasEquipesSlice";
 
 function App() {
-
   const dispatch = useDispatch();
-  const login = useSelector(state => state.loggedUser.id)
-  const equipeAtiva = useSelector(state => state.equipeAtiva)
+  const login = useSelector((state) => state.loggedUser.id);
+  const equipeAtiva = useSelector((state) => state.equipeAtiva);
 
   useEffect(() => {
     let gerenciadas = teamsSheet.filter((equipe) => {
@@ -48,33 +47,7 @@ function App() {
         outras: outras,
       })
     );
-    
   }, [login]);
-
-  const handleExcluirMembro = (membro) => {
-    let membros = [...equipeAtiva.membros];
-    membros.splice(
-      membros.findIndex((m) => {
-        return membro.id === m.id;
-      }),
-      1
-    );
-
-    let novoEstado = Object.assign({}, equipeAtiva);
-    novoEstado.membros = membros;
-
-  };
-
-  const handleAddMembro = (membro) => {
-    let novoEstado = Object.assign({}, equipeAtiva);
-    novoEstado.membros.push(membro);
-
-  };
-
-  const handleNovaEquipe = (newTeam) => {
-    const lastId = teamsSheet.slice(-1)[0].id;
-    newTeam.id = lastId + 1;
-  };
 
   const handleAddEvento = (novoEvento) => {
     const lastId = eventsSheet.slice(-1)[0].idEvent;
@@ -83,66 +56,23 @@ function App() {
 
     let novoEstado = Object.assign({}, equipeAtiva);
     novoEstado.eventos.push(novoEvento);
- 
-  };
-
-  const handleExcluirEvento = (evento) => {
-    let eventos = [...equipeAtiva.eventos];
-    eventos.splice(
-      eventos.findIndex((e) => {
-        return evento.idEvent === e.idEvent;
-      }),
-      1
-    );
-
-    let novoEstado = Object.assign({}, equipeAtiva);
-    novoEstado.eventos = eventos;
-
   };
 
   return (
     <Router>
       <Routes>
-        <Route
-          path="/"
-          element={<MinhasEquipes/>}
-        />
-        <Route
-          path="/:idTeam/home"
-          element={<Home/>}
-        />
+        <Route path="/" element={<MinhasEquipes />} />
+        <Route path="/:idTeam/home" element={<Home />} />
 
-        <Route
-          path="/:idTeam/task/:idTask"
-          element={
-            <Tarefa/>
-          }
-        />
+        <Route path="/:idTeam/task/:idTask" element={<Tarefa />} />
         <Route
           path="/:idTeam/task/:idTask/atribuir"
-          element={
-            <AtribuirTarefa/>
-          }
+          element={<AtribuirTarefa />}
         />
 
-        <Route
-          path="/:idTeam/novaTarefa"
-          element={
-            <NovaTarefa/>
-          }
-        />
+        <Route path="/:idTeam/novaTarefa" element={<NovaTarefa />} />
 
-        <Route
-          path="/:idTeam/eventos"
-          element={
-            <Eventos
-              eventos={equipeAtiva.eventos}
-              idTeam={equipeAtiva.info.id}
-              idEvent={equipeAtiva.idEvent}
-              excluirEvento={handleExcluirEvento}
-            />
-          }
-        />
+        <Route path="/:idTeam/eventos" element={<Eventos />} />
 
         <Route
           path="/:idTeam/eventos/novoEvento"
@@ -154,30 +84,14 @@ function App() {
           }
         />
 
-        <Route
-          path="/:idTeam/gerenciarEquipe"
-          element={
-            <GerenciarEquipe
-              membros={equipeAtiva.membros}
-              excluirMembro={handleExcluirMembro}
-            />
-          }
-        />
+        <Route path="/:idTeam/gerenciarEquipe" element={<GerenciarEquipe />} />
 
         <Route
           path="/:idTeam/gerenciarEquipe/addMembro"
-          element={
-            <AdicionarMembro
-              addMembro={handleAddMembro}
-              membros={equipeAtiva.membros}
-            />
-          }
+          element={<AdicionarMembro />}
         />
 
-        <Route
-          path="/novaEquipe"
-          element={<NovaEquipe login={login} novaEquipe={handleNovaEquipe} />}
-        />
+        <Route path="/novaEquipe" element={<NovaEquipe />} />
       </Routes>
     </Router>
   );

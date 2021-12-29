@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
+import { excluirEvento } from "../../storeConfig/equipeAtivaSlice";
 
-function Eventos({ eventos, excluirEvento, isGerente, idTeam }) {
+function Eventos() {
+  
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const equipeAtiva = useSelector(state => state.equipeAtiva)
 
   const [display, setDisplay] = useState("");
 
   useEffect(() => {
-    isGerente ? setDisplay("") : setDisplay("hide");
-  }, [isGerente]);
+    equipeAtiva.isGerente ? setDisplay("") : setDisplay("hide");
+  }, [equipeAtiva]);
 
   const handleExcluirEvento = (e) => {
-    excluirEvento(e);
+    dispatch(excluirEvento(e))
   };
   return (
     <div className="corpo">
@@ -22,7 +27,7 @@ function Eventos({ eventos, excluirEvento, isGerente, idTeam }) {
       <main className="container">
         <h3 className="text-center my-3">Próximos Eventos</h3>
         <section className="d-flex flex-wrap justify-content-evenly">
-          {eventos.map((e) => {
+          {equipeAtiva.eventos.map((e) => {
             return (
               <div className="card card-evento mb-3" key={e.idEvent}>
                 <div className={`card-header ${e.tipo}`}>{e.name}</div>
@@ -40,7 +45,7 @@ function Eventos({ eventos, excluirEvento, isGerente, idTeam }) {
                   <p className="card-text">{e.descricao}</p>
                 </div>
 
-                <section className="menu">
+                <section className={`menu ${display}`}>
                   <span
                     className="btn btn-danger mb-3 "
                     onClick={() => {
@@ -56,8 +61,8 @@ function Eventos({ eventos, excluirEvento, isGerente, idTeam }) {
         </section>
 
         <section className="menu">
-          <Link to={"/" + idTeam + "/eventos/novoEvento"}>
-            <button type="button" className="btn btn-secondary">
+          <Link to={"/" + equipeAtiva.info.id + "/eventos/novoEvento"}>
+            <button type="button" className="btn btn-primary">
               Criar Evento
             </button>
           </Link>

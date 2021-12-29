@@ -11,8 +11,6 @@ function MinhasEquipes() {
 
   const minhasEquipes = useSelector(state => state.minhasEquipes)
 
-  console.log(minhasEquipes)
-
   const mapEquipe = (equipe) => {
     const gerente = userData.filter((user) => {
       return user.id === equipe.gerente;
