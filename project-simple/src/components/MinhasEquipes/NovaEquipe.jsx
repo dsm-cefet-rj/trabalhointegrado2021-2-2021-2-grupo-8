@@ -1,7 +1,12 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { addTeam } from "../../storeConfig/minhasEquipesSlice";
+import teamsSheet from "../../data/dataTeams.json";
 
-function NovaEquipe({ login, novaEquipe }) {
+function NovaEquipe() {
+  const dispatch = useDispatch();
+  const login = useSelector((state) => state.loggedUser);
   let newTeam = {
     id: 0,
     name: "",
@@ -29,6 +34,7 @@ function NovaEquipe({ login, novaEquipe }) {
   };
 
   const handleNovaEquipe = () => {
+  
     let data = new Date();
     let hoje =
       getMonthName(data.getMonth()) +
@@ -38,7 +44,7 @@ function NovaEquipe({ login, novaEquipe }) {
       data.getFullYear();
     newTeam.dataCriacao = hoje;
     newTeam.gerente = login.id;
-    novaEquipe(newTeam);
+    dispatch(addTeam(newTeam));
   };
 
   return (
@@ -79,7 +85,7 @@ function NovaEquipe({ login, novaEquipe }) {
         </section>
 
         <section className="menu">
-          <Link to={'/'}>
+          <Link to={"/"}>
             <button
               type="button"
               className="btn btn-success"
