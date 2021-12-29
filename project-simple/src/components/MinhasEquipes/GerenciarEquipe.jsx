@@ -1,13 +1,34 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import semFoto from "../../assets/sem-foto-homem.jpg";
+import { addTarefa, excluirMembro, excluirTarefa } from "../../storeConfig/equipeAtivaSlice";
+import { deleteTeam } from "../../storeConfig/minhasEquipesSlice";
 
-function GerenciarEquipe({ membros, excluirMembro }) {
+function GerenciarEquipe() {
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+
+  const equipeAtiva = useSelector((state) => state.equipeAtiva);
+
   const handleExcluirMembro = (m) => {
-    excluirMembro(m);
+    let tasks = [...equipeAtiva.tarefas];
+    tasks.forEach(t => {
+      if (t.idResponsavel === m.id){
+        dispatch(excluirTarefa(t));
+        let task = {...t}
+        task.idResponsavel=0;
+        dispatch(addTarefa(task));
+      }
+    });
+
+    dispatch(excluirMembro(m));
   };
+
+  const handleExcluirEquipe = () => {
+    dispatch(deleteTeam(equipeAtiva))
+  }
 
   return (
     <div className="corpo">
@@ -18,7 +39,7 @@ function GerenciarEquipe({ membros, excluirMembro }) {
       <main className="container">
         <h3 className="text-center my-3">Gerencie sua equipe</h3>
         <section className="d-flex flex-wrap justify-content-evenly">
-          {membros.map((m) => {
+          {equipeAtiva.membros.map((m) => {
             return (
               <div className="card card-membro" key={m.id}>
                 <img className="img-fluid" src={semFoto} alt="foto membro" />
@@ -49,6 +70,11 @@ function GerenciarEquipe({ membros, excluirMembro }) {
           <Link to={"addMembro"}>
             <button type="button" className="btn btn-primary">
               Adicionar membro
+            </button>
+          </Link>
+          <Link to={"/"}>
+            <button type="button" className="btn btn-danger" onClick={handleExcluirEquipe}>
+              Excluir Equipe
             </button>
           </Link>
           <button

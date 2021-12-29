@@ -11,11 +11,11 @@ export const minhasEquipesSlice = createSlice({
       state.gerenciadas = payload.gerenciadas;
       state.outras = payload.outras;
     },
-    addTeam: (state, action) => {
-      state.gerenciadas.push(action.payload.newTeam);
+    addTeam: (state, { payload }) => {
+     console.log(payload);
     },
-    deleteTeam: (state, action) => {
-      state.splice(state.gerenciadas.indexOf(action.payload));
+    deleteTeam: (state, { payload }) => {
+      state.gerenciadas.splice(state.gerenciadas.findIndex(e => payload.info.id == e.id),1);
     },
   },
 });

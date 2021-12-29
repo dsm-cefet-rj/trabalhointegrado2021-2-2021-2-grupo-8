@@ -20,22 +20,63 @@ export const equipeAtiva = createSlice({
       state.tarefas = payload.tarefas;
     },
     devolverTarefa: (state, { payload }) => {
-      state.tarefas[state.tarefas.findIndex(t => payload.idTask == t.idTask)].idResponsavel = 0; 
+      state.tarefas[
+        state.tarefas.findIndex((t) => payload.idTask == t.idTask)
+      ].idResponsavel = 0;
     },
     excluirTarefa: (state, { payload }) => {
-      state.tarefas.splice(state.tarefas.findIndex(t => payload.idTask == t.idTask),1);
+      state.tarefas.splice(
+        state.tarefas.findIndex((t) => payload.idTask == t.idTask),
+        1
+      );
     },
     atribuirTarefa: (state, { payload }) => {
-      state.tarefas.splice(state.tarefas.findIndex(t => payload.idTask == t.idTask),1);
+      state.tarefas.splice(
+        state.tarefas.findIndex((t) => payload.idTask == t.idTask),
+        1
+      );
       state.tarefas.push(payload);
     },
     addTarefa: (state, { payload }) => {
       state.tarefas.push(payload);
     },
+    addMebro: (state, { payload }) => {
+      state.membros.push(payload);
+    },
+    excluirMembro: (state, { payload }) => {
+      state.membros.splice(
+        state.membros.findIndex((m) => payload.id == m.id),
+        1
+      );
+    },
+    criarEquipe: (state, { payload }) => {
+      console.log(payload);
+    },
+    excluirEquipe: (state, { payload }) => {
+      console.log(payload);
+    },
+    addEvento: (state, { payload }) => {
+      console.log(payload);
+    },
+    excluirEvento: (state, { payload }) => {
+      console.log(payload);
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setEquipeAtiva, atribuirTarefa, devolverTarefa, excluirTarefa, addTarefa } = equipeAtiva.actions;
+export const {
+  setEquipeAtiva,
+  atribuirTarefa,
+  devolverTarefa,
+  excluirTarefa,
+  addTarefa,
+  addMebro,
+  excluirMembro,
+  criarEquipe,
+  excluirEquipe,
+  addEvento,
+  excluirEvento,
+} = equipeAtiva.actions;
 
 export default equipeAtiva.reducer;

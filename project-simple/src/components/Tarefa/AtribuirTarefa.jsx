@@ -79,7 +79,7 @@ function AtribuirTarefa() {
                   <p className="text-center">{r.name}</p>
                 </div>
                 <hr />
-                <Link to={"/" + equipeAtiva.id + "/home"}>
+                <Link to={"/" + equipeAtiva.info.id + "/home"}>
                   <div className="text-center">
                     <span
                       className="btn btn-success"

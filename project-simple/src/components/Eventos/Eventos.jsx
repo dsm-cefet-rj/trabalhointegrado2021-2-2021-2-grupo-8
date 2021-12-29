@@ -57,7 +57,7 @@ function Eventos({ eventos, excluirEvento, isGerente, idTeam }) {
 
         <section className="menu">
           <Link to={"/" + idTeam + "/eventos/novoEvento"}>
-            <button type="button" className="btn btn-secondary">
+            <button type="button" className="btn btn-primary">
               Criar Evento
             </button>
           </Link>

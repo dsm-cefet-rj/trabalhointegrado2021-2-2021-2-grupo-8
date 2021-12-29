@@ -70,8 +70,8 @@ function NovaTarefa() {
   };
 
   const handleAddTarefa = (idUser) => {
-    console.log(tasksSheet[-1]);
-    //dispatch(addTarefa(novaTarefa));
+    novaTarefa.id = tasksSheet.at(-1).idTask + 1;
+    dispatch(addTarefa(novaTarefa));
   };
 
   return (

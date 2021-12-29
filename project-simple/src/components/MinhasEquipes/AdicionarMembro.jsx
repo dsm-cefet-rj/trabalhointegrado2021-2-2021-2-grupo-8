@@ -1,25 +1,32 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import semFoto from "../../assets/sem-foto-homem.jpg";
 import userSheet from "../../data/dataUser.json";
+import { addMebro } from "../../storeConfig/equipeAtivaSlice";
 
-function AdicionarMembro({ addMembro, membros }) {
+function AdicionarMembro() {
   let busca = "";
 
+  const dispatch = useDispatch();
+  const equipeAtiva = useSelector(state => state.equipeAtiva)
   const navigate = useNavigate();
 
   const [resultado, setResultado] = useState([]);
 
   const handleBusca = () => {
-    console.log(busca);
     const regex = new RegExp(busca, "i");
 
     let parcial = userSheet.filter((user) => {
       return regex.test(user.name) || regex.test(user.id) || regex.test(user.email);
     });
 
+
+    let members = [...equipeAtiva.membros];
+    members.push(equipeAtiva.gerente);
+
     parcial.forEach((r, idx) => {
-      membros.forEach((m) => {
+      members.forEach((m) => {
         if (r.id == m.id) {
           parcial.splice(idx, 1);
         }
@@ -30,7 +37,7 @@ function AdicionarMembro({ addMembro, membros }) {
   };
 
   const handleAddMembro = (member) => {
-    addMembro(member);
+    dispatch(addMebro(member));
     navigate(-1);
   };
 
