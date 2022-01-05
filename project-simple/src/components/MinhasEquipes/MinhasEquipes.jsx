@@ -1,42 +1,50 @@
-import React from "react";
+import { React, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CardMinhaEquipe from "./CardMinhaEquipe";
-import userData from "../../data/dataUser.json";
-import membersSheet from "../../data/dataMembers.json";
-import { useSelector } from "react-redux";
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { fetchEquipes } from "../../storeConfig/equipesSlice";
+import { fetchUsuarios } from "../../storeConfig/usuariosSlice";
+import { setEquipes } from "../../storeConfig/loggedUserSlice";
 
 function MinhasEquipes() {
+  const dispatch = useDispatch();
+  const minhasEquipes = useSelector((state) => state.loggedUser.equipes);
+  const usuarios = useSelector((state) => state.usuarios);
+  const equipes = useSelector((state) => state.equipes);
 
-  const minhasEquipes = useSelector(state => state.minhasEquipes)
+  useEffect(() => {
+    if (equipes.status === "idle") {
+      dispatch(fetchEquipes());
+    }
+
+    if (usuarios.status === "idle") {
+      dispatch(fetchUsuarios());
+    }
+
+    dispatch(setEquipes(equipes.data));
+  }, [equipes, usuarios, dispatch]);
 
   const mapEquipe = (equipe) => {
-    const gerente = userData.filter((user) => {
-      return user.id === equipe.gerente;
-    });
-
-    const membroEquipe = membersSheet.filter((entrada) => {
-      return entrada.idTeam === equipe.id;
-    });
+    const gerente = usuarios.data.find((user) => user.id === equipe.gerente);
 
     let membros = [];
 
-    membroEquipe.forEach((element) => {
-      const membro = userData.filter((user) => {
-        return user.id === element.idUser;
-      });
-      membros.push(membro[0]);
-    });
-
-    return (
-      <CardMinhaEquipe
-        key={equipe.id}
-        equipe={equipe}
-        gerente={gerente[0]}
-        membros={membros}
-      />
+    equipe.membros.forEach((m) =>
+      membros.push(usuarios.data.find((u) => u.id === m))
     );
+
+    if (equipes.status !== "succeeded" || usuarios.status !== "succeeded") {
+      return <h3 key={equipe.id} className="text-center">Loading</h3>;
+    } else {
+      return (
+        <CardMinhaEquipe
+          key={equipe.id}
+          equipe={equipe}
+          gerente={gerente}
+          membros={membros}
+        />
+      );
+    }
   };
 
   return (
@@ -49,10 +57,10 @@ function MinhasEquipes() {
         <section className="lista-equipes d-flex flex-column">
           <h3 className="text-center my-3">Equipes que você gerencia</h3>
           <section className="menu">
-          <Link to={"/novaEquipe"}>
-            <span className="btn btn-primary">Criar Nova Equipe</span>
-          </Link>
-        </section>
+            <Link to={"/novaEquipe"}>
+              <span className="btn btn-primary">Criar Nova Equipe</span>
+            </Link>
+          </section>
           {minhasEquipes.gerenciadas.map(mapEquipe)}
         </section>
         <hr />
