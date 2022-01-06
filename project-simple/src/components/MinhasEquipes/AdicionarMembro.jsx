@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import semFoto from "../../assets/sem-foto-homem.jpg";
 import userSheet from "../../data/dataUser.json";
-import { addMebro } from "../../storeConfig/equipeAtivaSlice";
 
 function AdicionarMembro() {
   let busca = "";
@@ -37,7 +36,7 @@ function AdicionarMembro() {
   };
 
   const handleAddMembro = (member) => {
-    dispatch(addMebro(member));
+    console.log(member)
     navigate(-1);
   };
 

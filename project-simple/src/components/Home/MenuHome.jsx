@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getEquipeAtiva } from "../../storeConfig/loggedUserSlice";
 
 function MenuHome() {
 
-  const equipeAtiva = useSelector(state => state.equipeAtiva)
+  const equipeAtiva = useSelector(getEquipeAtiva)
 
   const [display, setDisplay] = useState("");
   

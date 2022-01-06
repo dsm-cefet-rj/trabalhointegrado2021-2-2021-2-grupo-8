@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import semFoto from "../../assets/sem-foto-homem.jpg";
+import {
+  getEquipeAtiva,
+  getIsGerente,
+} from "../../storeConfig/loggedUserSlice";
 import MenuTarefa from "./MenuTarefa";
 
 function Tarefa() {
@@ -10,24 +14,49 @@ function Tarefa() {
   const location = useLocation();
   const { tarefa } = location.state;
 
-  const equipeAtiva = useSelector((state) => state.equipeAtiva);
-  const loggedUser = useSelector((state) => state.loggedUser);
+  const equipeAtiva = useSelector(getEquipeAtiva);
+  const isGerente = useSelector(getIsGerente);
 
   const [display, setDisplay] = useState("hide");
   const [responsavel, setResponsavel] = useState({});
 
   useEffect(() => {
-    const members = [...equipeAtiva.membros]
+    const members = [...equipeAtiva.membros];
     members.push(equipeAtiva.gerente);
     if (tarefa.idResponsavel != 0) {
-      setResponsavel(members.find(m => m.id == tarefa.idResponsavel));
+      setResponsavel(members.find((m) => m.id == tarefa.idResponsavel));
       setDisplay("");
     }
 
-    if (!equipeAtiva.isGerente) {
+    if (!isGerente) {
       setDisplay("hide");
     }
   }, [equipeAtiva, tarefa]);
+
+  const Responsavel = () => {
+    if (tarefa.responsavel != 0) {
+      return (
+        <div className={`${display}`}>
+          <div className="d-flex justify-content-center mt-2">
+            <div className="card card-membro">
+              <p className="text-center py-1">Responsável</p>
+              <img className="img-fluid" src={semFoto} alt="foto membro" />
+              <div className="my-2">
+                <p className="text-center">{responsavel.id}</p>
+                <p className="text-center">{responsavel.nome}</p>
+                <hr />
+                <p className="text-center">Contatos:</p>
+                <p className="text-center">{responsavel.email}</p>
+                <p className="text-center">{responsavel.phone}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    } else {
+      return <div></div>;
+    }
+  };
 
   return (
     <div className="corpo">
@@ -36,7 +65,7 @@ function Tarefa() {
       </header>
 
       <main className="container">
-        <h3 className="text-center my-4">{tarefa.name}</h3>
+        <h3 className="text-center my-4">{tarefa.nome}</h3>
 
         <section className="container">
           <div className="text-center">
@@ -57,28 +86,11 @@ function Tarefa() {
               {tarefa.descricao}
             </span>
           </div>
-          <div className={`${display}`}>
-            <div className="d-flex justify-content-center mt-2">
-              <div className="card card-membro">
-                <p className="text-center py-1">Responsável</p>
-                <img className="img-fluid" src={semFoto} alt="foto membro" />
-                <div className="my-2">
-                  <p className="text-center">{responsavel.id}</p>
-                  <p className="text-center">{responsavel.name}</p>
-                  <hr />
-                  <p className="text-center">Contatos:</p>
-                  <p className="text-center">{responsavel.email}</p>
-                  <p className="text-center">{responsavel.phone}</p>
-                </div>
-              </div>
-            </div>
-          </div>
         </section>
 
-        <MenuTarefa
-          login={loggedUser}
-          tarefa={tarefa}
-        />
+        <Responsavel idResponsavel={tarefa.idResponsavel}/>
+
+        <MenuTarefa tarefa={tarefa} isGerente={isGerente} />
 
         <div className="menu">
           <button

@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-import { excluirEvento } from "../../storeConfig/equipeAtivaSlice";
+import { fetchEventos, selectEventosByTeam } from "../../storeConfig/eventosSlice";
+import {
+  getEquipeAtiva,
+  getIsGerente,
+} from "../../storeConfig/loggedUserSlice";
 
 function Eventos() {
-  
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const equipeAtiva = useSelector(state => state.equipeAtiva)
+  const equipeAtiva = useSelector(getEquipeAtiva);
+  const isGerente = useSelector(getIsGerente);
+  const eventos = useSelector(selectEventosByTeam(equipeAtiva));
 
   const [display, setDisplay] = useState("");
 
   useEffect(() => {
-    equipeAtiva.isGerente ? setDisplay("") : setDisplay("hide");
-  }, [equipeAtiva]);
+    isGerente ? setDisplay("") : setDisplay("hide");
+  }, [isGerente]);
 
   const handleExcluirEvento = (e) => {
-    dispatch(excluirEvento(e))
+    console.log(e);
   };
   return (
     <div className="corpo">
@@ -27,10 +31,10 @@ function Eventos() {
       <main className="container">
         <h3 className="text-center my-3">Próximos Eventos</h3>
         <section className="d-flex flex-wrap justify-content-evenly">
-          {equipeAtiva.eventos.map((e) => {
+          {eventos.map((e) => {
             return (
-              <div className="card card-evento mb-3" key={e.idEvent}>
-                <div className={`card-header ${e.tipo}`}>{e.name}</div>
+              <div className="card card-evento mb-3" key={e.id}>
+                <div className={`card-header ${e.tipo}`}>{e.nome}</div>
                 <div className="card-body">
                   <p className="card-text">
                     Início: {e.dataInicio} às {e.horaInicio}
@@ -38,9 +42,6 @@ function Eventos() {
                   <p className="card-text">
                     Fim: {e.dataFim} às {e.horaFim}
                   </p>
-                  <br />
-                  <p className="card-text">Importância: {e.importancia}</p>
-                  <p className="card-text">{e.tipo}</p>
                   <br/>
                   <p className="card-text">{e.descricao}</p>
                 </div>
@@ -61,9 +62,10 @@ function Eventos() {
         </section>
 
         <section className="menu">
-        
-          <Link className={`${display}`} to={"/" + equipeAtiva.info.id + "/eventos/novoEvento"}>
-
+          <Link
+            className={`${display}`}
+            to={"/" + equipeAtiva.info.id + "/eventos/novoEvento"}
+          >
             <button type="button" className="btn btn-primary">
               Criar Evento
             </button>

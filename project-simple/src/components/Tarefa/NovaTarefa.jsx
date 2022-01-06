@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { addTarefa } from "../../storeConfig/equipeAtivaSlice";
 
 function NovaTarefa() {
   const navigate = useNavigate();
@@ -70,7 +69,7 @@ function NovaTarefa() {
 
   const handleAddTarefa = (idUser) => {
     novaTarefa.idTask = equipeAtiva.tarefas.at(-1).idTask + 1;
-    dispatch(addTarefa(novaTarefa));
+    console.log(novaTarefa)
   };
 
   return (

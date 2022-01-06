@@ -1,34 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  atribuirTarefa,
-  devolverTarefa,
-  excluirTarefa
-} from "../../storeConfig/equipeAtivaSlice";
 
-function MenuTarefa({ tarefa }) {
+function MenuTarefa({ tarefa, isGerente }) {
   const dispatch = useDispatch();
-  const isGerente = useSelector((state) => state.equipeAtiva.isGerente);
-  const loggedUser = useSelector((state) => state.loggedUser);
+  const idUser = useSelector((state) => state.loggedUser.id);
   const [minha, setMinha] = useState(-1);
 
   useEffect(() => {
-    loggedUser.id === tarefa.idResponsavel ? setMinha(1) : setMinha(0);
+    idUser === tarefa.idResponsavel ? setMinha(1) : setMinha(0);
   }, []);
 
   const handleAceitarTarefa = () => {
-    const novaTarefa = { ...tarefa };
-    novaTarefa.idResponsavel = loggedUser.id;
-    dispatch(atribuirTarefa(novaTarefa));
+    console.log(tarefa);
   };
 
   const handleDevolverTarefa = () => {
-    dispatch(devolverTarefa(tarefa));
+    console.log(tarefa);
   };
 
   const hadleExcluirTarefa = () => {
-    dispatch(excluirTarefa(tarefa));
+    console.log(tarefa);
   };
 
   if (isGerente) {

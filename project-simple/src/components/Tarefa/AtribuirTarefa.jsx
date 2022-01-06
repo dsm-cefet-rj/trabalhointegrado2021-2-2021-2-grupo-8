@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import semFoto from "../../assets/sem-foto-homem.jpg";
-import { atribuirTarefa } from "../../storeConfig/equipeAtivaSlice";
+import { getEquipeAtiva } from "../../storeConfig/loggedUserSlice";
 
 function AtribuirTarefa() {
 
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const equipeAtiva = useSelector(state => state.equipeAtiva)
+  const equipeAtiva = useSelector(getEquipeAtiva)
 
   const [resultado, setResultado] = useState([]);
   const [membros, setMembros] = useState([]);
@@ -34,7 +34,7 @@ function AtribuirTarefa() {
   const handleAtribuirTarefa = (idUser) => {
     const novaTarefa = { ...tarefa };
     novaTarefa.idResponsavel = idUser;
-    dispatch(atribuirTarefa(novaTarefa));
+    console.log(novaTarefa)
   };
 
   return (

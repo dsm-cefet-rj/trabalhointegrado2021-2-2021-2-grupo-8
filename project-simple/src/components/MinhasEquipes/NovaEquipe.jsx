@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addTeam } from "../../storeConfig/minhasEquipesSlice";
 import teamsSheet from "../../data/dataTeams.json";
 
 
@@ -46,7 +45,6 @@ function NovaEquipe() {
     newTeam.dataCriacao = hoje;
     newTeam.gerente = login.id;
     newTeam.id = teamsSheet.at(-1).id + 1;
-    dispatch(addTeam(newTeam));
   };
 
   return (

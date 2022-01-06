@@ -37,7 +37,12 @@ export const usuarios = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
+//selectors
+
+export const selectMembros = (state, idTeam) => {
+  console.log(state, idTeam)
+}
+
 export const { addUsuario } = usuarios.actions;
 
 export default usuarios.reducer;

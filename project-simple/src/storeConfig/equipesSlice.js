@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchEquipes = createAsyncThunk(
   "equipes/fetchEquipes",
-  async () => {
+  async (idUser) => {
     try {
       let response = await fetch("http://localhost:5000/equipes");
       return await response.json();
@@ -49,7 +49,22 @@ export const equipes = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
+//selectors
+
+export const selectMinhasEquipes = (idUser) => (state) => {
+  let outras = [];
+
+  state.equipes.data.forEach((e) => {
+    e.membros.forEach((m) => {
+      if (m === idUser) {
+        outras.push(e);
+      }
+    });
+  });
+  let gerenciadas = state.equipes.data.filter((e) => e.gerente === idUser);
+  return { gerenciadas: gerenciadas, outras: outras };
+};
+
 export const { addEquipe, deleteEquipe, addMebro, deleteMebro } =
   equipes.actions;
 

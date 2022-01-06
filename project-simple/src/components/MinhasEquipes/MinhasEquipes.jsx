@@ -1,28 +1,14 @@
-import { React, useEffect } from "react";
+import { React } from "react";
 import { Link } from "react-router-dom";
 import CardMinhaEquipe from "./CardMinhaEquipe";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchEquipes } from "../../storeConfig/equipesSlice";
-import { fetchUsuarios } from "../../storeConfig/usuariosSlice";
-import { setEquipes } from "../../storeConfig/loggedUserSlice";
+import { useSelector } from "react-redux";
+import { selectMinhasEquipes } from "../../storeConfig/equipesSlice";
 
 function MinhasEquipes() {
-  const dispatch = useDispatch();
-  const minhasEquipes = useSelector((state) => state.loggedUser.equipes);
   const usuarios = useSelector((state) => state.usuarios);
   const equipes = useSelector((state) => state.equipes);
-
-  useEffect(() => {
-    if (equipes.status === "idle") {
-      dispatch(fetchEquipes());
-    }
-
-    if (usuarios.status === "idle") {
-      dispatch(fetchUsuarios());
-    }
-
-    dispatch(setEquipes(equipes.data));
-  }, [equipes, usuarios, dispatch]);
+  const idUser = useSelector((state) => state.loggedUser.id);
+  const minhasEquipes = useSelector(selectMinhasEquipes(idUser));
 
   const mapEquipe = (equipe) => {
     const gerente = usuarios.data.find((user) => user.id === equipe.gerente);
@@ -34,7 +20,11 @@ function MinhasEquipes() {
     );
 
     if (equipes.status !== "succeeded" || usuarios.status !== "succeeded") {
-      return <h3 key={equipe.id} className="text-center">Loading</h3>;
+      return (
+        <h3 key={equipe.id} className="text-center">
+          Loading
+        </h3>
+      );
     } else {
       return (
         <CardMinhaEquipe

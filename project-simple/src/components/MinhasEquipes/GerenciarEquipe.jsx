@@ -2,8 +2,6 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import semFoto from "../../assets/sem-foto-homem.jpg";
-import { addTarefa, excluirMembro, excluirTarefa } from "../../storeConfig/equipeAtivaSlice";
-import { deleteTeam } from "../../storeConfig/minhasEquipesSlice";
 
 function GerenciarEquipe() {
 
@@ -12,21 +10,22 @@ function GerenciarEquipe() {
   const equipeAtiva = useSelector((state) => state.equipeAtiva);
 
   const handleExcluirMembro = (m) => {
-    let tasks = [...equipeAtiva.tarefas];
-    tasks.forEach(t => {
-      if (t.idResponsavel === m.id){
-        dispatch(excluirTarefa(t));
-        let task = {...t}
-        task.idResponsavel=0;
-        dispatch(addTarefa(task));
-      }
-    });
+    console.log(m)
+    //let tasks = [...equipeAtiva.tarefas];
+    //tasks.forEach(t => {
+    //  if (t.idResponsavel === m.id){
+    //    dispatch(excluirTarefa(t));
+    //    let task = {...t}
+    //    task.idResponsavel=0;
+    //    dispatch(addTarefa(task));
+    //  }
+    //});
 
-    dispatch(excluirMembro(m));
+    //dispatch(excluirMembro(m));
   };
 
   const handleExcluirEquipe = () => {
-    dispatch(deleteTeam(equipeAtiva));
+    console.log(equipeAtiva)
   }
 
   return (

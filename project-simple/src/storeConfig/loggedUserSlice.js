@@ -4,39 +4,16 @@ export const loggedUser = createSlice({
   name: "loggedUser",
   initialState: {
     id: 36,
-    equipes: {
-      gerenciadas: [],
-      outras: [],
-    },
     equipeAtiva: {
-      gerente: {},
       info: {},
+      gerente: {},
       isGerente: -1,
       membros: [],
     },
   },
   reducers: {
-    setEquipes: (state, { payload }) => {
-      let gerenciadas = payload.filter((e) => {
-        return e.gerente === state.id;
-      });
-
-      let outras = [];
-
-      payload.forEach((e) => {
-        e.membros.forEach((m) => {
-          if (m === state.id) {
-            outras.push(e);
-          }
-        });
-      });
-
-      state.equipes.gerenciadas = gerenciadas;
-      state.equipes.outras = outras;
-    },
     setEquipeAtiva: {
       reducer(state, { payload }) {
-        console.log(payload);
         state.equipeAtiva.info = payload.equipe;
         state.equipeAtiva.membros = payload.membros;
         state.equipeAtiva.gerente = payload.gerente;
@@ -57,6 +34,11 @@ export const loggedUser = createSlice({
   },
 });
 
-export const { setEquipes, setEquipeAtiva } = loggedUser.actions;
+//Selectors:
+
+export const getEquipeAtiva = (state) => state.loggedUser.equipeAtiva;
+export const getIsGerente = (state) => state.loggedUser.equipeAtiva.isGerente;
+
+export const { setEquipeAtiva } = loggedUser.actions;
 
 export default loggedUser.reducer;

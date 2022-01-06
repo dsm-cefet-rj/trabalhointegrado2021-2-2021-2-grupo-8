@@ -1,31 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setTarefas } from "../../storeConfig/tarefasSlice";
+import React from "react";
+import { useSelector } from "react-redux";
+import { getEquipeAtiva } from "../../storeConfig/loggedUserSlice";
 import MenuHome from "./MenuHome";
 import QuadroTarefas from "./QuadroTarefas";
 
 function Home() {
-  const equipeAtiva = useSelector((state) => state.equipeAtiva);
-  const loggedUser = useSelector((state) => state.loggedUser);
-  const tarefas = useSelector((state) => state.tarefas);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    let tasks = { ...tarefas };
-    tasks.paradas = equipeAtiva.tarefas.filter((t) => {
-      return t.idResponsavel == 0;
-    });
-
-    tasks.andamento = equipeAtiva.tarefas.filter((t) => {
-      return t.idResponsavel != 0 && t.idResponsavel != loggedUser.id;
-    });
-
-    tasks.minhas = equipeAtiva.tarefas.filter((t) => {
-      return t.idResponsavel == loggedUser.id;
-    });
-
-    dispatch(setTarefas(tasks));
-  }, [equipeAtiva]);
+  const equipeAtiva = useSelector(getEquipeAtiva);
 
   return (
     <div className="corpo">
@@ -34,11 +14,10 @@ function Home() {
       </header>
       <main className="container">
         <h3 className="text-center my-4">
-          {"Equipe " + equipeAtiva.info.name}
+          {"Equipe " + equipeAtiva.info.nome}
         </h3>
-        <QuadroTarefas/>
-
-        <MenuHome/>
+        <QuadroTarefas equipeAtiva={equipeAtiva} />
+        <MenuHome />
       </main>
     </div>
   );

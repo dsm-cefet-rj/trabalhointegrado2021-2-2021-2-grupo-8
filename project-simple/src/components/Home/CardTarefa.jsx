@@ -4,17 +4,13 @@ import { Link } from "react-router-dom";
 function CardTarefa({ tarefa }) {
   return (
     <Link
-      key={tarefa.idTask}
       className="tarefa-card"
-      style={{ textDecoration: "none", color: "black" }}
-      key={tarefa.idTask}
-      to={"/" + tarefa.idTeam + "/task/" + tarefa.idTask}
+      to={"/" + tarefa.equipe + "/task/" + tarefa.id}
       state={{ tarefa: tarefa }}
     >
-      {tarefa.name}
+      {tarefa.nome}
     </Link>
   );
 }
-
 
 export default CardTarefa;

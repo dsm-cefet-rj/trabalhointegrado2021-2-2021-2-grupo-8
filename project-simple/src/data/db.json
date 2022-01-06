@@ -600,7 +600,7 @@
         },
         {
             "id": 9,
-            "equipe": 1,
+            "equipe": 0,
             "nome": "incididunt fugiat dolor",
             "dataPrazo": "2023-09-13",
             "horaPrazo": "12:17",
@@ -660,7 +660,7 @@
         },
         {
             "id": 15,
-            "equipe": 7,
+            "equipe": 0,
             "nome": "nisi mollit laborum",
             "dataPrazo": "2023-05-18",
             "horaPrazo": "15:09",
@@ -710,7 +710,7 @@
         },
         {
             "id": 20,
-            "equipe": 16,
+            "equipe": 0,
             "nome": "magna nostrud minim",
             "dataPrazo": "2022-12-06",
             "horaPrazo": "16:09",
@@ -840,7 +840,7 @@
         },
         {
             "id": 33,
-            "equipe": 6,
+            "equipe": 0,
             "nome": "nisi voluptate duis",
             "dataPrazo": "2023-01-31",
             "horaPrazo": "14:00",
