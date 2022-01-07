@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import semFoto from "../../assets/sem-foto-homem.jpg";
 import { getEquipeAtiva } from "../../storeConfig/loggedUserSlice";
+import { updateTarefaServer } from "../../storeConfig/tarefasSlice";
 
 function AtribuirTarefa() {
 
@@ -28,13 +29,12 @@ function AtribuirTarefa() {
 
   const handleBusca = (user) => {
     const regex = new RegExp(busca, "i");
-    return regex.test(user.name) || regex.test(user.id);
+    return regex.test(user.nome) || regex.test(user.id);
   };
 
   const handleAtribuirTarefa = (idUser) => {
-    const novaTarefa = { ...tarefa };
-    novaTarefa.idResponsavel = idUser;
-    console.log(novaTarefa)
+    const novaTarefa = { ...tarefa, responsavel: idUser};
+    dispatch(updateTarefaServer(novaTarefa))
   };
 
   return (
@@ -75,8 +75,8 @@ function AtribuirTarefa() {
                 <img className="img-fluid" src={semFoto} alt="foto membro" />
 
                 <div className="mt-2">
-                  <p className="text-center">{r.id}</p>
-                  <p className="text-center">{r.name}</p>
+                  <p className="text-center">ID: {r.id}</p>
+                  <p className="text-center">{r.nome}</p>
                 </div>
                 <hr />
                 <Link to={"/" + equipeAtiva.info.id + "/home"}>

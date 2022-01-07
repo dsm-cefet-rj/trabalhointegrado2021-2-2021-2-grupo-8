@@ -5,7 +5,7 @@ import Eventos from "./components/Eventos/Eventos";
 import GerenciarEquipe from "./components/MinhasEquipes/GerenciarEquipe";
 import Home from "./components/Home/Home";
 import MinhasEquipes from "./components/MinhasEquipes/MinhasEquipes";
-import NovaTarefa from "./components/Tarefa/NovaTarefa";
+import FormTarefa from "./components/Tarefa/FormTarefa";
 import NovoEvento from "./components/Eventos/NovoEvento";
 import Tarefa from "./components/Tarefa/Tarefa";
 import AtribuirTarefa from "./components/Tarefa/AtribuirTarefa";
@@ -61,7 +61,7 @@ function App() {
           element={<AtribuirTarefa />}
         />
 
-        <Route path="/:idTeam/novaTarefa" element={<NovaTarefa />} />
+        <Route path="/:idTeam/formTarefa" element={<FormTarefa />} />
 
         <Route path="/:idTeam/eventos" element={<Eventos />} />
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import semFoto from "../../assets/sem-foto-homem.jpg";
-import userSheet from "../../data/dataUser.json";
+
 
 function AdicionarMembro() {
   let busca = "";
@@ -14,7 +14,7 @@ function AdicionarMembro() {
   const [resultado, setResultado] = useState([]);
 
   const handleBusca = () => {
-    const regex = new RegExp(busca, "i");
+    /*const regex = new RegExp(busca, "i");
 
     let parcial = userSheet.filter((user) => {
       return regex.test(user.name) || regex.test(user.id) || regex.test(user.email);
@@ -32,7 +32,7 @@ function AdicionarMembro() {
       });
     });
 
-    setResultado(parcial);
+    setResultado(parcial);*/ console.log(equipeAtiva)
   };
 
   const handleAddMembro = (member) => {

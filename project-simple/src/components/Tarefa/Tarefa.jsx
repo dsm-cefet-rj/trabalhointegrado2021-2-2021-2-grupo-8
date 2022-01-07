@@ -21,10 +21,10 @@ function Tarefa() {
   const [responsavel, setResponsavel] = useState({});
 
   useEffect(() => {
-    const members = [...equipeAtiva.membros];
-    members.push(equipeAtiva.gerente);
-    if (tarefa.idResponsavel != 0) {
-      setResponsavel(members.find((m) => m.id == tarefa.idResponsavel));
+    const membros = [...equipeAtiva.membros];
+    membros.push(equipeAtiva.gerente);
+    if (tarefa.responsavel != 0) {
+      setResponsavel(membros.find((m) => m.id == tarefa.responsavel));
       setDisplay("");
     }
 
@@ -42,12 +42,12 @@ function Tarefa() {
               <p className="text-center py-1">Responsável</p>
               <img className="img-fluid" src={semFoto} alt="foto membro" />
               <div className="my-2">
-                <p className="text-center">{responsavel.id}</p>
+                <p className="text-center">ID: {responsavel.id}</p>
                 <p className="text-center">{responsavel.nome}</p>
                 <hr />
                 <p className="text-center">Contatos:</p>
                 <p className="text-center">{responsavel.email}</p>
-                <p className="text-center">{responsavel.phone}</p>
+                <p className="text-center">{responsavel.tel}</p>
               </div>
             </div>
           </div>

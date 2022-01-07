@@ -38,6 +38,7 @@ export const loggedUser = createSlice({
 
 export const getEquipeAtiva = (state) => state.loggedUser.equipeAtiva;
 export const getIsGerente = (state) => state.loggedUser.equipeAtiva.isGerente;
+export const getIdUser = (state) => state.loggedUser.id;
 
 export const { setEquipeAtiva } = loggedUser.actions;
 
