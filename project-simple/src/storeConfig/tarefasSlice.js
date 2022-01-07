@@ -1,71 +1,103 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  createEntityAdapter,
+  isAnyOf,
+} from "@reduxjs/toolkit";
+import { baseUrl } from "../api/baseUrl";
+import { httpDelete, httpGet, httpPost, httpPut } from "../api/utils";
+
+const tarefasAdapter = createEntityAdapter();
+
+const initialState = tarefasAdapter.getInitialState({
+  status: "idle",
+  error: null,
+});
+
+//async thunks
 
 export const fetchTarefas = createAsyncThunk(
   "tarefas/fetchTarefas",
   async () => {
-    try {
-      let response = await fetch("http://localhost:5000/tarefas");
-      return await response.json();
-    } catch (error) {
-      return [];
-    }
+    return httpGet(baseUrl + "/tarefas");
+  }
+);
+
+export const deleteTarefaServer = createAsyncThunk(
+  "tarefas/deleteTarefaServer",
+  async (tarefa) => {
+    await httpDelete(baseUrl + "/tarefas/" + tarefa.id);
+    return tarefa.id;
+  }
+);
+
+export const addTarefaServer = createAsyncThunk(
+  "tarefas/addTarefaServer",
+  async (tarefa) => {
+    return httpPost(baseUrl + "/tarefas", tarefa);
+  }
+);
+
+export const updateTarefaServer = createAsyncThunk(
+  "tarefas/updateTarefaServer",
+  async (tarefa) => {
+    return httpPut(baseUrl + "/tarefas/" + tarefa.id, tarefa);
   }
 );
 
 export const tarefas = createSlice({
   name: "tarefas",
-  initialState: {
-    data: [],
-    status: "idle",
-    error: null,
-  },
-  reducers: {
-    addTarefa: (state, { payload }) => {
-      console.log(payload);
-    },
-    deleteTarefa: (state, { payload }) => {
-      console.log(payload);
-    },
-  },
+  initialState: initialState,
   extraReducers(builder) {
     builder
-      .addCase(fetchTarefas.pending, (state) => {
-        state.status = "loading";
-      })
       .addCase(fetchTarefas.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.data = action.payload;
+        tarefasAdapter.setAll(state, action.payload);
       })
-      .addCase(fetchTarefas.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      });
+      .addCase(deleteTarefaServer.fulfilled, (state, action) => {
+        state.status = "updated";
+        tarefasAdapter.removeOne(state, action.payload);
+      })
+      .addMatcher(
+        isAnyOf(updateTarefaServer.fulfilled, addTarefaServer.fulfilled),
+        (state, action) => {
+          state.status = "updated";
+          tarefasAdapter.upsertOne(state, action.payload);
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchTarefas.pending,
+          updateTarefaServer.pending,
+          addTarefaServer.pending,
+          deleteTarefaServer.pending
+        ),
+        (state) => {
+          state.status = "loading";
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchTarefas.rejected,
+          updateTarefaServer.rejected,
+          addTarefaServer.rejected,
+          deleteTarefaServer.rejected
+        ),
+        (state, action) => {
+          state.status = "failed";
+          state.error = action.error.message;
+        }
+      );
   },
 });
 
 //selectors
 
-export const selectTarefasByTeam = (equipe) => (state) => {
-  let disponiveis = [];
-  let minhas = [];
-  let andamento = [];
-
-  let minhasTarefas = state.tarefas.data.filter((t) => {
-    return t.equipe === equipe.info.id;
-  });
-
-  minhasTarefas.forEach((t) => {
-    if (t.responsavel === 0) {
-      disponiveis.push(t);
-    } else if (t.responsavel === state.loggedUser.id) {
-      minhas.push(t);
-    } else {
-      andamento.push(t);
-    }
-  });
-
-  return { disponiveis: disponiveis, minhas: minhas, andamento: andamento };
-};
+export const {
+  selectAll: selectAllTarefas,
+  selectById: selectTarefaById,
+  selectIds: selectTarefaIds,
+} = tarefasAdapter.getSelectors((state) => state.tarefas);
 
 export const { addTarefa, deleteTarefa } = tarefas.actions;
 
