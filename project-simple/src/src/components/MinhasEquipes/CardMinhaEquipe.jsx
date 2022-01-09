@@ -11,6 +11,23 @@ function CardMinhaEquipe({ equipe, gerente, membros }) {
     dispatch(setEquipeAtiva(equipe, membros, gerente));
   };
 
+  const mapMembros = () => {
+    if (membros.length < 1) {
+      return (
+        <h6 className="text-center">Esta equipe ainda não possui membros</h6>
+      );
+    } else {
+      return membros.map((membro) => {
+        return (
+          <div key={membro.id} className="card card-equipe-membro mb-2">
+            <img className="card-img-top" src={semFoto} alt="foto membro" />
+            <p className="pt-1">{membro.nome}</p>
+          </div>
+        );
+      });
+    }
+  };
+
   return (
     <div className="card card-equipe">
       <Link to={equipe.id + "/home"}>
@@ -36,14 +53,7 @@ function CardMinhaEquipe({ equipe, gerente, membros }) {
         <hr />
         <div className="row d-flex justify-content-evenly mb-2">
           <h5 className="mb-3">Membros</h5>
-          {membros.map((membro) => {
-            return (
-              <div key={membro.id} className="card card-equipe-membro mb-2">
-                <img className="card-img-top" src={semFoto} alt="foto membro" />
-                <p className="pt-1">{membro.nome}</p>
-              </div>
-            );
-          })}
+          {mapMembros()}
         </div>
       </div>
     </div>

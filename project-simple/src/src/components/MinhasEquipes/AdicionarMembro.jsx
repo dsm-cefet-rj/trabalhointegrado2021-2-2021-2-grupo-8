@@ -2,41 +2,50 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import semFoto from "../../assets/sem-foto-homem.jpg";
-
+import {
+  selectEquipeById,
+  updateEquipeServer,
+} from "../../storeConfig/equipesSlice";
+import { addMember, getEquipeAtiva } from "../../storeConfig/loggedUserSlice";
+import { selectAllUsuarios } from "../../storeConfig/usuariosSlice";
 
 function AdicionarMembro() {
   let busca = "";
 
   const dispatch = useDispatch();
-  const equipeAtiva = useSelector(state => state.equipeAtiva)
+  const equipeAtiva = useSelector(getEquipeAtiva);
+  const equipe = useSelector((state) =>
+    selectEquipeById(state, equipeAtiva.info.id)
+  );
+  const usuarios = useSelector(selectAllUsuarios);
   const navigate = useNavigate();
 
   const [resultado, setResultado] = useState([]);
 
   const handleBusca = () => {
-    /*const regex = new RegExp(busca, "i");
+    let membros = [...equipeAtiva.membros];
+    membros.push(equipeAtiva.gerente);
 
-    let parcial = userSheet.filter((user) => {
-      return regex.test(user.name) || regex.test(user.id) || regex.test(user.email);
-    });
+    const regex = new RegExp(busca, "i");
 
+    let parcial = usuarios
+      .filter((user) => {
+        return (
+          regex.test(user.nome) || regex.test(user.id) || regex.test(user.email)
+        );
+      })
+      .filter((u) => !membros.includes(u));
 
-    let members = [...equipeAtiva.membros];
-    members.push(equipeAtiva.gerente);
-
-    parcial.forEach((r, idx) => {
-      members.forEach((m) => {
-        if (r.id == m.id) {
-          parcial.splice(idx, 1);
-        }
-      });
-    });
-
-    setResultado(parcial);*/ console.log(equipeAtiva)
+    setResultado(parcial);
   };
 
   const handleAddMembro = (member) => {
-    console.log(member)
+    let equipeAtualizada = {
+      ...equipe,
+      membros: [...equipe.membros, member.id],
+    };
+    dispatch(updateEquipeServer(equipeAtualizada));
+    dispatch(addMember(member))
     navigate(-1);
   };
 
@@ -64,15 +73,16 @@ function AdicionarMembro() {
         </section>
 
         <section className="d-flex flex-wrap justify-content-evenly">
-          {resultado.slice(0,10).map((r) => {
+          {resultado.slice(0, 10).map((r) => {
             return (
               <div className="card card-membro" key={r.id}>
                 <img className="img-fluid" src={semFoto} alt="foto membro" />
 
-                <div className="col d-flex flex-column justify-content-evenly mt-2">
-                  <p className="">{r.id}</p>
-                  <p className="">{r.name}</p>
+                <div className="text-center pt-2">
+                  <p className="">ID: {r.id}</p>
+                  <p className="">{r.nome}</p>
                   <p className="">{r.email}</p>
+                  <p className="">{r.tel}</p>
                 </div>
                 <hr />
                 <div className="text-center">

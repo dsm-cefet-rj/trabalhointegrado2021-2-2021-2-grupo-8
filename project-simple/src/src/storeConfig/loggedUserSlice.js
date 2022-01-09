@@ -31,6 +31,15 @@ export const loggedUser = createSlice({
         };
       },
     },
+    addMember: (state, { payload }) => {
+      state.equipeAtiva.membros.push(payload);
+    },
+    removeMember: (state, { payload }) => {
+      state.equipeAtiva.membros.splice(
+        state.equipeAtiva.membros.indexOf(payload),
+        1
+      );
+    },
   },
 });
 
@@ -40,6 +49,6 @@ export const getEquipeAtiva = (state) => state.loggedUser.equipeAtiva;
 export const getIsGerente = (state) => state.loggedUser.equipeAtiva.isGerente;
 export const getIdUser = (state) => state.loggedUser.id;
 
-export const { setEquipeAtiva } = loggedUser.actions;
+export const { setEquipeAtiva, addMember, removeMember } = loggedUser.actions;
 
 export default loggedUser.reducer;

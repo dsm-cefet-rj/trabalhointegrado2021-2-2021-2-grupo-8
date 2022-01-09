@@ -9,7 +9,7 @@ import FormTarefa from "./components/Tarefa/FormTarefa";
 import NovoEvento from "./components/Eventos/NovoEvento";
 import Tarefa from "./components/Tarefa/Tarefa";
 import AtribuirTarefa from "./components/Tarefa/AtribuirTarefa";
-import NovaEquipe from "./components/MinhasEquipes/NovaEquipe";
+import FormEquipe from "./components/MinhasEquipes/FormEquipe";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchEquipes } from "./storeConfig/equipesSlice";
@@ -24,18 +24,18 @@ function App() {
   const equipes = useSelector((state) => state.equipes);
   const tarefas = useSelector((state) => state.tarefas);
   const eventos = useSelector(state => state.eventos);
+  
+  useEffect(() => {
+    if (usuarios.status === "idle") {
+      dispatch(fetchUsuarios());
+    }
+  }, [usuarios, dispatch]);
 
   useEffect(() => {
     if (equipes.status === "idle") {
       dispatch(fetchEquipes(idUser));
     }
   }, [equipes, dispatch]);
-
-  useEffect(() => {
-    if (usuarios.status === "idle") {
-      dispatch(fetchUsuarios());
-    }
-  }, [usuarios, dispatch]);
 
   useEffect(() => {
     if (tarefas.status === "idle") {
@@ -74,7 +74,7 @@ function App() {
           element={<AdicionarMembro />}
         />
 
-        <Route path="/novaEquipe" element={<NovaEquipe />} />
+        <Route path="/formEquipe" element={<FormEquipe />} />
       </Routes>
     </Router>
   );
