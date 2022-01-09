@@ -18,20 +18,10 @@ function FormTarefa() {
   const equipeAtiva = useSelector(getEquipeAtiva);
   const tarefasIds = useSelector(selectTarefaIds);
 
-  let novaTarefa = {
-    id: -1,
-    equipe: tarefa.equipe,
-    nome: tarefa.nome,
-    dataPrazo: tarefa.dataPrazo,
-    horaPrazo: tarefa.horaPrazo,
-    descricao: tarefa.descricao,
-    urgencia: tarefa.urgencia,
-    responsavel: tarefa.responsavel,
-  };
+  let novaTarefa = {...tarefa};
 
   const handleAddTarefa = (idUser) => {
     if (tarefa.id !== undefined) {
-      novaTarefa.id = tarefa.id;
       dispatch(updateTarefaServer(novaTarefa));
     } else {
       novaTarefa.id = tarefasIds.at(-1) + 1;
@@ -39,7 +29,6 @@ function FormTarefa() {
       novaTarefa.responsavel = 0;
       dispatch(addTarefaServer(novaTarefa));
     }
-    console.log(novaTarefa);
   };
 
   return (

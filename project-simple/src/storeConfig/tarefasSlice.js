@@ -99,6 +99,4 @@ export const {
   selectIds: selectTarefaIds,
 } = tarefasAdapter.getSelectors((state) => state.tarefas);
 
-export const { addTarefa, deleteTarefa } = tarefas.actions;
-
 export default tarefas.reducer;

@@ -16,7 +16,7 @@ function Home() {
         <h3 className="text-center my-4">
           {"Equipe " + equipeAtiva.info.nome}
         </h3>
-        <QuadroTarefas equipeAtiva={equipeAtiva} />
+        <QuadroTarefas />
         <MenuHome />
       </main>
     </div>

@@ -1,48 +1,102 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  createEntityAdapter,
+  isAnyOf,
+} from "@reduxjs/toolkit";
+import { baseUrl } from "../api/baseUrl";
+import { httpDelete, httpGet, httpPost, httpPut } from "../api/utils";
 
-export const fetchUsuarios = createAsyncThunk("usuarios/fetchUsuarios", async () => {
-  try {
-    let response = await fetch("http://localhost:5000/usuarios");
-    return await response.json();
-  } catch (error) {
-    return [];
-  }
+const usuariosAdapter = createEntityAdapter();
+
+const initialState = usuariosAdapter.getInitialState({
+  status: "idle",
+  error: null,
 });
+
+//async thunks
+
+export const fetchUsuarios = createAsyncThunk(
+  "usuarios/fetchUsuarios",
+  async () => {
+    return httpGet(baseUrl + "/usuarios");
+  }
+);
+
+export const deleteUsuarioServer = createAsyncThunk(
+  "usuarios/deleteUsuarioServer",
+  async (usuario) => {
+    await httpDelete(baseUrl + "/usuarios/" + usuario.id);
+    return usuario.id;
+  }
+);
+
+export const addUsuarioServer = createAsyncThunk(
+  "usuarios/addUsuarioServer",
+  async (usuario) => {
+    return httpPost(baseUrl + "/usuarios", usuario);
+  }
+);
+
+export const updateUsuarioServer = createAsyncThunk(
+  "usuarios/updateUsuarioServer",
+  async (usuario) => {
+    return httpPut(baseUrl + "/usuarios/" + usuario.id, usuario);
+  }
+);
 
 export const usuarios = createSlice({
   name: "usuarios",
-  initialState: {
-    data: [],
-    status: "idle",
-    error: null,
-  },
-  reducers: {
-    addUsuario: (state, { payload }) => {
-      console.log(payload);
-    },
-  },
+  initialState: initialState,
   extraReducers(builder) {
     builder
-      .addCase(fetchUsuarios.pending, (state) => {
-        state.status = "loading";
-      })
       .addCase(fetchUsuarios.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.data = action.payload;
+        usuariosAdapter.setAll(state, action.payload);
       })
-      .addCase(fetchUsuarios.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      });
+      .addCase(deleteUsuarioServer.fulfilled, (state, action) => {
+        state.status = "updated";
+        usuariosAdapter.removeOne(state, action.payload);
+      })
+      .addMatcher(
+        isAnyOf(updateUsuarioServer.fulfilled, addUsuarioServer.fulfilled),
+        (state, action) => {
+          state.status = "updated";
+          usuariosAdapter.upsertOne(state, action.payload);
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchUsuarios.pending,
+          updateUsuarioServer.pending,
+          addUsuarioServer.pending,
+          deleteUsuarioServer.pending
+        ),
+        (state) => {
+          state.status = "loading";
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchUsuarios.rejected,
+          updateUsuarioServer.rejected,
+          addUsuarioServer.rejected,
+          deleteUsuarioServer.rejected
+        ),
+        (state, action) => {
+          state.status = "failed";
+          state.error = action.error.message;
+        }
+      );
   },
 });
 
 //selectors
 
-export const selectMembros = (state, idTeam) => {
-  console.log(state, idTeam)
-}
-
-export const { addUsuario } = usuarios.actions;
+export const {
+  selectAll: selectAllUsuarios,
+  selectById: selectUsuarioById,
+  selectIds: selectUsuarioIds,
+} = usuariosAdapter.getSelectors((state) => state.usuarios);
 
 export default usuarios.reducer;

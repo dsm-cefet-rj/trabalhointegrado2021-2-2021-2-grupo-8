@@ -2,38 +2,44 @@ import { React } from "react";
 import { Link } from "react-router-dom";
 import CardMinhaEquipe from "./CardMinhaEquipe";
 import { useSelector } from "react-redux";
-import { selectMinhasEquipes } from "../../storeConfig/equipesSlice";
+import { selectAllEquipes } from "../../storeConfig/equipesSlice";
+import { selectAllUsuarios } from "../../storeConfig/usuariosSlice";
 
 function MinhasEquipes() {
-  const usuarios = useSelector((state) => state.usuarios);
-  const equipes = useSelector((state) => state.equipes);
+  const usuarios = useSelector(selectAllUsuarios);
+  const equipes = useSelector(selectAllEquipes);
   const idUser = useSelector((state) => state.loggedUser.id);
-  const minhasEquipes = useSelector(selectMinhasEquipes(idUser));
 
-  const mapEquipe = (equipe) => {
-    const gerente = usuarios.data.find((user) => user.id === equipe.gerente);
+  const mapEquipes = (mode) => {
+    let arrayEquipes = [];
+    if (mode === "gerenciadas") {
+      arrayEquipes = equipes.filter((e) => e.gerente === idUser);
+    } else if (mode === "outras") {
+      arrayEquipes = equipes.filter((e) => e.membros.includes(idUser));
+    }
 
-    let membros = [];
-
-    equipe.membros.forEach((m) =>
-      membros.push(usuarios.data.find((u) => u.id === m))
-    );
-
-    if (equipes.status !== "succeeded" || usuarios.status !== "succeeded") {
-      return (
-        <h3 key={equipe.id} className="text-center">
-          Loading
-        </h3>
-      );
+    if (equipes.status === "loading" || usuarios.status === "loading") {
+      return <h3 className="text-center">Carregando cards...</h3>;
+    } else if (equipes.status === "failed" || usuarios.status === "failed") {
+      return <h3 className="text-center">Falha ao carregar equipes.</h3>;
     } else {
-      return (
-        <CardMinhaEquipe
-          key={equipe.id}
-          equipe={equipe}
-          gerente={gerente}
-          membros={membros}
-        />
-      );
+      return arrayEquipes.map((e) => {
+        const gerente = usuarios.find((user) => user.id === e.gerente);
+        let membros = [];
+        if (e.membros.length > 0) {
+          e.membros.forEach((m) => {
+            membros.push(usuarios.find((u) => u.id === m));
+          });
+        }
+        return (
+          <CardMinhaEquipe
+            key={e.id}
+            equipe={e}
+            gerente={gerente}
+            membros={membros}
+          />
+        );
+      });
     }
   };
 
@@ -47,16 +53,16 @@ function MinhasEquipes() {
         <section className="lista-equipes d-flex flex-column">
           <h3 className="text-center my-3">Equipes que você gerencia</h3>
           <section className="menu">
-            <Link to={"/novaEquipe"}>
+            <Link to={"/formEquipe"} state={{ equipe: {} }}>
               <span className="btn btn-primary">Criar Nova Equipe</span>
             </Link>
           </section>
-          {minhasEquipes.gerenciadas.map(mapEquipe)}
+          {mapEquipes("gerenciadas")}
         </section>
         <hr />
         <section className="lista-equipes d-flex flex-column mt-5">
           <h3 className="text-center my-3">Outras Equipes</h3>
-          {minhasEquipes.outras.map(mapEquipe)}
+          {mapEquipes("outras")}
         </section>
       </main>
     </div>

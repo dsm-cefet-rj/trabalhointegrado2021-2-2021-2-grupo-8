@@ -1,32 +1,62 @@
 import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import semFoto from "../../assets/sem-foto-homem.jpg";
+import {
+  deleteEquipeServer,
+  selectEquipeById,
+  updateEquipeServer,
+} from "../../storeConfig/equipesSlice";
+import {
+  getEquipeAtiva,
+  removeMember,
+} from "../../storeConfig/loggedUserSlice";
+import {
+  deleteTarefaServer,
+  selectAllTarefas,
+  updateTarefaServer,
+} from "../../storeConfig/tarefasSlice";
 
 function GerenciarEquipe() {
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const equipeAtiva = useSelector((state) => state.equipeAtiva);
+  const equipeAtiva = useSelector(getEquipeAtiva);
+  const tarefas = useSelector(selectAllTarefas);
+  const equipe = useSelector((state) =>
+    selectEquipeById(state, equipeAtiva.info.id)
+  );
+
+  const [tarefasEquipe, setTarefasEquipe] = useState([]);
+
+  useEffect(() => {
+    setTarefasEquipe(tarefas.filter((t) => t.equipe === equipeAtiva.info.id));
+  }, [tarefas]);
 
   const handleExcluirMembro = (m) => {
-    console.log(m)
-    //let tasks = [...equipeAtiva.tarefas];
-    //tasks.forEach(t => {
-    //  if (t.idResponsavel === m.id){
-    //    dispatch(excluirTarefa(t));
-    //    let task = {...t}
-    //    task.idResponsavel=0;
-    //    dispatch(addTarefa(task));
-    //  }
-    //});
+    tarefasEquipe.forEach((t) => {
+      if (t.responsavel === m.id) {
+        let novaTarefa = { ...t, responsavel: 0 };
+        dispatch(updateTarefaServer(novaTarefa));
+      }
+    });
 
-    //dispatch(excluirMembro(m));
+    let equipeAtualizada = {
+      ...equipe,
+      membros: equipe.membros.filter((id) => id !== m.id),
+    };
+
+    dispatch(updateEquipeServer(equipeAtualizada));
+    dispatch(removeMember(m.id));
   };
 
   const handleExcluirEquipe = () => {
-    console.log(equipeAtiva)
-  }
+    tarefasEquipe.forEach((t) => {
+      dispatch(deleteTarefaServer(t));
+    });
+    dispatch(deleteEquipeServer(equipeAtiva.info.id));
+  };
 
   return (
     <div className="corpo">
@@ -42,11 +72,11 @@ function GerenciarEquipe() {
               <div className="card card-membro" key={m.id}>
                 <img className="img-fluid" src={semFoto} alt="foto membro" />
 
-                <div className="col d-flex flex-column justify-content-evenly">
-                  <p className="">{m.id}</p>
-                  <p className="">{m.name}</p>
+                <div className="text-center pt-2">
+                  <p className="">ID: {m.id}</p>
+                  <p className="">{m.nome}</p>
                   <p className="">{m.email}</p>
-                  <p className="">{m.phone}</p>
+                  <p className="">{m.tel}</p>
                 </div>
                 <hr />
                 <div className="text-center">
@@ -71,9 +101,16 @@ function GerenciarEquipe() {
             </button>
           </Link>
           <Link to={"/"}>
-            <button type="button" className="btn btn-danger" onClick={handleExcluirEquipe}>
-              Excluir Equipe
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={handleExcluirEquipe}
+            >
+              Excluir equipe
             </button>
+          </Link>
+          <Link to={"/formEquipe"} state={{ equipe: equipe }}>
+            <span className="btn btn-primary">Editar equipe</span>
           </Link>
           <button
             type="button"

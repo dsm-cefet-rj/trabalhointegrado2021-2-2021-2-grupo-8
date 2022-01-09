@@ -696,7 +696,7 @@
       "horaPrazo": "16:09",
       "descricao": "non do cillum amet aute aute aliquip Lorem dolor ullamco adipisicing ut sit minim pariatur sint commodo aute quis qui deserunt culpa ut",
       "urgencia": "media",
-      "responsavel": 0
+      "responsavel": 36
     },
     {
       "id": 21,
@@ -904,9 +904,9 @@
       "nome": "ea nisi cupidatat esse",
       "dataPrazo": "2023-07-31",
       "horaPrazo": "10:35",
-      "descricao": "cillum consequat officia anim laborum commodo commodo consectetur proident aliquip cupidatat exercitation pariatur qui aliquip culpa incididunt fugiat exercitation culpa laboris culpa tempor dolor non commodo adipisicing ut",
+      "descricao": "cillum consequat officia anim laborum commodo commodo consectetur proident aliquip cupidatat exercitation pariatur qui novo texto",
       "urgencia": "baixa",
-      "responsavel": 0
+      "responsavel": 36
     },
     {
       "id": 42,
@@ -1446,7 +1446,7 @@
       "horaPrazo": "16:52",
       "descricao": "laborum voluptate enim velit fugiat esse ut id reprehenderit aute non exercitation ullamco laboris aliquip proident dolore",
       "urgencia": "alta",
-      "responsavel": 0
+      "responsavel": 24
     },
     {
       "id": 98,
@@ -1476,7 +1476,7 @@
       "horaPrazo": "21:45",
       "descricao": "gfuhktgfyikt novo texto3 ",
       "urgencia": "media",
-      "responsavel": 0
+      "responsavel": 16
     },
     {
       "equipe": 0,
@@ -1494,6 +1494,16 @@
       "dataPrazo": "2022-01-05",
       "horaPrazo": "00:19",
       "descricao": "fyujfyuj",
+      "urgencia": "alta",
+      "responsavel": 0
+    },
+    {
+      "id": 103,
+      "equipe": 9,
+      "nome": "nova tarefa",
+      "dataPrazo": "2022-01-12",
+      "horaPrazo": "00:14",
+      "descricao": "texto nova tarefa mais isso aqui que euesqeuic",
       "urgencia": "alta",
       "responsavel": 0
     }
