@@ -1,40 +1,39 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { getEquipeAtiva } from "../../storeConfig/loggedUserSlice";
+import { 
+  addEventoServer,
+  selectEventoIds,
+  updateEventoServer
+ } from "../../storeConfig/eventosSlice";
 
 
-function NovoEvento() {
+function FormEvento() {
 
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const { evento } = location.state;
+
+
   const dispatch = useDispatch();
-  const equipeAtiva = useSelector(state => state.equipeAtiva)
+  const equipeAtiva = useSelector(getEquipeAtiva);
+  const eventosIds = useSelector(selectEventoIds);
 
-  let newEvent = {
-      name: "",
-      idEvent: "",
-      idTeam:"",
-      dataInicio:"",
-      horaInicio:"",
-      dataFim:"",
-      horaFim:"",
-      descricao: "",
-      importancia:"",
-      tipo:"",
-    }
-
+  let novoEvento = {...evento}
 
   const handleAddEvento = () => {
-    newEvent.idTeam = equipeAtiva.info.id
-    newEvent.idEvent = equipeAtiva.eventos.at(-1).idEvent + 1;
-
-    console.log(newEvent)
+    novoEvento.equipe = equipeAtiva.info.id
+    novoEvento.id = eventosIds.at(-1) + 1;
+    console.log(novoEvento);
     navigate(-1)
   }
 
   return (
     <div className="corpo">
       <header className="cabecalho">
-        <h1 className="app-name">Project Simple</h1>
+        <h1 className="app-nome">Project Simple</h1>
       </header>
 
       <main className="container">
@@ -48,7 +47,7 @@ function NovoEvento() {
                 className="input-novo w-50"
                 placeholder="Digite o nome do evento"
                 onChange={(e) => {
-                  newEvent.name = e.target.value;
+                  novoEvento.nome = e.target.value;
                 }}
               />
             </label>
@@ -58,17 +57,17 @@ function NovoEvento() {
               <input
                 className="input-novo"
                 type="date"
-                name="inicio-evento"
+                nome="inicio-evento"
                 onChange={(e)=>{
-                  newEvent.dataInicio = e.target.value;
+                  novoEvento.dataInicio = e.target.value;
                 }}
               />
               <input
                 className="input-novo"
                 type="time"
-                name="inicio-evento"
+                nome="inicio-evento"
                 onChange={(e)=>{
-                  newEvent.horaInicio = e.target.value;
+                  novoEvento.horaInicio = e.target.value;
                 }}
               />
             </label>
@@ -78,37 +77,26 @@ function NovoEvento() {
               <input
                 className="input-novo"
                 type="date"
-                name="fim-evento"
+                nome="fim-evento"
                 onChange={(e)=>{
-                  newEvent.dataFim = e.target.value;
+                  novoEvento.dataFim = e.target.value;
                 }}
               />
               <input
                 className="input-novo"
                 type="time"
-                name="fim-evento"
+                nome="fim-evento"
                 onChange={(e)=>{
-                  newEvent.horaFim = e.target.value;
+                  novoEvento.horaFim = e.target.value;
                 }}
               />
             </label>
 
-            <label className="mb-4">
-              Importância:
-              <select className="input-novo" name="importancia" id="importancia" onChange={(e)=>{
-                  newEvent.importancia = e.target.value;
-                }}>
-                <option value="#"></option>
-                <option value="Alta">Alta</option>
-                <option value="Média">Media</option>
-                <option value="Baixa">Baixa</option>
-              </select>
-          </label>
           
           <label className="mb-4">
               Tipo:
-              <select className="input-novo" name="tipo" id="tipo" onChange={(e)=>{
-                  newEvent.tipo = e.target.value;
+              <select className="input-novo" nome="tipo" id="tipo" onChange={(e)=>{
+                  novoEvento.tipo = e.target.value;
                 }}>
                 <option value="#"></option>
                 <option value="reuniao">Reunião</option>
@@ -122,10 +110,10 @@ function NovoEvento() {
               Descrição:
               <textarea
                 className="input-descricao"
-                name="descricao"
+                nome="descricao"
                 placeholder="Digite a descrição do evento"
                 onChange={(e)=>{
-                  newEvent.descricao = e.target.value;
+                  novoEvento.descricao = e.target.value;
                   
                 }}
               ></textarea>
@@ -133,7 +121,7 @@ function NovoEvento() {
         </section>
 
         <section className="menu">
-        <Link to={"/" + equipeAtiva.info.id + "/eventos/novoEvento"}>
+        <Link to={"/" + equipeAtiva.info.id + "/eventos/formEvento"}>
             <button
               type="button"
               className="btn btn-success"
@@ -157,4 +145,4 @@ function NovoEvento() {
   );
 }
 
-export default NovoEvento;
+export default FormEvento;

@@ -589,16 +589,6 @@
       "responsavel": 0
     },
     {
-      "id": 9,
-      "equipe": 0,
-      "nome": "incididunt fugiat dolor",
-      "dataPrazo": "2023-09-13",
-      "horaPrazo": "12:17",
-      "descricao": "quis esse sit velit ea ea nulla quis exercitation voluptate dolor reprehenderit excepteur eiusmod nostrud ex aute aliqua pariatur consectetur labore tempor labore",
-      "urgencia": "baixa",
-      "responsavel": 0
-    },
-    {
       "id": 10,
       "equipe": 3,
       "nome": "sint ex cillum",
@@ -1774,28 +1764,6 @@
       "tipo": "outros"
     },
     {
-      "id": 24,
-      "equipe": 0,
-      "nome": "non eiusmod",
-      "dataInicio": "2021-11-29",
-      "horaInicio": "17:18",
-      "dataFim": "2021-05-25",
-      "horaFim": "07:19",
-      "descricao": "qui enim sunt sunt fugiat est tempor quis eiusmod et irure dolor eiusmod dolore cillum pariatur velit quis eiusmod",
-      "tipo": "reuniao"
-    },
-    {
-      "id": 25,
-      "equipe": 9,
-      "nome": "voluptate consectetur",
-      "dataInicio": "2021-05-03",
-      "horaInicio": "13:57",
-      "dataFim": "2021-04-10",
-      "horaFim": "23:10",
-      "descricao": "ut dolor Lorem labore Lorem ullamco consequat mollit velit occaecat tempor proident amet culpa fugiat amet proident",
-      "tipo": "outros"
-    },
-    {
       "id": 26,
       "equipe": 8,
       "nome": "ea est ea nisi",
@@ -1981,17 +1949,6 @@
       "horaFim": "08:24",
       "descricao": "consequat ea reprehenderit fugiat nostrud elit consectetur nulla est sunt ipsum consequat",
       "tipo": "aniversario"
-    },
-    {
-      "id": 43,
-      "equipe": 9,
-      "nome": "ullamco duis",
-      "dataInicio": "2021-02-10",
-      "horaInicio": "09:19",
-      "dataFim": "2021-05-04",
-      "horaFim": "00:14",
-      "descricao": "nostrud incididunt veniam ullamco nulla ut amet consequat deserunt minim",
-      "tipo": "reuniao"
     },
     {
       "id": 44,
@@ -2212,17 +2169,6 @@
       "horaFim": "04:08",
       "descricao": "anim amet Lorem aute consectetur velit esse sunt sunt esse dolore ullamco qui consequat in",
       "tipo": "reuniao"
-    },
-    {
-      "id": 64,
-      "equipe": 9,
-      "nome": "deserunt aute non",
-      "dataInicio": "2021-06-07",
-      "horaInicio": "13:03",
-      "dataFim": "2021-07-03",
-      "horaFim": "23:25",
-      "descricao": "aliquip nisi aliqua duis irure esse id in ex aute esse ipsum duis sit",
-      "tipo": "aniversario"
     },
     {
       "id": 65,

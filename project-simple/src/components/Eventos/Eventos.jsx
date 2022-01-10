@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
-import { fetchEventos, selectEventosByTeam } from "../../storeConfig/eventosSlice";
+import { useNavigate, Link, useLocation } from "react-router-dom";
+import { deleteEventoServer, fetchEventos, selectAllEventos} from "../../storeConfig/eventosSlice";
 import {
   getEquipeAtiva,
   getIsGerente,
@@ -9,18 +9,21 @@ import {
 
 function Eventos() {
   const navigate = useNavigate();
+
   const equipeAtiva = useSelector(getEquipeAtiva);
   const isGerente = useSelector(getIsGerente);
-  const eventos = useSelector(selectEventosByTeam(equipeAtiva));
+  const eventos = useSelector(selectAllEventos);
 
   const [display, setDisplay] = useState("");
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     isGerente ? setDisplay("") : setDisplay("hide");
   }, [isGerente]);
 
   const handleExcluirEvento = (e) => {
-    console.log(e);
+    dispatch(deleteEventoServer(e));
   };
   return (
     <div className="corpo">
@@ -31,7 +34,7 @@ function Eventos() {
       <main className="container">
         <h3 className="text-center my-3">Próximos Eventos</h3>
         <section className="d-flex flex-wrap justify-content-evenly">
-          {eventos.map((e) => {
+          {eventos.filter(e => e.equipe === equipeAtiva.info.id).map((e) => {
             return (
               <div className="card card-evento mb-3" key={e.id}>
                 <div className={`card-header ${e.tipo}`}>{e.nome}</div>
@@ -55,6 +58,8 @@ function Eventos() {
                   >
                     Excluir Evento
                   </span>
+
+
                 </section>
               </div>
             );
@@ -64,7 +69,8 @@ function Eventos() {
         <section className="menu">
           <Link
             className={`${display}`}
-            to={"/" + equipeAtiva.info.id + "/eventos/novoEvento"}
+            to={"/" + equipeAtiva.info.id + "/eventos/formEvento"}
+            state = {{evento:{}}}
           >
             <button type="button" className="btn btn-primary">
               Criar Evento

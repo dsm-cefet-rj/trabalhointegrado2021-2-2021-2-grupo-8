@@ -1,53 +1,102 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  createEntityAdapter,
+  isAnyOf,
+} from "@reduxjs/toolkit";
+import { baseUrl } from "../api/baseUrl";
+import { httpDelete, httpGet, httpPost, httpPut } from "../api/utils";
+
+const eventosAdapter = createEntityAdapter();
+
+const initialState = eventosAdapter.getInitialState({
+  status: "idle",
+  error: null,
+});
+
+//async thunks
 
 export const fetchEventos = createAsyncThunk(
   "eventos/fetchEventos",
-  async (equipe) => {
-    try {
-      let response = await fetch("http://localhost:5000/eventos");
-      return await response.json();
-    } catch (error) {
-      return [];
-    }
+  async () => {
+    return httpGet(baseUrl + "/eventos");
+  }
+);
+
+export const deleteEventoServer = createAsyncThunk(
+  "eventos/deleteEventoServer",
+  async (evento) => {
+    await httpDelete(baseUrl + "/eventos/" + evento.id);
+    return evento.id;
+  }
+);
+
+export const addEventoServer = createAsyncThunk(
+  "eventos/addEventoServer",
+  async (evento) => {
+    return httpPost(baseUrl + "/eventos", evento);
+  }
+);
+
+export const updateEventoServer = createAsyncThunk(
+  "eventos/updateEventoServer",
+  async (evento) => {
+    return httpPut(baseUrl + "/eventos/" + evento.id, evento);
   }
 );
 
 export const eventos = createSlice({
   name: "eventos",
-  initialState: {
-    data: [],
-    status: "idle",
-    error: null,
-  },
-  reducers: {
-    addEvento: (state, { payload }) => {
-      console.log(payload);
-    },
-    deleteEvento: (state, { payload }) => {
-      console.log(payload);
-    },
-  },
-
+  initialState: initialState,
   extraReducers(builder) {
     builder
-      .addCase(fetchEventos.pending, (state) => {
-        state.status = "loading";
-      })
       .addCase(fetchEventos.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.data = action.payload;
+        eventosAdapter.setAll(state, action.payload);
       })
-      .addCase(fetchEventos.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      });
+      .addCase(deleteEventoServer.fulfilled, (state, action) => {
+        state.status = "updated";
+        eventosAdapter.removeOne(state, action.payload);
+      })
+      .addMatcher(
+        isAnyOf(updateEventoServer.fulfilled, addEventoServer.fulfilled),
+        (state, action) => {
+          state.status = "updated";
+          eventosAdapter.upsertOne(state, action.payload);
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchEventos.pending,
+          updateEventoServer.pending,
+          addEventoServer.pending,
+          deleteEventoServer.pending
+        ),
+        (state) => {
+          state.status = "loading";
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchEventos.rejected,
+          updateEventoServer.rejected,
+          addEventoServer.rejected,
+          deleteEventoServer.rejected
+        ),
+        (state, action) => {
+          state.status = "failed";
+          state.error = action.error.message;
+        }
+      );
   },
 });
 
-export const selectEventosByTeam = (equipe) => (state) => {
-  return state.eventos.data.filter(e=>equipe.info.id === e.equipe)
-}
+//selectors
 
-export const { addEvento, deleteEvento } = eventos.actions;
+export const {
+  selectAll: selectAllEventos,
+  selectById: selectEventoById,
+  selectIds: selectEventoIds,
+} = eventosAdapter.getSelectors((state) => state.eventos);
 
 export default eventos.reducer;
