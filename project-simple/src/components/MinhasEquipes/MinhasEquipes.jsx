@@ -8,38 +8,49 @@ import { selectAllUsuarios } from "../../storeConfig/usuariosSlice";
 function MinhasEquipes() {
   const usuarios = useSelector(selectAllUsuarios);
   const equipes = useSelector(selectAllEquipes);
+  const statusEquipes = useSelector((state) => state.equipes.status);
+  const statusUsuarios = useSelector((state) => state.usuarios.status);
   const idUser = useSelector((state) => state.loggedUser.id);
 
   const mapEquipes = (mode) => {
-    let arrayEquipes = [];
-    if (mode === "gerenciadas") {
-      arrayEquipes = equipes.filter((e) => e.gerente === idUser);
-    } else if (mode === "outras") {
-      arrayEquipes = equipes.filter((e) => e.membros.includes(idUser));
-    }
+    if (
+      (statusEquipes === "succeeded" || statusEquipes === "updated") &&
+      (statusUsuarios === "succeeded" || statusUsuarios === "updated")
+    ) {
+      let arrayEquipes = [];
+      if (mode === "gerenciadas") {
+        arrayEquipes = equipes.filter((e) => e.gerente === idUser);
+      } else if (mode === "outras") {
+        arrayEquipes = equipes.filter((e) => e.membros.includes(idUser));
+      }
 
-    if (equipes.status === "loading" || usuarios.status === "loading") {
-      return <h3 className="text-center">Carregando cards...</h3>;
-    } else if (equipes.status === "failed" || usuarios.status === "failed") {
-      return <h3 className="text-center">Falha ao carregar equipes.</h3>;
-    } else {
-      return arrayEquipes.map((e) => {
-        const gerente = usuarios.find((user) => user.id === e.gerente);
-        let membros = [];
-        if (e.membros.length > 0) {
-          e.membros.forEach((m) => {
-            membros.push(usuarios.find((u) => u.id === m));
-          });
-        }
+      if (arrayEquipes.length > 0) {
+        return arrayEquipes.map((e) => {
+          const gerente = usuarios.find((user) => user.id === e.gerente);
+          let membros = [];
+          if (e.membros.length > 0) {
+            e.membros.forEach((m) => {
+              membros.push(usuarios.find((u) => u.id === m));
+            });
+          }
+          return (
+            <CardMinhaEquipe
+              key={e.id}
+              equipe={e}
+              gerente={gerente}
+              membros={membros}
+            />
+          );
+        });
+      } else {
         return (
-          <CardMinhaEquipe
-            key={e.id}
-            equipe={e}
-            gerente={gerente}
-            membros={membros}
-          />
+          <div className="text-center p-6">Nenhuma equipe a ser exibida</div>
         );
-      });
+      }
+    } else if (statusEquipes === "loading" || statusUsuarios === "loading") {
+      return <div className="text-center p-6">Carregando equipes</div>;
+    } else {
+      return <div className="text-center p-6">Erro ao carregar equipes</div>;
     }
   };
 

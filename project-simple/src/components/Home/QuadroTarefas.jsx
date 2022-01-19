@@ -42,7 +42,7 @@ function QuadroTarefas() {
       }
     } else if (statusTarefas === "loading") {
       return <div className="p-6">Carregando Tarefas</div>;
-    } else if (statusTarefas === "failed") {
+    } else {
       return <div className="p-6">Erro ao carregar tarefas</div>;
     }
   };

@@ -10,6 +10,10 @@ import {
   updateEquipeServer,
 } from "../../storeConfig/equipesSlice";
 import {
+  deleteEventoServer,
+  selectAllEventos,
+} from "../../storeConfig/eventosSlice";
+import {
   getEquipeAtiva,
   removeMember,
 } from "../../storeConfig/loggedUserSlice";
@@ -24,23 +28,20 @@ function GerenciarEquipe() {
   const dispatch = useDispatch();
   const equipeAtiva = useSelector(getEquipeAtiva);
   const tarefas = useSelector(selectAllTarefas);
+  const eventos = useSelector(selectAllEventos);
   const equipe = useSelector((state) =>
     selectEquipeById(state, equipeAtiva.info.id)
   );
 
-  const [tarefasEquipe, setTarefasEquipe] = useState([]);
-
-  useEffect(() => {
-    setTarefasEquipe(tarefas.filter((t) => t.equipe === equipeAtiva.info.id));
-  }, [tarefas]);
-
   const handleExcluirMembro = (m) => {
-    tarefasEquipe.forEach((t) => {
-      if (t.responsavel === m.id) {
-        let novaTarefa = { ...t, responsavel: 0 };
-        dispatch(updateTarefaServer(novaTarefa));
-      }
-    });
+    tarefas
+      .filter((t) => t.equipe === equipeAtiva.info.id)
+      .map((t) => {
+        if (t.responsavel === m.id) {
+          let novaTarefa = { ...t, responsavel: 0 };
+          dispatch(updateTarefaServer(novaTarefa));
+        }
+      });
 
     let equipeAtualizada = {
       ...equipe,
@@ -52,9 +53,16 @@ function GerenciarEquipe() {
   };
 
   const handleExcluirEquipe = () => {
-    tarefasEquipe.forEach((t) => {
-      dispatch(deleteTarefaServer(t));
-    });
+    tarefas
+      .filter((t) => t.equipe === equipeAtiva.info.id)
+      .map((t) => {
+        dispatch(deleteTarefaServer(t));
+      });
+    eventos
+      .filter((e) => e.equipe === equipeAtiva.info.id)
+      .map((e) => {
+        dispatch(deleteEventoServer(e));
+      });
     dispatch(deleteEquipeServer(equipeAtiva.info.id));
   };
 
