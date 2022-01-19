@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   getEquipeAtiva,
   getIdUser,
@@ -19,7 +19,7 @@ function QuadroTarefas() {
 
   useEffect(() => {
     isGerente ? setDisplay("") : setDisplay("hide");
-  }, [statusTarefas, allTarefas, equipeAtiva]);
+  }, [isGerente]);
 
   const quadro = (mode) => {
     if (statusTarefas === "succeeded" || statusTarefas === "updated") {
@@ -28,10 +28,13 @@ function QuadroTarefas() {
         .filter((t) => {
           if (mode === "disponiveis") {
             return t.responsavel === 0;
-          } else if (mode == "minhas") {
+          } else if (mode === "minhas") {
             return t.responsavel === idUser;
           } else if (mode === "andamento") {
             return t.responsavel !== 0 && t.responsavel !== idUser;
+          } else {
+            console.log("Erro ao carregar tarefas")
+            return -1;
           }
         });
 

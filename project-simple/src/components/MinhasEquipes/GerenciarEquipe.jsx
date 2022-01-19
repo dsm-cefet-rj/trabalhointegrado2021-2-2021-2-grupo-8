@@ -1,6 +1,4 @@
 import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import semFoto from "../../assets/sem-foto-homem.jpg";
@@ -36,7 +34,7 @@ function GerenciarEquipe() {
   const handleExcluirMembro = (m) => {
     tarefas
       .filter((t) => t.equipe === equipeAtiva.info.id)
-      .map((t) => {
+      .forEach((t) => {
         if (t.responsavel === m.id) {
           let novaTarefa = { ...t, responsavel: 0 };
           dispatch(updateTarefaServer(novaTarefa));
@@ -55,12 +53,12 @@ function GerenciarEquipe() {
   const handleExcluirEquipe = () => {
     tarefas
       .filter((t) => t.equipe === equipeAtiva.info.id)
-      .map((t) => {
+      .forEach((t) => {
         dispatch(deleteTarefaServer(t));
       });
     eventos
       .filter((e) => e.equipe === equipeAtiva.info.id)
-      .map((e) => {
+      .forEach((e) => {
         dispatch(deleteEventoServer(e));
       });
     dispatch(deleteEquipeServer(equipeAtiva.info.id));

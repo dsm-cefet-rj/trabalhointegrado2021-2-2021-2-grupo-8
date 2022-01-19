@@ -23,18 +23,18 @@ function Tarefa() {
   useEffect(() => {
     const membros = [...equipeAtiva.membros];
     membros.push(equipeAtiva.gerente);
-    if (tarefa.responsavel != 0) {
-      setResponsavel(membros.find((m) => m.id == tarefa.responsavel));
+    if (tarefa.responsavel !== 0) {
+      setResponsavel(membros.find((m) => m.id === tarefa.responsavel));
       setDisplay("");
     }
 
     if (!isGerente) {
       setDisplay("hide");
     }
-  }, [equipeAtiva, tarefa]);
+  }, [equipeAtiva, tarefa, isGerente]);
 
   const Responsavel = () => {
-    if (tarefa.responsavel != 0) {
+    if (tarefa.responsavel !== 0) {
       return (
         <div className={`${display}`}>
           <div className="d-flex justify-content-center mt-2">

@@ -2431,6 +2431,17 @@
       "equipe": 0,
       "id": 86,
       "tipo": "reuniao"
+    },
+    {
+      "descricao": "sxthudxrthujsejk alguma coisa nova",
+      "horaFim": "20:28",
+      "dataFim": "2022-01-05",
+      "horaInicio": "20:28",
+      "dataInicio": "2022-01-14",
+      "nome": "novo evento",
+      "equipe": 0,
+      "id": 87,
+      "tipo": "deadline"
     }
   ]
 }

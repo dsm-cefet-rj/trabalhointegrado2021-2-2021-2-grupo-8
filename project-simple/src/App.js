@@ -35,7 +35,7 @@ function App() {
     if (equipes.status === "idle") {
       dispatch(fetchEquipes(idUser));
     }
-  }, [equipes, dispatch]);
+  }, [equipes, idUser, dispatch]);
 
   useEffect(() => {
     if (tarefas.status === "idle") {

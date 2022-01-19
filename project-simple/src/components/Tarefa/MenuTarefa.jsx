@@ -13,7 +13,7 @@ function MenuTarefa({ tarefa }) {
 
   useEffect(() => {
     idUser === tarefa.responsavel ? setMinha(1) : setMinha(0);
-  }, []);
+  }, [idUser, tarefa.responsavel]);
 
   const handleAceitarTarefa = () => {
     dispatch(updateTarefaServer({ ...tarefa, responsavel: idUser }));

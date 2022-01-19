@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getEquipeAtiva } from "../../storeConfig/loggedUserSlice";
 import {
   addEventoServer,
@@ -10,7 +10,6 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { eventoSchema } from "./EventoSchema";
-import { useState } from "react";
 
 function FormEvento() {
   const location = useLocation();
@@ -24,17 +23,6 @@ function FormEvento() {
   let [novoEvento] = useState(
     evento.id !== undefined ? evento : eventoSchema.cast({})
   );
-
-  const handleAddEvento = () => {
-    if (evento.id !== undefined) {
-      dispatch(updateEventoServer(novoEvento))
-    } else {
-      novoEvento.equipe = equipeAtiva.info.id;
-      novoEvento.id = eventosIds.at(-1) + 1;
-      dispatch(addEventoServer(novoEvento))
-    }
-    navigate(-1)
-  };
 
   const{
     register,
@@ -82,7 +70,7 @@ function FormEvento() {
                 defaultValue={evento.nome}
                 {...register("nome")}
               />
-              <span className="help-block">{errors.name?.message}</span>
+              <span className="help-block">{errors.nome?.message}</span>
             </label>
             <label className="mb-4">
               Início:

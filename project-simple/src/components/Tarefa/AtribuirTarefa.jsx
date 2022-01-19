@@ -21,7 +21,7 @@ function AtribuirTarefa() {
   let busca = "";
 
   useEffect(() => {
-    let members = [... equipeAtiva.membros]
+    let members = [...equipeAtiva.membros]
     members.push(equipeAtiva.gerente);
     setMembros(members);
     setResultado(members);
