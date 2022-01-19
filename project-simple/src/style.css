@@ -158,3 +158,12 @@
 .hide {
   display: none !important;
 }
+
+.help-block {
+  color: orangered;
+}
+
+.input-dataHora {
+  display: flex;
+  flex-direction: row;
+}

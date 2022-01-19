@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { addEquipeServer, selectEquipeIds, updateEquipeServer } from "../../storeConfig/equipesSlice";
-import { selectAllUsuarios } from "../../storeConfig/usuariosSlice";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  addEquipeServer,
+  selectEquipeIds,
+  updateEquipeServer,
+} from "../../storeConfig/equipesSlice";
+import { equipeSchema } from "./EquipeSchema";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 
 function FormEquipe() {
   const navigate = useNavigate();
@@ -13,18 +19,29 @@ function FormEquipe() {
   const equipesIds = useSelector(selectEquipeIds);
   const userId = useSelector((state) => state.loggedUser.id);
 
-  let novaEquipe = { ...equipe };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(equipeSchema),
+  });
 
-  const handleNovaEquipe = () => {
-    if (equipe.id === undefined) {
-      let data = new Date();
+  const [novaEquipe] = useState(
+    equipe.id !== undefined ? equipe : equipeSchema.cast({})
+  );
+
+  const onSubmit = (data) => {
+    novaEquipe.nome = data.nome;
+    novaEquipe.descricao = data.descricao;
+    if (novaEquipe.id === -1) {
       novaEquipe.id = equipesIds.at(-1) + 1;
       novaEquipe.gerente = userId;
-      novaEquipe.dataCriacao = data.getFullYear()+"-"+('0'+data.getMonth()+1).slice(-2)+"-"+("0" + data.getDate()).slice(-2);
-      novaEquipe.membros = [];
       dispatch(addEquipeServer(novaEquipe));
+      navigate(-1);
     } else {
       dispatch(updateEquipeServer(novaEquipe));
+      navigate(-3);
     }
   };
 
@@ -37,54 +54,55 @@ function FormEquipe() {
       <main className="container">
         <h3 className="text-center my-3">Nova Equipe</h3>
 
-        <section className="d-flex flex-column">
-          <label className="mb-4">
-            Nome da Equipe:
+        <form
+          className="form-horizontal mx-3"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className="form-group mb-3">
+            <label className="col-md-4 control-label" htmlFor="nome">
+              Nome da Equipe
+            </label>
+
             <input
+              id="nome"
+              name="nome"
               type="text"
-              className="input-novo w-50"
-              placeholder="Digite o nome da Equipe"
+              placeholder="Digite um nome para sua equipe"
+              className="form-control input-md"
               defaultValue={equipe.nome}
-              onChange={(e) => {
-                novaEquipe.nome = e.target.value;
-              }}
-            ></input>
-          </label>
-
-          <label>
-            Descrição:
-            <textarea
-              className="input-descricao"
-              name="descricao"
-              placeholder="Digite uma breve descrição sobre a equipe e seus objetivos"
-              defaultValue={equipe.descricao}
-              onChange={(e) => {
-                novaEquipe.descricao = e.target.value;
-              }}
+              {...register("nome")}
             />
-          </label>
-        </section>
+            <span className="help-block">{errors.nome?.message}</span>
+            <label className="col-md-4 control-label" htmlFor="descricao">
+              Descrição
+            </label>
+            <textarea
+              rows="6"
+              className="form-control"
+              id="descricao"
+              name="descricao"
+              placeholder="Digite uma descrição para sua equipe"
+              defaultValue={equipe.descricao}
+              {...register("descricao")}
+            />
+            <span className="help-block">{errors.descricao?.message}</span>
+          </div>
 
-        <section className="menu">
-          <Link to={"/"}>
-            <button
-              type="button"
-              className="btn btn-success"
-              onClick={handleNovaEquipe}
-            >
+          <section className="menu">
+            <button type="submit" className="btn btn-success">
               Enviar
             </button>
-          </Link>
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            Voltar
-          </button>
-        </section>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              Voltar
+            </button>
+          </section>
+        </form>
       </main>
     </div>
   );
