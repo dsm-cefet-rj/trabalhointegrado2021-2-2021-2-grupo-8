@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="css/reset.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <title>Novo Evento</title>
+</head>
+
+<body class="corpo">
+
+    <header class="cabecalho">
+        <h1 class="app-name">Project Simple</h1>
+    </header>
+
+    <main class="container">
+
+        <h3 class="text-center my-3">Novo Evento</h3>
+
+        <section class="d-flex flex-column">
+            <label class="mb-4">Nome do Evento:
+                <input type="text" class="input-novo w-50" placeholder="Digite o nome do evento"></input>
+            </label>
+
+            <label class="mb-4">Início:
+                <input class="input-novo" type="datetime-local" name="inicio-evento">
+            </label>
+
+            <label class="mb-4">Fim:
+                <input class="input-novo" type="datetime-local" name="inicio-evento">
+            </label>
+
+            <label class="mb-4">Importância:
+                <select class="input-novo" name="urgencia" id="urgencia">
+                    <option value="#"></option>
+                    <option value="alta">Alta</option>
+                    <option value="media">Media</option>
+                    <option value="baixa">Baixa</option>
+                </select>
+            </label>
+
+            <label>Descrição:
+                <textarea class="input-descricao" name="descricao"
+                    placeholder="Digite a descrição do evento"></textarea>
+            </label>
+        </section>
+
+        <section class="menu">
+
+            <button type="button" class="btn btn-success">
+                Criar Evento
+            </button>
+
+        </section>
+
+    </main>
+
+    <button class="back-button"><span style="font-size: 1.25rem;">&larr;</span> Go Back</button>
+
+</body>
+
+</html>

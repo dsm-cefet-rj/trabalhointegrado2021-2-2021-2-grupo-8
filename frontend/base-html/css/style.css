@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+.corpo {
+  max-width: 940px;
+  margin: 0 auto;
+  font-family: Poppins, Arial, Helvetica, sans-serif;
+}
+
+.cabecalho {
+  background-color: #0094FF;
+  padding: 10px;
+}
+
+.app-name {
+  text-align: center;
+  color: rgb(255, 255, 255);
+  margin: 0;
+}
+
+.nome-tabela {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  text-align: center;
+  padding: 5px;
+  border-style: solid;
+  border-width: 2px;
+  border-bottom: 0px;
+}
+
+.tabela-tarefas {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 5px;
+  border-style: solid;
+  border-width: 2px;
+}
+
+.tarefa-card {
+  min-height: 8em;
+  min-width: 8em;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(252, 252, 170);
+  box-shadow: 5px 5px 5px grey;
+  padding: 1%;
+  margin: 1%;
+  max-width: 30%;
+}
+
+.span-tarefa {
+  background-color: #dddddd;
+  border-radius: 5px;
+  text-align: center;
+  padding: 5px;
+}
+
+.descricao-tarefa {
+  min-height: 15em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu {
+    text-align: center;
+    margin: 20px auto;
+}
+
+.botao-menu {
+    border-radius: 4px;
+    padding: 10px 0px;
+    background-color: rgb(173, 173, 173);
+    color: rgb(236, 236, 236);
+    font-size: large;
+    margin: 20px 0;
+}
+
+.back-button{
+  border-style: none;
+  background-color: rgba(196, 196, 196, 0.31);
+  width: 8rem;
+  padding: 0.75rem;
+}
+
+.card-membro {
+  margin: 5px;
+  padding: 3px;
+  width: 45%;
+  text-align: center;
+}
+
+.input-descricao {
+  width: 100%;
+  min-height: 15em;
+  padding: 5px;
+  margin: 5px;
+}
+
+.card-evento {
+  min-width: 45%;
+  margin: 5px;
+  text-align: center;
+  min-height: 15em;
+}
+
+.input-novo{
+  text-align: center;
+  padding: 5px;
+  margin: 3px;
+}
+
+.btn {
+  min-width: 45%;
+  max-width: 80%;
+  margin: 5px;
+}
+
+.reuniao {
+  background-color: purple;
+  color: azure;
+}
+
+.deadline {
+  background-color: orangered;
+  color: azure;
+}
+
+.birthday {
+  background-color: green;
+  color: azure;
+}
+
+.lista-equipes {
+  border-radius: 10px;
+  padding-bottom: 20px;
+}
+
+.card-equipe {
+  width: 98%;
+  margin: 5px;
+  text-align: center;
+}
+
+.card-equipe-membro {
+  margin: 5px;
+  padding: 3px;
+  width: 22%;
+  text-align: center;
+}

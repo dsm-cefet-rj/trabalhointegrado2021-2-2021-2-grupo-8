@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="css/reset.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <title>Gerenciar Equipe</title>
+</head>
+
+<body class="corpo">
+
+    <header class="container cabecalho">
+        <h1 class="app-name">Project Simple</h1>
+    </header>
+
+    <main class="container">
+
+        <h3 class="text-center my-3">Gerencie sua equipe</h3>
+        <section class="d-flex flex-wrap justify-content-evenly">
+
+            <div class="card card-membro">
+                <img class="card-img-top" src="./assets/sem-foto-homem.jpg" alt="foto membro">
+                <div class="card-body">
+                    <h5 class="card-title">Nome: </h5>
+                    <p class="card-text">Cargo:</p>
+                    <p class="card-text">Data de ingresso:</p>
+                    <hr>
+                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#gerenciar1" role="button">
+                        Gerenciar
+                    </a>
+                    <div class="collapse" id="gerenciar1">
+                        <div class="mt-3">
+                            <p>
+                                <a href="#" class="btn btn-success w-100">Atribuir Tarefa</a>
+                                <a href="#" class="btn btn-danger w-100">Excluir Membro</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-membro">
+                <img class="card-img-top" src="./assets/sem-foto-homem.jpg" alt="foto membro">
+                <div class="card-body">
+                    <h5 class="card-title">Nome: </h5>
+                    <p class="card-text">Cargo:</p>
+                    <p class="card-text">Data de ingresso:</p>
+                    <hr>
+                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#gerenciar2" role="button">
+                        Gerenciar
+                    </a>
+                    <div class="collapse" id="gerenciar2">
+                        <div class="mt-3">
+                            <p>
+                                <a href="#" class="btn btn-success w-100">Atribuir Tarefa</a>
+                                <a href="#" class="btn btn-danger w-100">Excluir Membro</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="menu">
+            <button type="button" class="btn btn-secondary">
+                Adicionar membro
+            </button>
+        </section>
+    </main>
+
+    <button class="back-button my-3"><span style="font-size: 1.25rem;">&larr;</span> Go Back</button>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
