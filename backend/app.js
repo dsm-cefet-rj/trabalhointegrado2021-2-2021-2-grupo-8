@@ -4,6 +4,20 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var cors = require("cors");
 
+const mongoose = require("mongoose");
+
+const url = "mongodb://localhost:27017/projectsimple";
+const connect = mongoose.connect(url);
+
+connect.then(
+  (db) => {
+    console.log("Connected to MongoDB server");
+  },
+  (err) => {
+    console.log(err);
+  }
+);
+
 var indexRouter = require("./routes/index");
 var usuariosRouter = require("./routes/usuarios");
 var equipesRouter = require("./routes/equipes");

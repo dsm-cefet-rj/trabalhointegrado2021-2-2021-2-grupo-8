@@ -1,45 +1,64 @@
 var express = require("express");
 var router = express.Router();
-var data = require("./db.json");
+const bodyParser = require("body-parser");
+const Tarefas = require("../models/tarefas");
 
-let tarefas = data.tarefas;
+router.use(bodyParser.json());
 
 router
   .route("/")
-  .get((req, res, next) => {
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "application/json");
-    res.json(tarefas);
+  .get(async (req, res, next) => {
+    try {
+      const tarefas = await Tarefas.find({});
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "application/json");
+      res.json(tarefas);
+    } catch (err) {
+      next(err);
+    }
   })
-  .post((req, res, next) => {
-    tarefas.push(req.body);
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "application/json");
-    res.json(req.body);
+  .post(async (req, res, next) => {
+    try {
+      await Tarefas.create(req.body);
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "application/json");
+      res.json(req.body);
+    } catch (err) {
+      next(err);
+    }
   });
 
 router
   .route("/:id")
-  .delete((req, res, next) => {
-    tarefas = tarefas.splice(
-      tarefas.findIndex((u) => req.params.id == u.id),
-      1
-    );
-
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "application/json");
-    res.json(req.params.id);
+  .get(async (req, res, next) => {
+    try {
+      const tarefa = await Tarefas.find({ id: req.params.id });
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "application/json");
+      res.json(tarefa);
+    } catch (err) {
+      next(err);
+    }
   })
-  .put((req, res, next) => {
-    tarefas = tarefas.splice(
-      tarefas.findIndex((u) => req.params.id == u.id),
-      1,
-      req.body
-    );
-
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "application/json");
-    res.json(req.body);
+  .delete(async (req, res, next) => {
+    try {
+      await Tarefas.deleteOne({ id: req.params.id });
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "application/json");
+      res.json(req.params.id);
+    } catch (err) {
+      next(err);
+    }
+  })
+  .put(async(req, res, next) => {
+    try {
+      await Tarefas.replaceOne({ id: req.params.id }, req.body);
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "application/json");
+      res.json(req.body);
+    } catch (err) {
+      next(err);
+    }
   });
 
 module.exports = router;

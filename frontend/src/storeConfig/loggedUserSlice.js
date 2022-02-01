@@ -35,10 +35,12 @@ export const loggedUser = createSlice({
       state.equipeAtiva.membros.push(payload);
     },
     removeMember: (state, { payload }) => {
+      console.log(payload, state.equipeAtiva.membros);
       state.equipeAtiva.membros.splice(
-        state.equipeAtiva.membros.indexOf(payload),
+        state.equipeAtiva.membros.findIndex((m) => m.id === payload),
         1
       );
+      console.log(payload, state.equipeAtiva.membros);
     },
   },
 });
