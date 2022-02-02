@@ -28,6 +28,4 @@ const equipeSchema = new Schema({
   },
 });
 
-var Equipes = mongoose.model('Equipe', equipeSchema);
-
-module.exports = Equipes;
+module.exports = mongoose.model('Equipe', equipeSchema);

@@ -36,7 +36,4 @@ const tarefaSchema = new Schema({
   },
 });
 
-var Tarefas = mongoose.model("Tarefa", tarefaSchema);
-
-module.exports = Tarefas;
-
+module.exports = mongoose.model("Tarefa", tarefaSchema);
