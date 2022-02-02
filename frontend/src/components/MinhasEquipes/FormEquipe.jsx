@@ -35,7 +35,8 @@ function FormEquipe() {
     novaEquipe.nome = data.nome;
     novaEquipe.descricao = data.descricao;
     if (novaEquipe.id === -1) {
-      novaEquipe.id = equipesIds.at(-1) + 1;
+      console.log(equipesIds);
+      novaEquipe.id = equipesIds.length === 0 ? 0 : equipesIds.at(-1) + 1;
       novaEquipe.gerente = userId;
       dispatch(addEquipeServer(novaEquipe));
       navigate(-1);
