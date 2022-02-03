@@ -12,6 +12,8 @@ function MinhasEquipes() {
   const statusUsuarios = useSelector((state) => state.usuarios.status);
   const idUser = useSelector((state) => state.loggedUser.id);
 
+  console.log(idUser);
+
   const mapEquipes = (mode) => {
     if (
       (statusEquipes === "succeeded" || statusEquipes === "updated") &&
@@ -21,7 +23,10 @@ function MinhasEquipes() {
       if (mode === "gerenciadas") {
         arrayEquipes = equipes.filter((e) => e.gerente === idUser);
       } else if (mode === "outras") {
-        arrayEquipes = equipes.filter((e) => e.membros.includes(idUser));
+        arrayEquipes = equipes.filter((e) => {
+          console.log(e.membros);
+          return e.membros.includes(idUser);
+        });
       }
 
       if (arrayEquipes.length > 0) {

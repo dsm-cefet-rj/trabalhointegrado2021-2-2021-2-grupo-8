@@ -11,8 +11,6 @@
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "mongoose": "^6.1.8",
-    "morgan": "~1.9.1",
-    "node-fetch": "^2.6.1",
-    "normalize-mongoose": "^1.0.0"
+    "morgan": "~1.9.1"
   }
 }

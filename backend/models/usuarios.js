@@ -1,17 +1,14 @@
 const mongoose = require("mongoose");
+const normalize = require("./plugins/normalizeMongoose.js");
 const Schema = mongoose.Schema;
 
 const usuarioSchema = new Schema({
-  id: {
-    type: Number,
-    required: true,
-  },
   nome: {
     type: String,
     required: true,
   },
   tel: {
-    type: Number,
+    type: String,
     required: true,
   },
   email: {
@@ -19,5 +16,7 @@ const usuarioSchema = new Schema({
     required: true,
   },
 });
+
+usuarioSchema.plugin(normalize);
 
 module.exports = mongoose.model("Usuario", usuarioSchema);

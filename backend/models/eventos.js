@@ -1,13 +1,10 @@
 const mongoose = require("mongoose");
+const normalize = require("./plugins/normalizeMongoose.js");
 const Schema = mongoose.Schema;
 
 const eventoSchema = new Schema({
-  id: {
-    type: Number,
-    required: true,
-  },
   equipe: {
-    type: Number,
+    type: String,
     required: true,
   },
   nome: {
@@ -40,4 +37,6 @@ const eventoSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('Evento', eventoSchema);
+eventoSchema.plugin(normalize);
+
+module.exports = mongoose.model("Evento", eventoSchema);

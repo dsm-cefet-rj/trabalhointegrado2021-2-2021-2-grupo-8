@@ -1,13 +1,10 @@
 const mongoose = require("mongoose");
+const normalize = require("./plugins/normalizeMongoose.js");
 const Schema = mongoose.Schema;
 
 const tarefaSchema = new Schema({
-  id: {
-    type: Number,
-    required: true,
-  },
   equipe: {
-    type: Number,
+    type: String,
     required: true,
   },
   nome: {
@@ -31,9 +28,11 @@ const tarefaSchema = new Schema({
     required: true,
   },
   responsavel: {
-    type: Number,
+    type: String,
     required: true,
   },
 });
+
+tarefaSchema.plugin(normalize);
 
 module.exports = mongoose.model("Tarefa", tarefaSchema);
