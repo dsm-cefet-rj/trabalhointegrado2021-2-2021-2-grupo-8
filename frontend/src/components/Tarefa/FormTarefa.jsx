@@ -40,7 +40,6 @@ function FormTarefa() {
     novaTarefa.nome = data.nome;
     novaTarefa.urgencia = data.urgencia;
     if (novaTarefa.id === -1) {
-      novaTarefa.id = tarefasIds.length === 0 ? 0 : tarefasIds.at(-1) + 1;
       novaTarefa.equipe = equipeAtiva.info.id;
       novaTarefa.responsavel = 0; 
       dispatch(addTarefaServer(novaTarefa))
