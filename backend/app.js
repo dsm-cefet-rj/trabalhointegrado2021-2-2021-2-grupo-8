@@ -6,7 +6,7 @@ var cors = require("cors");
 
 const mongoose = require("mongoose");
 
-const url = "mongodb://localhost:27017/projectsimple";
+const url = "mongodb+srv://nickbs:UxroUVhWEHMUvhbI@cluster0.oznxp.mongodb.net/projectsimple?retryWrites=true&w=majority";
 const connect = mongoose.connect(url);
 
 connect.then(
