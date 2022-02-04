@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 export const loggedUser = createSlice({
   name: "loggedUser",
   initialState: {
-    id: "61fc311a671c0e928cfdc63f",
+    id: null,
+    error: null,
     equipeAtiva: {
       info: {},
       gerente: {},

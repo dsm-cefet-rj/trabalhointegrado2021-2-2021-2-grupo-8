@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import {
   deleteEventoServer,
+  fetchEventos,
   selectAllEventos,
 } from "../../storeConfig/eventosSlice";
 import {
@@ -19,6 +20,12 @@ function Eventos() {
   const statusEventos = useSelector((state) => state.eventos.status);
 
   const [display, setDisplay] = useState("");
+
+  useEffect(() => {
+    if (statusEventos === "idle" || statusEventos === "updated") {
+      dispatch(fetchEventos());
+    }
+  }, [statusEventos, dispatch]);
 
   useEffect(() => {
     isGerente ? setDisplay("") : setDisplay("hide");

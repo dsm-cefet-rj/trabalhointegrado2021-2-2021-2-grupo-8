@@ -29,7 +29,7 @@ function MenuHome() {
       >
         <span className="btn btn-primary">Gerenciar Equipe</span>
       </Link>
-      <Link to={"/"}>
+      <Link to={"/minhasEquipes"}>
         <span className="btn btn-secondary">Minhas Equipes</span>
       </Link>
     </section>

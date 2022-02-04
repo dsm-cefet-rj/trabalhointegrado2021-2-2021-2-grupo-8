@@ -1,5 +1,11 @@
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import AdicionarMembro from "./components/MinhasEquipes/AdicionarMembro";
 import Eventos from "./components/Eventos/Eventos";
 import GerenciarEquipe from "./components/MinhasEquipes/GerenciarEquipe";
@@ -14,70 +20,72 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchEquipes } from "./storeConfig/equipesSlice";
 import { fetchUsuarios } from "./storeConfig/usuariosSlice";
-import { fetchTarefas } from "./storeConfig/tarefasSlice";
-import { fetchEventos } from "./storeConfig/eventosSlice";
+import LoginPage from "./components/LoginPage/LoginPage";
+import NotFound from "./components/LoginPage/NotFound";
+import FormCadastro from "./components/LoginPage/FormCadastro";
 
 function App() {
   const dispatch = useDispatch();
   const idUser = useSelector((state) => state.loggedUser.id);
   const usuarios = useSelector((state) => state.usuarios);
   const equipes = useSelector((state) => state.equipes);
-  const tarefas = useSelector((state) => state.tarefas);
-  const eventos = useSelector(state => state.eventos);
-  
+
   useEffect(() => {
-    if (usuarios.status === "idle") {
+    if (usuarios.status === "idle" || usuarios.status === "updated") {
       dispatch(fetchUsuarios());
     }
   }, [usuarios, dispatch]);
 
   useEffect(() => {
-    if (equipes.status === "idle") {
+    if (equipes.status === "idle" || equipes.status === "updated") {
       dispatch(fetchEquipes(idUser));
     }
   }, [equipes, idUser, dispatch]);
 
-  useEffect(() => {
-    if (tarefas.status === "idle") {
-      dispatch(fetchTarefas());
-    }
-  }, [tarefas, dispatch]);
-  
-  useEffect(() => {
-    if (eventos.status === "idle") {
-      dispatch(fetchEventos());
-    }
-  }, [eventos, dispatch]);
+  if (!idUser) {
+    return (
+      <Router>
+        <Routes>
+          <Route path="*" element={<LoginPage />} />
+          <Route path="/signIn" element={<FormCadastro/>} />
+        </Routes>
+      </Router>
+    );
+  } else {
+    return (
+      <Router>
+        <Routes>
+          <Route path="*" element={<NotFound />} />
+          <Route path="/minhasEquipes" element={<MinhasEquipes />} />
+          <Route path="/:idTeam/home" element={<Home />} />
 
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<MinhasEquipes />} />
-        <Route path="/:idTeam/home" element={<Home />} />
+          <Route path="/:idTeam/task/:idTask" element={<Tarefa />} />
+          <Route
+            path="/:idTeam/task/:idTask/atribuir"
+            element={<AtribuirTarefa />}
+          />
 
-        <Route path="/:idTeam/task/:idTask" element={<Tarefa />} />
-        <Route
-          path="/:idTeam/task/:idTask/atribuir"
-          element={<AtribuirTarefa />}
-        />
+          <Route path="/:idTeam/formTarefa" element={<FormTarefa />} />
 
-        <Route path="/:idTeam/formTarefa" element={<FormTarefa />} />
+          <Route path="/:idTeam/eventos" element={<Eventos />} />
 
-        <Route path="/:idTeam/eventos" element={<Eventos />} />
+          <Route path="/:idTeam/eventos/formEvento" element={<FormEvento />} />
 
-        <Route path="/:idTeam/eventos/formEvento" element={<FormEvento />} />
+          <Route
+            path="/:idTeam/gerenciarEquipe"
+            element={<GerenciarEquipe />}
+          />
 
-        <Route path="/:idTeam/gerenciarEquipe" element={<GerenciarEquipe />} />
+          <Route
+            path="/:idTeam/gerenciarEquipe/addMembro"
+            element={<AdicionarMembro />}
+          />
 
-        <Route
-          path="/:idTeam/gerenciarEquipe/addMembro"
-          element={<AdicionarMembro />}
-        />
-
-        <Route path="/formEquipe" element={<FormEquipe />} />
-      </Routes>
-    </Router>
-  );
+          <Route path="/formEquipe" element={<FormEquipe />} />
+        </Routes>
+      </Router>
+    );
+  }
 }
 
 export default App;

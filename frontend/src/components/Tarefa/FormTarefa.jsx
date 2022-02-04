@@ -19,7 +19,6 @@ function FormTarefa() {
 
   const dispatch = useDispatch();
   const equipeAtiva = useSelector(getEquipeAtiva);
-  const tarefasIds = useSelector(selectTarefaIds);
 
   const {
     register,
@@ -32,6 +31,8 @@ function FormTarefa() {
   let [novaTarefa] = useState(
     tarefa.id !== undefined ? tarefa : tarefaSchema.cast({})
   );
+
+  console.log(novaTarefa)
 
   const onSubmit = (data) => {
     novaTarefa.dataPrazo = data.dataPrazo;

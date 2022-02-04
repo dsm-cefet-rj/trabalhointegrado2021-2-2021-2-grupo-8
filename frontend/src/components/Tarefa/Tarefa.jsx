@@ -20,10 +20,12 @@ function Tarefa() {
   const [display, setDisplay] = useState("hide");
   const [responsavel, setResponsavel] = useState({});
 
+  console.log(tarefa);
+
   useEffect(() => {
     const membros = [...equipeAtiva.membros];
     membros.push(equipeAtiva.gerente);
-    if (tarefa.responsavel !== 0) {
+    if (tarefa.responsavel !== "0") {
       setResponsavel(membros.find((m) => m.id === tarefa.responsavel));
       setDisplay("");
     }

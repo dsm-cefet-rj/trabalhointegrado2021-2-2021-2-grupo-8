@@ -1,11 +1,21 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchEventos } from "../../storeConfig/eventosSlice";
 import { getEquipeAtiva } from "../../storeConfig/loggedUserSlice";
+import { fetchTarefas } from "../../storeConfig/tarefasSlice";
 import MenuHome from "./MenuHome";
 import QuadroTarefas from "./QuadroTarefas";
 
 function Home() {
+  const dispatch = useDispatch();
   const equipeAtiva = useSelector(getEquipeAtiva);
+  const tarefas = useSelector((state) => state.tarefas);
+
+  useEffect(() => {
+    if (tarefas.status === "idle" || tarefas.status === "updated") {
+      dispatch(fetchTarefas());
+    }
+  }, [tarefas, dispatch]);
 
   return (
     <div className="corpo">

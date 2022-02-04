@@ -32,7 +32,7 @@ router
   .route("/:id")
   .get(async (req, res, next) => {
     try {
-      const tarefa = await Tarefas.find({ id: req.params.id });
+      const tarefa = await Tarefas.findById(req.params.id);
       res.statusCode = 200;
       res.setHeader("Content-Type", "application/json");
       res.json(tarefa);
@@ -42,7 +42,7 @@ router
   })
   .delete(async (req, res, next) => {
     try {
-      await Tarefas.deleteOne({ id: req.params.id });
+      await Tarefas.findByIdAndDelete(req.params.id );
       res.statusCode = 200;
       res.setHeader("Content-Type", "application/json");
       res.json(req.params.id);
@@ -52,7 +52,7 @@ router
   })
   .put(async(req, res, next) => {
     try {
-      await Tarefas.replaceOne({ id: req.params.id }, req.body);
+      await Tarefas.findByIdAndUpdate(req.params.id, req.body);
       res.statusCode = 200;
       res.setHeader("Content-Type", "application/json");
       res.json(req.body);

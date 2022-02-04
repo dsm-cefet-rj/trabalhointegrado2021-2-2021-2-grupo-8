@@ -30,7 +30,7 @@ function CardMinhaEquipe({ equipe, gerente, membros }) {
 
   return (
     <div className="card card-equipe">
-      <Link to={equipe.id + "/home"}>
+      <Link to={"/" + equipe.id + "/home"}>
         <div className="card-header" onClick={handleEquipeAtiva}>
           {equipe.nome}
         </div>

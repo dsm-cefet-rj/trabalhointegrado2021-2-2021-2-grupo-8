@@ -27,11 +27,11 @@ function QuadroTarefas() {
         .filter((t) => t.equipe === equipeAtiva.info.id)
         .filter((t) => {
           if (mode === "disponiveis") {
-            return t.responsavel === 0;
+            return t.responsavel === "0";
           } else if (mode === "minhas") {
             return t.responsavel === idUser;
           } else if (mode === "andamento") {
-            return t.responsavel !== 0 && t.responsavel !== idUser;
+            return t.responsavel !== "0" && t.responsavel !== idUser;
           } else {
             console.log("Erro ao carregar tarefas")
             return -1;
