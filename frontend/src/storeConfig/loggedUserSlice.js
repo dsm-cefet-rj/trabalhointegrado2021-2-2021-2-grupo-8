@@ -1,35 +1,36 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export const fetchUser = createAsyncThunk(
+  "eventos/fetchEventos",
+  async () => {
+    return httpGet(baseUrl + "/eventos");
+  }
+);
+
 export const loggedUser = createSlice({
   name: "loggedUser",
   initialState: {
     id: null,
     error: null,
     equipeAtiva: {
-      info: {},
-      gerente: {},
+      equipe: {},
       isGerente: -1,
-      membros: [],
     },
   },
   reducers: {
+    setUser: {
+      reducer(state, {payload}) {
+        
+      },
+    },
     setEquipeAtiva: {
       reducer(state, { payload }) {
-        state.equipeAtiva.info = payload.equipe;
-        state.equipeAtiva.membros = payload.membros;
-        state.equipeAtiva.gerente = payload.gerente;
-        payload.gerente.id === state.id
-          ? (state.equipeAtiva.isGerente = 1)
-          : (state.equipeAtiva.isGerente = 0);
-      },
-      prepare(equipe, membros, gerente) {
-        return {
-          payload: {
-            equipe: equipe,
-            membros: membros,
-            gerente: gerente,
-          },
-        };
+        state.equipeAtiva.equipe = payload;
+        if (payload.gerente.id === state.id) {
+          state.equipeAtiva.isGerente = 1;
+        } else {
+          state.equipeAtiva.isGerente = 0;
+        }
       },
     },
     addMember: (state, { payload }) => {

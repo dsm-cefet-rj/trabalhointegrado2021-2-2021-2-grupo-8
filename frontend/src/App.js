@@ -46,8 +46,9 @@ function App() {
     return (
       <Router>
         <Routes>
-          <Route path="*" element={<LoginPage />} />
-          <Route path="/signIn" element={<FormCadastro/>} />
+          <Route path="*" element={<Navigate to="/login" replace={true} />} />
+          <Route path="/signIn" element={<FormCadastro />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </Router>
     );
