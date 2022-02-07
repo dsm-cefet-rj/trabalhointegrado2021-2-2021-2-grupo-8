@@ -28,12 +28,12 @@ function GerenciarEquipe() {
   const tarefas = useSelector(selectAllTarefas);
   const eventos = useSelector(selectAllEventos);
   const equipe = useSelector((state) =>
-    selectEquipeById(state, equipeAtiva.info.id)
+    selectEquipeById(state, equipeAtiva.equipe.id)
   );
 
   const handleExcluirMembro = (m) => {
     tarefas
-      .filter((t) => t.equipe === equipeAtiva.info.id)
+      .filter((t) => t.equipe === equipeAtiva.equipe.id)
       .forEach((t) => {
         if (t.responsavel === m.id) {
           let novaTarefa = { ...t, responsavel: 0 };
@@ -52,16 +52,16 @@ function GerenciarEquipe() {
 
   const handleExcluirEquipe = () => {
     tarefas
-      .filter((t) => t.equipe === equipeAtiva.info.id)
+      .filter((t) => t.equipe === equipeAtiva.equipe.id)
       .forEach((t) => {
         dispatch(deleteTarefaServer(t));
       });
     eventos
-      .filter((e) => e.equipe === equipeAtiva.info.id)
+      .filter((e) => e.equipe === equipeAtiva.equipe.id)
       .forEach((e) => {
         dispatch(deleteEventoServer(e));
       });
-    dispatch(deleteEquipeServer(equipeAtiva.info.id));
+    dispatch(deleteEquipeServer(equipeAtiva.equipe.id));
   };
 
   return (
@@ -73,7 +73,7 @@ function GerenciarEquipe() {
       <main className="container">
         <h3 className="text-center my-3">Gerencie sua equipe</h3>
         <section className="d-flex flex-wrap justify-content-evenly">
-          {equipeAtiva.membros.map((m) => {
+          {equipeAtiva.equipe.membros.map((m) => {
             return (
               <div className="card card-membro" key={m.id}>
                 <img className="img-fluid" src={semFoto} alt="foto membro" />

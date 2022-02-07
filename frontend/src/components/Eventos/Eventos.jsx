@@ -38,7 +38,7 @@ function Eventos() {
   const mapEventos = () => {
     if (statusEventos === "succeeded" || statusEventos === "updated") {
       let arrayEventos = allEventos.filter(
-        (t) => t.equipe === equipeAtiva.info.id
+        (t) => t.equipe === equipeAtiva.equipe.id
       );
 
       if (arrayEventos.length > 0) {
@@ -67,7 +67,7 @@ function Eventos() {
               </span>
               <Link
                 className={`${display}`}
-                to={"/" + equipeAtiva.info.id + "/eventos/formEvento"}
+                to={"/" + equipeAtiva.equipe.id + "/eventos/formEvento"}
                 state={{ evento: e }}
               >
                 <button type="button" className="btn btn-primary">
@@ -102,7 +102,7 @@ function Eventos() {
         <section className="menu">
           <Link
             className={`${display}`}
-            to={"/" + equipeAtiva.info.id + "/eventos/formEvento"}
+            to={"/" + equipeAtiva.equipe.id + "/eventos/formEvento"}
             state={{ evento: {} }}
           >
             <button type="button" className="btn btn-primary">

@@ -4,20 +4,20 @@ import semFoto from "../../assets/sem-foto-homem.jpg";
 import { setEquipeAtiva } from "../../storeConfig/loggedUserSlice";
 import { useDispatch } from "react-redux";
 
-function CardMinhaEquipe({ equipe, gerente, membros }) {
+function CardMinhaEquipe({ equipe }) {
   const dispatch = useDispatch();
 
   const handleEquipeAtiva = () => {
-    dispatch(setEquipeAtiva(equipe, membros, gerente));
+    dispatch(setEquipeAtiva(equipe));
   };
 
   const mapMembros = () => {
-    if (membros.length < 1) {
+    if (equipe.membros.length < 1) {
       return (
         <h6 className="text-center">Esta equipe ainda não possui membros</h6>
       );
     } else {
-      return membros.map((membro) => {
+      return equipe.membros.map((membro) => {
         return (
           <div key={membro.id} className="card card-equipe-membro mb-2">
             <img className="card-img-top" src={semFoto} alt="foto membro" />
@@ -41,7 +41,7 @@ function CardMinhaEquipe({ equipe, gerente, membros }) {
             <div className="card">
               <h6 className="mt-2">Gerente</h6>
               <img className="img-fluid p-2" src={semFoto} alt="" />
-              <p className="pb-1">{gerente.nome}</p>
+              <p className="pb-1">{equipe.gerente.nome}</p>
             </div>
           </div>
           <div className="col d-flex flex-column">

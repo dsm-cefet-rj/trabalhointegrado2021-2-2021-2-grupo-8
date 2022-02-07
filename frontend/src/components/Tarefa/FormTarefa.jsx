@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getEquipeAtiva } from "../../storeConfig/loggedUserSlice";
 import {
   addTarefaServer,
-  selectTarefaIds,
   updateTarefaServer,
 } from "../../storeConfig/tarefasSlice";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -41,7 +40,7 @@ function FormTarefa() {
     novaTarefa.nome = data.nome;
     novaTarefa.urgencia = data.urgencia;
     if (novaTarefa.id === -1) {
-      novaTarefa.equipe = equipeAtiva.info.id;
+      novaTarefa.equipe = equipeAtiva.equipe.id;
       novaTarefa.responsavel = 0; 
       dispatch(addTarefaServer(novaTarefa))
       navigate(-1)

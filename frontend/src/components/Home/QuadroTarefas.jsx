@@ -24,7 +24,7 @@ function QuadroTarefas() {
   const quadro = (mode) => {
     if (statusTarefas === "succeeded" || statusTarefas === "updated") {
       let arrayTarefas = allTarefas
-        .filter((t) => t.equipe === equipeAtiva.info.id)
+        .filter((t) => t.equipe === equipeAtiva.equipe.id)
         .filter((t) => {
           if (mode === "disponiveis") {
             return t.responsavel === "0";

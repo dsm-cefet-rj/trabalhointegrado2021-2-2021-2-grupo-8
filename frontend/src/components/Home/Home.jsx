@@ -24,7 +24,7 @@ function Home() {
       </header>
       <main className="container">
         <h3 className="text-center my-4">
-          {"Equipe " + equipeAtiva.info.nome}
+          {"Equipe " + equipeAtiva.equipe.nome}
         </h3>
         <QuadroTarefas />
         <MenuHome />

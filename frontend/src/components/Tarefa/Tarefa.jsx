@@ -16,49 +16,15 @@ function Tarefa() {
 
   const equipeAtiva = useSelector(getEquipeAtiva);
   const isGerente = useSelector(getIsGerente);
-
-  const [display, setDisplay] = useState("hide");
   const [responsavel, setResponsavel] = useState({});
 
-  console.log(tarefa);
-
   useEffect(() => {
-    const membros = [...equipeAtiva.membros];
-    membros.push(equipeAtiva.gerente);
     if (tarefa.responsavel !== "0") {
+      const membros = [...equipeAtiva.equipe.membros];
+      membros.push(equipeAtiva.equipe.gerente);
       setResponsavel(membros.find((m) => m.id === tarefa.responsavel));
-      setDisplay("");
-    }
-
-    if (!isGerente) {
-      setDisplay("hide");
     }
   }, [equipeAtiva, tarefa, isGerente]);
-
-  const Responsavel = () => {
-    if (tarefa.responsavel !== 0) {
-      return (
-        <div className={`${display}`}>
-          <div className="d-flex justify-content-center mt-2">
-            <div className="card card-membro">
-              <p className="text-center py-1">Responsável</p>
-              <img className="img-fluid" src={semFoto} alt="foto membro" />
-              <div className="my-2">
-                <p className="text-center">ID: {responsavel.id}</p>
-                <p className="text-center">{responsavel.nome}</p>
-                <hr />
-                <p className="text-center">Contatos:</p>
-                <p className="text-center">{responsavel.email}</p>
-                <p className="text-center">{responsavel.tel}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    } else {
-      return <div></div>;
-    }
-  };
 
   return (
     <div className="corpo">
@@ -90,7 +56,22 @@ function Tarefa() {
           </div>
         </section>
 
-        <Responsavel idResponsavel={tarefa.idResponsavel}/>
+        {tarefa.responsavel !== "0" && isGerente &&(
+          <div className="d-flex justify-content-center mt-2">
+            <div className="card card-membro">
+              <p className="text-center py-1">Responsável</p>
+              <img className="img-fluid" src={semFoto} alt="foto membro" />
+              <div className="my-2">
+                <p className="text-center">ID: {responsavel.id}</p>
+                <p className="text-center">{responsavel.nome}</p>
+                <hr />
+                <p className="text-center">Contatos:</p>
+                <p className="text-center">{responsavel.email}</p>
+                <p className="text-center">{responsavel.tel}</p>
+              </div>
+            </div>
+          </div>
+        )}
 
         <MenuTarefa tarefa={tarefa} isGerente={isGerente} />
 

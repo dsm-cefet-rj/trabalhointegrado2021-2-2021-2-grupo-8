@@ -21,8 +21,7 @@ function AtribuirTarefa() {
   let busca = "";
 
   useEffect(() => {
-    let members = [...equipeAtiva.membros]
-    members.push(equipeAtiva.gerente);
+    let members = [...equipeAtiva.equipe.membros]
     setMembros(members);
     setResultado(members);
   }, [equipeAtiva]);
@@ -57,7 +56,7 @@ function AtribuirTarefa() {
           />
           <span
             className="btn btn-primary"
-            onClick={(e) => {
+            onClick={() => {
               setResultado(membros.filter(handleBusca));
             }}
           >
@@ -79,7 +78,7 @@ function AtribuirTarefa() {
                   <p className="text-center">{r.nome}</p>
                 </div>
                 <hr />
-                <Link to={"/" + equipeAtiva.info.id + "/home"}>
+                <Link to={"/" + equipeAtiva.equipe.id + "/home"}>
                   <div className="text-center">
                     <span
                       className="btn btn-success"

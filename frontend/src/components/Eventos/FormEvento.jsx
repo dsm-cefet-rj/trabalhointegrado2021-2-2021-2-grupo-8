@@ -41,7 +41,7 @@ function FormEvento() {
     novoEvento.descricao = data.descricao;
     novoEvento.tipo = data.tipo;
     if (novoEvento.id === -1) {
-      novoEvento.equipe = equipeAtiva.info.id;
+      novoEvento.equipe = equipeAtiva.equipe.id;
       dispatch(addEventoServer(novoEvento))
     } else {
       dispatch(updateEventoServer(novoEvento))

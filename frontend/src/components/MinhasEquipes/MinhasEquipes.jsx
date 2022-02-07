@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CardMinhaEquipe from "./CardMinhaEquipe";
 import { useSelector } from "react-redux";
@@ -12,46 +12,36 @@ function MinhasEquipes() {
   const statusUsuarios = useSelector((state) => state.usuarios.status);
   const idUser = useSelector((state) => state.loggedUser.id);
 
-  const mapEquipes = (mode) => {
-    if (
-      (statusEquipes === "succeeded" || statusEquipes === "updated") &&
-      (statusUsuarios === "succeeded" || statusUsuarios === "updated")
-    ) {
-      let arrayEquipes = [];
-      if (mode === "gerenciadas") {
-        arrayEquipes = equipes.filter((e) => e.gerente === idUser);
-      } else if (mode === "outras") {
-        arrayEquipes = equipes.filter((e) => e.membros.includes(idUser));
-      }
+  const [minhasEquipes, setMinhasEquipes] = useState([]);
 
-      if (arrayEquipes.length > 0) {
-        return arrayEquipes.map((e) => {
-          const gerente = usuarios.find((user) => user.id === e.gerente);
+  useEffect(() => {
+    if (statusEquipes === "succeeded" && statusUsuarios === "succeeded") {
+      let temp = [];
+      equipes
+        .filter((e) => e.gerente === idUser || e.membros.includes(idUser))
+        .forEach((e) => {
           let membros = [];
-          if (e.membros.length > 0) {
-            e.membros.forEach((m) => {
-              membros.push(usuarios.find((u) => u.id === m));
-            });
-          }
-          return (
-            <CardMinhaEquipe
-              key={e.id}
-              equipe={e}
-              gerente={gerente}
-              membros={membros}
-            />
-          );
+          e.membros.forEach((m) => {
+            membros.push(usuarios.find((u) => u.id === m));
+          });
+          temp.push({
+            ...e,
+            gerente: usuarios.find((u) => u.id === e.gerente),
+            membros: membros,
+          });
         });
-      } else {
-        return (
-          <div className="text-center p-6">Nenhuma equipe a ser exibida</div>
-        );
-      }
-    } else if (statusEquipes === "loading" || statusUsuarios === "loading") {
-      return <div className="text-center p-6">Carregando equipes</div>;
-    } else {
-      return <div className="text-center p-6">Erro ao carregar equipes</div>;
+      setMinhasEquipes(temp);
     }
+  }, [statusEquipes, statusUsuarios]);
+
+  const mapEquipes = (array) => {
+    return array.map((e) => {
+      if (statusEquipes === "succeeded" && statusUsuarios === "succeeded") {
+        return <CardMinhaEquipe key={e.id} equipe={e} />;
+      } else {
+        return <p>Carregando card</p>;
+      }
+    });
   };
 
   return (
@@ -59,7 +49,6 @@ function MinhasEquipes() {
       <header className="container cabecalho">
         <h1 className="app-name">Project Simple</h1>
       </header>
-
       <main className="container">
         <section className="lista-equipes d-flex flex-column">
           <h3 className="text-center my-3">Equipes que você gerencia</h3>
@@ -68,13 +57,14 @@ function MinhasEquipes() {
               <span className="btn btn-primary">Criar Nova Equipe</span>
             </Link>
           </section>
-          {mapEquipes("gerenciadas")}
+          {mapEquipes(minhasEquipes.filter((e) => e.gerente.id === idUser))}
         </section>
         <hr />
         <section className="lista-equipes d-flex flex-column mt-5">
           <h3 className="text-center my-3">Outras Equipes</h3>
-          {mapEquipes("outras")}
         </section>
+
+        {mapEquipes(minhasEquipes.filter((e) => e.gerente.id !== idUser))}
       </main>
     </div>
   );

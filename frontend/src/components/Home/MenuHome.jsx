@@ -15,17 +15,17 @@ function MenuHome() {
     <section className="menu ">
       <Link
         className={`${display}`}
-        to={"/" + equipeAtiva.info.id + "/formTarefa"}
+        to={"/" + equipeAtiva.equipe.id + "/formTarefa"}
         state={{tarefa:{}}}
       >
         <span className="btn btn-primary">Criar Tarefa</span>
       </Link>
-      <Link to={"/" + equipeAtiva.info.id + "/eventos"}>
+      <Link to={"/" + equipeAtiva.equipe.id + "/eventos"}>
         <span className="btn btn-primary">Eventos</span>
       </Link>
       <Link
         className={`${display}`}
-        to={"/" + equipeAtiva.info.id + "/gerenciarEquipe"}
+        to={"/" + equipeAtiva.equipe.id + "/gerenciarEquipe"}
       >
         <span className="btn btn-primary">Gerenciar Equipe</span>
       </Link>

@@ -50,7 +50,7 @@ router
       next(err);
     }
   })
-  .put(async(req, res, next) => {
+  .put(async (req, res, next) => {
     try {
       await Equipes.findByIdAndUpdate(req.params.id, req.body);
       res.statusCode = 200;
@@ -60,5 +60,18 @@ router
       next(err);
     }
   });
+
+router.route("/minhasEquipes/:user").get(async (req, res, next) => {
+  try {
+    const equipes = await Equipes.find({});
+    let minhasEquipes = equipes.filter((e) => e.gerente === req.params.user);
+    let outrasEquipes = equipes.filter((e) => e.membros.includes(req.params.user));
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "application/json");
+    res.json([...minhasEquipes,...outrasEquipes]);
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = router;
