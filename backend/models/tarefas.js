@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const normalize = require("./normalizeMongoose.js");
+const normalize = require("./plugins/normalizeMongoose.js");
 const Schema = mongoose.Schema;
 
 const tarefaSchema = new Schema({

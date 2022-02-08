@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
-const normalize = require("./normalizeMongoose.js");
+const normalize = require("./plugins/normalizeMongoose.js");
 const Schema = mongoose.Schema;
+
 
 const usuarioSchema = new Schema({
   nome: {
@@ -13,6 +14,7 @@ const usuarioSchema = new Schema({
   },
   email: {
     type: String,
+    unique: true,
     required: true,
   },
 });

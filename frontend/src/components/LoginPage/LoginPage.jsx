@@ -1,15 +1,21 @@
 import React from "react";
 import "./loginpage.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { httpDelete, httpGet, httpPost, httpPut } from "../../api/utils";
+import { baseUrl } from "../../api/baseUrl";
 
 function LoginPage() {
   const error = useSelector((state) => state.loggedUser.error);
 
   let loginInfo = {
-    login: "",
+    email: "",
     password: "",
   };
+
+  const handleLogin = async () => {
+    return httpPost(baseUrl + "/login", loginInfo);
+  }
 
   return (
     <div className="corpo">
@@ -22,12 +28,12 @@ function LoginPage() {
           <form className="p-3 mt-3 d-flex flex-column align-items-center">
             <div className="form-field d-flex align-items-center">
               <input
-                type="text"
-                name="userName"
-                id="userName"
-                placeholder="Username"
+                type="email"
+                name="email"
+                id="email"
+                placeholder="email"
                 onChange={(e) => {
-                  loginInfo.login = e.target.value;
+                  loginInfo.email = e.target.value;
                   console.log(loginInfo);
                 }}
               />
@@ -45,9 +51,7 @@ function LoginPage() {
               />
             </div>
             <span className="fas fa-key">{!!error && error}</span>
-            <Link className="w-100 d-flex justify-content-center" to="/minhasEquipes">
-              <button className="btn mt-3">Login</button>
-            </Link>
+            <button className="btn mt-3" onClick={handleLogin}>Login</button>
           </form>
           <div className="text-center fs-6">
             <a href="#">Forget password?</a> or <a href="#">Sign up</a>
