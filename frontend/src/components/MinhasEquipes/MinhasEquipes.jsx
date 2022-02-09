@@ -15,6 +15,7 @@ function MinhasEquipes() {
   const [minhasEquipes, setMinhasEquipes] = useState([]);
 
   useEffect(() => {
+
     if (statusEquipes === "succeeded" && statusUsuarios === "succeeded") {
       let temp = [];
       equipes
@@ -35,7 +36,7 @@ function MinhasEquipes() {
   }, [statusEquipes, statusUsuarios]);
 
   const mapEquipes = (array) => {
-    if (!array.lenght) {
+    if (!array.length) {
       return <h6 className="text-center">Nenhuma equipe no momento</h6>;
     } else {
       return array.map((e) => {

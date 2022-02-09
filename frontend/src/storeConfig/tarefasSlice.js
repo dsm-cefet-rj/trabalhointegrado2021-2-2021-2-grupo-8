@@ -16,32 +16,36 @@ const initialState = tarefasAdapter.getInitialState({
 
 //async thunks
 
+const authHeader = (token) => {
+  return { headers: { Authorization: "Bearer " + token } };
+};
+
 export const fetchTarefas = createAsyncThunk(
   "tarefas/fetchTarefas",
-  async () => {
-    return httpGet(baseUrl + "/tarefas");
+  async (token) => {
+    return httpGet(baseUrl + "/tarefas", authHeader(token));
   }
 );
 
 export const deleteTarefaServer = createAsyncThunk(
   "tarefas/deleteTarefaServer",
-  async (tarefa) => {
-    await httpDelete(baseUrl + "/tarefas/" + tarefa.id);
+  async ({tarefa, token}) => {
+    await httpDelete(baseUrl + "/tarefas/" + tarefa.id, authHeader(token));
     return tarefa.id;
   }
 );
 
 export const addTarefaServer = createAsyncThunk(
   "tarefas/addTarefaServer",
-  async (tarefa) => {
-    return httpPost(baseUrl + "/tarefas", tarefa);
+  async (tarefa, token) => {
+    return httpPost(baseUrl + "/tarefas", tarefa, authHeader(token));
   }
 );
 
 export const updateTarefaServer = createAsyncThunk(
   "tarefas/updateTarefaServer",
-  async (tarefa) => {
-    return httpPut(baseUrl + "/tarefas/" + tarefa.id, tarefa);
+  async (tarefa, token) => {
+    return httpPut(baseUrl + "/tarefas/" + tarefa.id, tarefa, authHeader(token));
   }
 );
 

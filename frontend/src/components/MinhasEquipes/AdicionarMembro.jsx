@@ -15,16 +15,17 @@ function AdicionarMembro() {
   const dispatch = useDispatch();
   const equipeAtiva = useSelector(getEquipeAtiva);
   const equipe = useSelector((state) =>
-    selectEquipeById(state, equipeAtiva.info.id)
+    selectEquipeById(state, equipeAtiva.equipe.id)
   );
   const usuarios = useSelector(selectAllUsuarios);
+  const token = useSelector(state => state.loggedUser.token)
   const navigate = useNavigate();
 
   const [resultado, setResultado] = useState([]);
 
   const handleBusca = () => {
-    let membros = [...equipeAtiva.membros];
-    membros.push(equipeAtiva.gerente);
+    let membros = [...equipeAtiva.equipe.membros];
+    membros.push(equipeAtiva.equipe.gerente);
 
     const regex = new RegExp(busca, "i");
 
@@ -44,7 +45,8 @@ function AdicionarMembro() {
       ...equipe,
       membros: [...equipe.membros, member.id],
     };
-    dispatch(updateEquipeServer(equipeAtualizada));
+    console.log(member, equipeAtualizada)
+    dispatch(updateEquipeServer({equipe: equipeAtualizada, token}));
     dispatch(addMember(member))
     navigate(-1);
   };

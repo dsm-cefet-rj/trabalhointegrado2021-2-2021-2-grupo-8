@@ -10,15 +10,15 @@ export const loggedUser = createSlice({
   name: "loggedUser",
   initialState: {
     id: null,
-    JWT: null,
+    token: null,
     error: null,
     equipeAtiva: {
       equipe: {},
       isGerente: -1,
     },
   },
-  setEquipeAtiva: {
-    reducer(state, { payload }) {
+  reducers: {
+    setEquipeAtiva: (state, { payload }) => {
       state.equipeAtiva.equipe = payload;
       if (payload.gerente.id === state.id) {
         state.equipeAtiva.isGerente = 1;
@@ -26,22 +26,21 @@ export const loggedUser = createSlice({
         state.equipeAtiva.isGerente = 0;
       }
     },
-  },
-  addMember: (state, { payload }) => {
-    state.equipeAtiva.membros.push(payload);
-  },
-  removeMember: (state, { payload }) => {
-    console.log(payload, state.equipeAtiva.membros);
-    state.equipeAtiva.membros.splice(
-      state.equipeAtiva.membros.findIndex((m) => m.id === payload),
-      1
-    );
+    addMember: (state, { payload }) => {
+      state.equipeAtiva.equipe.membros.push(payload);
+    },
+    removeMember: (state, { payload }) => {
+      state.equipeAtiva.equipe.membros.splice(
+        state.equipeAtiva.equipe.membros.findIndex((m) => m.id === payload),
+        1
+      );
+    },
   },
   extraReducers(builder) {
     builder
       .addCase(login.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.id = action.payload.id;
+        state.token = action.payload.token;
         state.error = null;
       })
       .addCase(login.rejected, (state, action) => {

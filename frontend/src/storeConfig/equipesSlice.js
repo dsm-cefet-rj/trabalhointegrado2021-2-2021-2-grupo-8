@@ -16,32 +16,37 @@ const initialState = equipesAdapter.getInitialState({
 
 //async thunks
 
+const authHeader = (token) => {
+  return { headers: { Authorization: "Bearer " + token } };
+};
+
 export const fetchEquipes = createAsyncThunk(
   "equipes/fetchEquipes",
-  async () => {
-    return httpGet(baseUrl + "/equipes");
+  async (token) => {
+    return httpGet(baseUrl + "/equipes", authHeader(token));
   }
 );
 
 export const deleteEquipeServer = createAsyncThunk(
   "equipes/deleteEquipeServer",
-  async (equipeId) => {
-    await httpDelete(baseUrl + "/equipes/" + equipeId);
+  async ({equipeId, token}) => {
+    await httpDelete(baseUrl + "/equipes/" + equipeId, authHeader(token));
     return equipeId;
   }
 );
 
 export const addEquipeServer = createAsyncThunk(
   "equipes/addEquipeServer",
-  async (equipe) => {
-    return httpPost(baseUrl + "/equipes", equipe);
+  async ({equipe, token}) => {
+    return httpPost(baseUrl + "/equipes", equipe, authHeader(token));
   }
 );
 
 export const updateEquipeServer = createAsyncThunk(
   "equipes/updateEquipeServer",
-  async (equipe) => {
-    return httpPut(baseUrl + "/equipes/" + equipe.id, equipe);
+  async ({equipe, token}) => {
+    console.log(equipe,token)
+    return httpPut(baseUrl + "/equipes/" + equipe.id, equipe, authHeader(token));
   }
 );
 

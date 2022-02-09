@@ -16,32 +16,40 @@ const initialState = usuariosAdapter.getInitialState({
 
 //async thunks
 
+const authHeader = (token) => {
+  return { headers: { Authorization: "Bearer " + token } };
+};
+
 export const fetchUsuarios = createAsyncThunk(
   "usuarios/fetchUsuarios",
-  async () => {
-    return httpGet(baseUrl + "/usuarios");
+  async (token) => {
+    return httpGet(baseUrl + "/usuarios", authHeader(token));
   }
 );
 
 export const deleteUsuarioServer = createAsyncThunk(
   "usuarios/deleteUsuarioServer",
-  async (usuario) => {
-    await httpDelete(baseUrl + "/usuarios/" + usuario.id);
+  async ({usuario, token}) => {
+    await httpDelete(baseUrl + "/usuarios/" + usuario.id, authHeader(token));
     return usuario.id;
   }
 );
 
 export const addUsuarioServer = createAsyncThunk(
   "usuarios/addUsuarioServer",
-  async (usuario) => {
-    return httpPost(baseUrl + "/usuarios", usuario);
+  async ({usuario}) => {
+    return httpPost(baseUrl + "/signup", usuario);
   }
 );
 
 export const updateUsuarioServer = createAsyncThunk(
   "usuarios/updateUsuarioServer",
-  async (usuario) => {
-    return httpPut(baseUrl + "/usuarios/" + usuario.id, usuario);
+  async ({usuario, token}) => {
+    return httpPut(
+      baseUrl + "/usuarios/" + usuario.id,
+      usuario,
+      authHeader(token)
+    );
   }
 );
 

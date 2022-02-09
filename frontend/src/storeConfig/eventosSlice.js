@@ -16,6 +16,10 @@ const initialState = eventosAdapter.getInitialState({
 
 //async thunks
 
+const authHeader = (token) => {
+  return { headers: { Authorization: "Bearer " + token } };
+};
+
 export const fetchEventos = createAsyncThunk(
   "eventos/fetchEventos",
   async () => {
