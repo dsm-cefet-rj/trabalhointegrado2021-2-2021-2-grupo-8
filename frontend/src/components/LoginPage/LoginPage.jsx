@@ -36,6 +36,7 @@ function LoginPage() {
                 placeholder="email"
                 onInput={(e) => {
                   setLoginInfo({ ...loginInfo, username: e.target.value });
+
                 }}
               />
             </div>
@@ -56,7 +57,7 @@ function LoginPage() {
             </button>
           </form>
           <div className="text-center fs-6">
-            <a href="#">Forget password?</a> or <a href="#">Sign up</a>
+            <a href="#">Forget password?</a> or <a href="/signIn">Sign up</a>
           </div>
         </div>
       </main>

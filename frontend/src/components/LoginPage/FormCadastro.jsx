@@ -1,6 +1,14 @@
 import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+// import { userSchema } from "./UserSchema";
+
+
 
 function FormCadastro() {
+
+  const navigate = useNavigate();
   const handleSubmit = () => {
     console.log("");
   };
@@ -65,6 +73,24 @@ function FormCadastro() {
                 />
               </div>
             </div>
+            <section className="menu">
+            <button type="submit"
+            className="btn btn-success"
+            onClick={() => {
+                navigate("/login");
+              }}>
+              Enviar
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Voltar
+            </button>
+          </section>
           </form>
         </div>
       </main>
