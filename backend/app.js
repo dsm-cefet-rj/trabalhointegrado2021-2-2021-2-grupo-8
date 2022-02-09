@@ -25,7 +25,6 @@ connect.then(
 );
 
 var userRouter = require("./routes/user");
-var usuariosRouter = require("./routes/usuarios");
 var equipesRouter = require("./routes/equipes");
 var tarefasRouter = require("./routes/tarefas");
 var eventosRouter = require("./routes/eventos");
@@ -40,7 +39,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 app.use("/", userRouter);
-app.use("/usuarios", authenticate.verifyUser, usuariosRouter);
 app.use("/equipes", authenticate.verifyUser, equipesRouter);
 app.use("/tarefas", authenticate.verifyUser, tarefasRouter);
 app.use("/eventos", authenticate.verifyUser, eventosRouter);

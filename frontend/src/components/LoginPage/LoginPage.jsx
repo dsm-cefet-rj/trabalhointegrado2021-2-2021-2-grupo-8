@@ -57,7 +57,7 @@ function LoginPage() {
             </button>
           </form>
           <div className="text-center fs-6">
-            <a href="#">Forget password?</a> or <a href="/signIn">Sign up</a>
+            <a href="#">Forget password?</a> or <a href="/signIn" >Sign up</a>
           </div>
         </div>
       </main>

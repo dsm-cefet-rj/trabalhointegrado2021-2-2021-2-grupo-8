@@ -22,7 +22,7 @@ import { fetchEquipes } from "./storeConfig/equipesSlice";
 import { fetchUsuarios } from "./storeConfig/usuariosSlice";
 import LoginPage from "./components/LoginPage/LoginPage";
 import NotFound from "./components/LoginPage/NotFound";
-import FormCadastro from "./components/LoginPage/FormCadastro";
+import FormCadastro from "./components/LoginPage/FormUsuario";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,13 +31,13 @@ function App() {
   const equipes = useSelector((state) => state.equipes);
 
   useEffect(() => {
-    if (usuarios.status === "idle" || usuarios.status === "updated") {
+    if ((usuarios.status === "idle" || usuarios.status === "updated") && idUser) {
       dispatch(fetchUsuarios());
     }
-  }, [usuarios, dispatch]);
+  }, [usuarios, idUser, dispatch]);
 
   useEffect(() => {
-    if (equipes.status === "idle" || equipes.status === "updated") {
+    if ((equipes.status === "idle" || equipes.status === "updated") && idUser) {
       dispatch(fetchEquipes(idUser));
     }
   }, [equipes, idUser, dispatch]);

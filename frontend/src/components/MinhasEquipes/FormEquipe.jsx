@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   addEquipeServer,
-  selectEquipeIds,
   updateEquipeServer,
 } from "../../storeConfig/equipesSlice";
 import { equipeSchema } from "./EquipeSchema";
