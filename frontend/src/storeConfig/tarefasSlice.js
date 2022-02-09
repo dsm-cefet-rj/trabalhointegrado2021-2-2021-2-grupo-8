@@ -37,14 +37,15 @@ export const deleteTarefaServer = createAsyncThunk(
 
 export const addTarefaServer = createAsyncThunk(
   "tarefas/addTarefaServer",
-  async (tarefa, token) => {
+  async ({tarefa, token}) => {
+    console.log(tarefa, token);
     return httpPost(baseUrl + "/tarefas", tarefa, authHeader(token));
   }
 );
 
 export const updateTarefaServer = createAsyncThunk(
   "tarefas/updateTarefaServer",
-  async (tarefa, token) => {
+  async ({tarefa, token}) => {
     return httpPut(baseUrl + "/tarefas/" + tarefa.id, tarefa, authHeader(token));
   }
 );

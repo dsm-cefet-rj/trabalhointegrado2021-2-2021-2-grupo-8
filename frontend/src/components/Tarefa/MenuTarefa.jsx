@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getIsGerente } from "../../storeConfig/loggedUserSlice";
-import { deleteTarefaServer, updateTarefaServer } from "../../storeConfig/tarefasSlice";
+import {
+  deleteTarefaServer,
+  updateTarefaServer,
+} from "../../storeConfig/tarefasSlice";
 
 function MenuTarefa({ tarefa }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const idUser = useSelector((state) => state.loggedUser.id);
+  const token = useSelector((state) => state.loggedUser.token);
   const isGerente = useSelector(getIsGerente);
   const [minha, setMinha] = useState(-1);
 
@@ -16,17 +20,17 @@ function MenuTarefa({ tarefa }) {
   }, [idUser, tarefa.responsavel]);
 
   const handleAceitarTarefa = () => {
-    dispatch(updateTarefaServer({ ...tarefa, responsavel: idUser }));
+    dispatch(updateTarefaServer({tarefa:{ ...tarefa, responsavel: idUser },token}));
     navigate(-1);
   };
 
   const handleDevolverTarefa = () => {
-    dispatch(updateTarefaServer({ ...tarefa, responsavel: 0 }));
+    dispatch(updateTarefaServer({tarefa:{ ...tarefa, responsavel: 0 }, token}));
     navigate(-1);
   };
 
   const hadleExcluirTarefa = () => {
-    dispatch(deleteTarefaServer(tarefa));
+    dispatch(deleteTarefaServer({tarefa,token}));
     navigate(-1);
   };
 
@@ -59,10 +63,7 @@ function MenuTarefa({ tarefa }) {
             </button>
           </Link>
 
-          <Link
-            to={"/" + tarefa.equipe + "/formTarefa"}
-            state={{ tarefa }}
-          >
+          <Link to={"/" + tarefa.equipe + "/formTarefa"} state={{ tarefa }}>
             <button type="button" className="btn btn-primary">
               Editar Tarefa
             </button>
@@ -105,10 +106,7 @@ function MenuTarefa({ tarefa }) {
             </button>
           </Link>
 
-          <Link
-            to={"/" + tarefa.equipe + "/formTarefa"}
-            state={{ tarefa }}
-          >
+          <Link to={"/" + tarefa.equipe + "/formTarefa"} state={{ tarefa }}>
             <button type="button" className="btn btn-primary">
               Editar Tarefa
             </button>

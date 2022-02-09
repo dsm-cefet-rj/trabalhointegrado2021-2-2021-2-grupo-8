@@ -10,10 +10,11 @@ function Home() {
   const dispatch = useDispatch();
   const equipeAtiva = useSelector(getEquipeAtiva);
   const tarefas = useSelector((state) => state.tarefas);
+  const token = useSelector(state => state.loggedUser.token)
 
   useEffect(() => {
     if (tarefas.status === "idle" || tarefas.status === "updated") {
-      dispatch(fetchTarefas());
+      dispatch(fetchTarefas(token));
     }
   }, [tarefas, dispatch]);
 

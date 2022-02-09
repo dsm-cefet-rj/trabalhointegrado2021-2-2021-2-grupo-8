@@ -6,11 +6,10 @@ import { getEquipeAtiva } from "../../storeConfig/loggedUserSlice";
 import { updateTarefaServer } from "../../storeConfig/tarefasSlice";
 
 function AtribuirTarefa() {
-
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const equipeAtiva = useSelector(getEquipeAtiva)
+  const equipeAtiva = useSelector(getEquipeAtiva);
 
   const [resultado, setResultado] = useState([]);
   const [membros, setMembros] = useState([]);
@@ -18,10 +17,12 @@ function AtribuirTarefa() {
   const location = useLocation();
   const { tarefa } = location.state;
 
+  const token = useSelector((state) => state.loggedUser.token);
+
   let busca = "";
 
   useEffect(() => {
-    let members = [...equipeAtiva.equipe.membros]
+    let members = [...equipeAtiva.equipe.membros];
     setMembros(members);
     setResultado(members);
   }, [equipeAtiva]);
@@ -32,8 +33,8 @@ function AtribuirTarefa() {
   };
 
   const handleAtribuirTarefa = (idUser) => {
-    const novaTarefa = { ...tarefa, responsavel: idUser};
-    dispatch(updateTarefaServer(novaTarefa))
+    const novaTarefa = { ...tarefa, responsavel: idUser };
+    dispatch(updateTarefaServer({ tarefa: novaTarefa, token }));
   };
 
   return (
