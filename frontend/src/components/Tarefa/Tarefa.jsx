@@ -17,6 +17,7 @@ function Tarefa() {
   const equipeAtiva = useSelector(getEquipeAtiva);
   const isGerente = useSelector(getIsGerente);
   const [responsavel, setResponsavel] = useState({});
+  
 
   useEffect(() => {
     if (tarefa.responsavel !== "0") {
