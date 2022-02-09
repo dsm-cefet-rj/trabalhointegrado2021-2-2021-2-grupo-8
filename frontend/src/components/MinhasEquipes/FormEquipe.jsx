@@ -16,7 +16,6 @@ function FormEquipe() {
   const { equipe } = location.state;
 
   const dispatch = useDispatch();
-  const equipesIds = useSelector(selectEquipeIds);
   const userId = useSelector((state) => state.loggedUser.id);
 
   const {

@@ -57,6 +57,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="*" element={<NotFound />} />
+          <Route path="/login" element={<Navigate to="/minhasEquipes" replace={true} />} />
           <Route path="/minhasEquipes" element={<MinhasEquipes />} />
           <Route path="/:idTeam/home" element={<Home />} />
 
