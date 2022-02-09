@@ -31,7 +31,7 @@ function LoginPage() {
                 type="email"
                 name="email"
                 id="email"
-                placeholder="email"
+                placeholder="Email"
                 onChange={(e) => {
                   loginInfo.email = e.target.value;
                   console.log(loginInfo);
