@@ -2,10 +2,15 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { baseUrl } from "../api/baseUrl";
 import { httpDelete, httpGet, httpPost, httpPut } from "../api/utils";
 
+export const login = createAsyncThunk("loggedUser/login", async (user) => {
+  return httpPost(baseUrl + "/login", user);
+});
+
 export const loggedUser = createSlice({
   name: "loggedUser",
   initialState: {
     id: null,
+    JWT: null,
     error: null,
     equipeAtiva: {
       equipe: {},
@@ -31,7 +36,17 @@ export const loggedUser = createSlice({
       state.equipeAtiva.membros.findIndex((m) => m.id === payload),
       1
     );
-    console.log(payload, state.equipeAtiva.membros);
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(login.fulfilled, (state, action) => {
+        console.log(action.payload);
+        state.id = action.payload.id;
+        state.error = null;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.error = "Usuário ou senha inválidos!";
+      });
   },
 });
 

@@ -35,13 +35,17 @@ function MinhasEquipes() {
   }, [statusEquipes, statusUsuarios]);
 
   const mapEquipes = (array) => {
-    return array.map((e) => {
-      if (statusEquipes === "succeeded" && statusUsuarios === "succeeded") {
-        return <CardMinhaEquipe key={e.id} equipe={e} />;
-      } else {
-        return <p>Carregando card</p>;
-      }
-    });
+    if (!array.lenght) {
+      return <h6 className="text-center">Nenhuma equipe no momento</h6>;
+    } else {
+      return array.map((e) => {
+        if (statusEquipes === "succeeded" && statusUsuarios === "succeeded") {
+          return <CardMinhaEquipe key={e.id} equipe={e} />;
+        } else {
+          return <p>Carregando card</p>;
+        }
+      });
+    }
   };
 
   return (

@@ -1,21 +1,23 @@
-import React from "react";
+import { React, useState } from "react";
 import "./loginpage.css";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { httpDelete, httpGet, httpPost, httpPut } from "../../api/utils";
-import { baseUrl } from "../../api/baseUrl";
+import { login } from "../../storeConfig/loggedUserSlice";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const error = useSelector((state) => state.loggedUser.error);
+  const idUser = useSelector((state) => state.loggedUser.id);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  let loginInfo = {
-    email: "",
+  const [loginInfo, setLoginInfo] = useState({
+    username: "",
     password: "",
-  };
+  });
 
   const handleLogin = async () => {
-    return httpPost(baseUrl + "/login", loginInfo);
-  }
+    dispatch(login(loginInfo));
+  };
 
   return (
     <div className="corpo">
@@ -31,10 +33,10 @@ function LoginPage() {
                 type="email"
                 name="email"
                 id="email"
-                placeholder="Email"
-                onChange={(e) => {
-                  loginInfo.email = e.target.value;
-                  console.log(loginInfo);
+                placeholder="email"
+                onInput={(e) => {
+                  setLoginInfo({ ...loginInfo, username: e.target.value });
+
                 }}
               />
             </div>
@@ -44,14 +46,15 @@ function LoginPage() {
                 name="password"
                 id="pwd"
                 placeholder="Password"
-                onChange={(e) => {
-                  loginInfo.password = e.target.value;
-                  console.log(loginInfo);
+                onInput={(e) => {
+                  setLoginInfo({ ...loginInfo, password: e.target.value });
                 }}
               />
             </div>
             <span className="fas fa-key">{!!error && error}</span>
-            <button className="btn mt-3" onClick={handleLogin}>Login</button>
+            <button type="button" className="btn mt-3" onClick={handleLogin}>
+              Login
+            </button>
           </form>
           <div className="text-center fs-6">
             <a href="#">Forget password?</a> or <a href="/signIn">Sign up</a>
