@@ -18,10 +18,18 @@ router.post("/signup", (req, res, next) => {
     }),
     req.body.password,
     (err, user) => {
+      console.log(User);
       if (err) {
-        res.statusCode = 500;
+        res.statusCode = 409;
         res.setHeader("Content-Type", "application/json");
-        res.json({ err: err });
+        if (err.code === 11000) {
+          res.json({
+            name: "EmailExistingError",
+            message: "The given email is already in use",
+          });
+        } else {
+          res.json(err);
+        }
       } else {
         passport.authenticate("local")(req, res, () => {
           res.statusCode = 200;
@@ -35,11 +43,10 @@ router.post("/signup", (req, res, next) => {
 router.post("/login", passport.authenticate("local"), (req, res) => {
   var token = authenticate.getToken({ _id: req.user._id });
   res.statusCode = 200;
-  res.setHeader("Content-Type", "application/json");
   res.json({ id: req.user._id, token: token });
 });
 
-router.get("/logout", (req, res) => {
+router.get("/logout", (req, res, next) => {
   if (req.session) {
     req.session.destroy();
     res.clearCookie("session-id");
@@ -62,7 +69,7 @@ router
     } catch (err) {
       next(err);
     }
-  })
+  });
 
 router
   .route("/usuarios/:id")

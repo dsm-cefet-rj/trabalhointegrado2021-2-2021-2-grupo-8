@@ -1,14 +1,13 @@
 import { React, useState } from "react";
 import "./loginpage.css";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../storeConfig/loggedUserSlice";
+import { login, resetErrors } from "../../storeConfig/loggedUserSlice";
 import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
-  const error = useSelector((state) => state.loggedUser.error);
-  const idUser = useSelector((state) => state.loggedUser.id);
-  const navigate = useNavigate();
+  const error = useSelector((state) => state.loggedUser.loginError);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [loginInfo, setLoginInfo] = useState({
     username: "",
@@ -17,6 +16,12 @@ function LoginPage() {
 
   const handleLogin = async () => {
     dispatch(login(loginInfo));
+  };
+
+  const resetError = () => {
+    if (error) {
+      dispatch(resetErrors());
+    }
   };
 
   return (
@@ -30,14 +35,14 @@ function LoginPage() {
           <form className="p-3 mt-3 d-flex flex-column align-items-center">
             <div className="form-field d-flex align-items-center">
               <input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="email"
+                type="text"
+                name="username"
+                id="username"
+                placeholder="Username"
                 onInput={(e) => {
                   setLoginInfo({ ...loginInfo, username: e.target.value });
-
                 }}
+                onChange={resetError}
               />
             </div>
             <div className="form-field d-flex  align-items-center">
@@ -49,6 +54,7 @@ function LoginPage() {
                 onInput={(e) => {
                   setLoginInfo({ ...loginInfo, password: e.target.value });
                 }}
+                onChange={resetError}
               />
             </div>
             <span className="fas fa-key">{!!error && error}</span>
@@ -57,7 +63,24 @@ function LoginPage() {
             </button>
           </form>
           <div className="text-center fs-6">
-            <a href="#">Forget password?</a> or <a href="/signIn" >Sign up</a>
+            <a
+              href=""
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+            >
+              Forget password?
+            </a>
+            {" or "}
+            <a
+              href=""
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/signin");
+              }}
+            >
+              Sign up
+            </a>
           </div>
         </div>
       </main>

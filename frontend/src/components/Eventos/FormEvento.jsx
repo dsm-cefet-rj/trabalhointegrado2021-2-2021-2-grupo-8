@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getEquipeAtiva } from "../../storeConfig/loggedUserSlice";
 import {
   addEventoServer,
-  selectEventoIds,
   updateEventoServer,
 } from "../../storeConfig/eventosSlice";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -18,19 +17,18 @@ function FormEvento() {
 
   const dispatch = useDispatch();
   const equipeAtiva = useSelector(getEquipeAtiva);
-  const eventosIds = useSelector(selectEventoIds);
 
   let [novoEvento] = useState(
     evento.id !== undefined ? evento : eventoSchema.cast({})
   );
 
-  const{
+  const {
     register,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = useForm({
-    resolver: yupResolver(eventoSchema)
-  })
+    resolver: yupResolver(eventoSchema),
+  });
 
   const onSubmit = (data) => {
     novoEvento.nome = data.nome;
@@ -42,11 +40,11 @@ function FormEvento() {
     novoEvento.tipo = data.tipo;
     if (novoEvento.id === -1) {
       novoEvento.equipe = equipeAtiva.equipe.id;
-      dispatch(addEventoServer(novoEvento))
+      dispatch(addEventoServer(novoEvento));
     } else {
-      dispatch(updateEventoServer(novoEvento))
+      dispatch(updateEventoServer(novoEvento));
     }
-    navigate(-1)
+    navigate(-1);
   };
 
   return (
@@ -139,10 +137,7 @@ function FormEvento() {
             </label>
           </section>
           <section className="menu">
-            <button
-              type="submit"
-              className="btn btn-success"
-            >
+            <button type="submit" className="btn btn-success">
               Enviar
             </button>
             <button

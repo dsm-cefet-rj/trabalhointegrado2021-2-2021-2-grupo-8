@@ -6,12 +6,17 @@ export const login = createAsyncThunk("loggedUser/login", async (user) => {
   return httpPost(baseUrl + "/login", user);
 });
 
+export const signup = createAsyncThunk("loggedUser/signup", async (user) => {
+  return httpPost(baseUrl + "/signup", user);
+});
+
 export const loggedUser = createSlice({
   name: "loggedUser",
   initialState: {
     id: null,
     token: null,
-    error: null,
+    signupMsg: "",
+    loginError: "",
     equipeAtiva: {
       equipe: {},
       isGerente: -1,
@@ -35,16 +40,27 @@ export const loggedUser = createSlice({
         1
       );
     },
+    resetErrors: (state, action) => {
+      console.log("entrei");
+      state.signupMsg = "";
+      state.loginError = "";
+    },
   },
   extraReducers(builder) {
     builder
       .addCase(login.fulfilled, (state, action) => {
         state.id = action.payload.id;
         state.token = action.payload.token;
-        state.error = null;
+        state.loginError = null;
       })
       .addCase(login.rejected, (state, action) => {
-        state.error = "Usuário ou senha inválidos!";
+        state.loginError = "Usuário ou senha inválidos!";
+      })
+      .addCase(signup.fulfilled, (state, action) => {
+        state.signupMsg = action.payload.status + " Redirecting...";
+      })
+      .addCase(signup.rejected, (state, action) => {
+        state.signupMsg = action.error.message;
       });
   },
 });
@@ -55,6 +71,7 @@ export const getEquipeAtiva = (state) => state.loggedUser.equipeAtiva;
 export const getIsGerente = (state) => state.loggedUser.equipeAtiva.isGerente;
 export const getIdUser = (state) => state.loggedUser.id;
 
-export const { setEquipeAtiva, addMember, removeMember } = loggedUser.actions;
+export const { setEquipeAtiva, addMember, removeMember, resetErrors } =
+  loggedUser.actions;
 
 export default loggedUser.reducer;
