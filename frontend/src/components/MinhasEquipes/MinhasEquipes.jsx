@@ -4,9 +4,7 @@ import CardMinhaEquipe from "./CardMinhaEquipe";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAllEquipes } from "../../storeConfig/equipesSlice";
 import { selectAllUsuarios } from "../../storeConfig/usuariosSlice";
-import logout from "../../storeConfig/loggedUserSlice";
-
-
+import { resetErrors, logout } from "../../storeConfig/loggedUserSlice";
 
 function MinhasEquipes() {
   const usuarios = useSelector(selectAllUsuarios);
@@ -14,8 +12,6 @@ function MinhasEquipes() {
   const statusEquipes = useSelector((state) => state.equipes.status);
   const statusUsuarios = useSelector((state) => state.usuarios.status);
   const idUser = useSelector((state) => state.loggedUser.id);
-  let token = useSelector((state) => state.loggedUser.token);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [minhasEquipes, setMinhasEquipes] = useState([]);
@@ -25,7 +21,6 @@ function MinhasEquipes() {
   };
 
   useEffect(() => {
-
     if (statusEquipes === "succeeded" && statusUsuarios === "succeeded") {
       let temp = [];
       equipes
@@ -77,25 +72,18 @@ function MinhasEquipes() {
         <hr />
         <section className="lista-equipes d-flex flex-column mt-5">
           <h3 className="text-center my-3">Outras Equipes</h3>
-          
         </section>
 
         {mapEquipes(minhasEquipes.filter((e) => e.gerente.id !== idUser))}
 
         <section className="menu">
           <button
-              type="button"
-              className="btn btn-danger"
-              id="btn-logout"
-              
-              onClick={() => {
-                console.log(token)
-                handleLogout();
-                navigate("/login");
-                console.log(token)
-              }}
-            >
-              Logout
+            type="button"
+            className="btn btn-danger"
+            id="btn-logout"
+            onClick={handleLogout}
+          >
+            Logout
           </button>
         </section>
       </main>

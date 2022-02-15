@@ -18,7 +18,6 @@ router.post("/signup", (req, res, next) => {
     }),
     req.body.password,
     (err, user) => {
-      console.log(User);
       if (err) {
         res.statusCode = 409;
         res.setHeader("Content-Type", "application/json");
@@ -46,16 +45,10 @@ router.post("/login", passport.authenticate("local"), (req, res) => {
   res.json({ id: req.user._id, token: token });
 });
 
-router.get("/logout", (req, res, next) => {
-  if (req.session) {
-    req.session.destroy();
-    res.clearCookie("session-id");
-    res.redirect("/");
-  } else {
-    var err = new Error("You are not logged in!");
-    err.status = 403;
-    next(err);
-  }
+router.post("/logout", (req, res, next) => {
+  req.logout();
+  res.statusCode = 200;
+  res.json({ success: true, status: "Logout Successful!" });
 });
 
 router

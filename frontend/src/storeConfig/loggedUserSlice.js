@@ -17,14 +17,13 @@ const initialState = {
   loginError: "",
   equipeAtiva: {
     equipe: {},
-    isGerente: -1, 
-  }};
-
-export const getInitialState = (state) => initialState;
+    isGerente: -1,
+  },
+};
 
 export const loggedUser = createSlice({
   name: "loggedUser",
-  initialState: initialState,
+  initialState,
   reducers: {
     setEquipeAtiva: (state, { payload }) => {
       state.equipeAtiva.equipe = payload;
@@ -44,16 +43,12 @@ export const loggedUser = createSlice({
       );
     },
     resetErrors: (state, action) => {
-      console.log("entrei");
       state.signupMsg = "";
       state.loginError = "";
     },
-    
     logout: (state, action) => {
-      console.log("logout");
-      state = initialState;
+      return initialState;
     },
-
   },
   extraReducers(builder) {
     builder
@@ -72,7 +67,6 @@ export const loggedUser = createSlice({
         state.signupMsg = action.error.message;
       });
   },
-  
 });
 
 //Selectors:
