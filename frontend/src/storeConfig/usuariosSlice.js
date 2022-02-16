@@ -22,34 +22,23 @@ const authHeader = (token) => {
 
 export const fetchUsuarios = createAsyncThunk(
   "usuarios/fetchUsuarios",
-  async (token) => {
-    return httpGet(baseUrl + "/usuarios", authHeader(token));
+  async (payload,{getState}) => {
+    return httpGet(baseUrl + "/usuarios", authHeader(getState().loggedUser.token));
   }
 );
 
 export const deleteUsuarioServer = createAsyncThunk(
   "usuarios/deleteUsuarioServer",
-  async ({usuario, token}) => {
-    await httpDelete(baseUrl + "/usuarios/" + usuario.id, authHeader(token));
+  async (usuario,{getState}) => {
+    await httpDelete(baseUrl + "/usuarios/" + usuario.id, authHeader(getState().loggedUser.token));
     return usuario.id;
-  }
-);
-
-export const addUsuarioServer = createAsyncThunk(
-  "usuarios/addUsuarioServer",
-  async ({usuario}) => {
-    return httpPost(baseUrl + "/signup", usuario);
   }
 );
 
 export const updateUsuarioServer = createAsyncThunk(
   "usuarios/updateUsuarioServer",
-  async ({usuario, token}) => {
-    return httpPut(
-      baseUrl + "/usuarios/" + usuario.id,
-      usuario,
-      authHeader(token)
-    );
+  async (usuario, {getState}) => {
+    return httpPut(baseUrl + "/usuarios/" + usuario.id, usuario, authHeader(getState().loggedUser.token));
   }
 );
 
@@ -67,7 +56,7 @@ export const usuarios = createSlice({
         usuariosAdapter.removeOne(state, action.payload);
       })
       .addMatcher(
-        isAnyOf(updateUsuarioServer.fulfilled, addUsuarioServer.fulfilled),
+        isAnyOf(updateUsuarioServer.fulfilled),
         (state, action) => {
           state.status = "updated";
           usuariosAdapter.upsertOne(state, action.payload);
@@ -77,7 +66,7 @@ export const usuarios = createSlice({
         isAnyOf(
           fetchUsuarios.pending,
           updateUsuarioServer.pending,
-          addUsuarioServer.pending,
+          
           deleteUsuarioServer.pending
         ),
         (state) => {
@@ -88,7 +77,6 @@ export const usuarios = createSlice({
         isAnyOf(
           fetchUsuarios.rejected,
           updateUsuarioServer.rejected,
-          addUsuarioServer.rejected,
           deleteUsuarioServer.rejected
         ),
         (state, action) => {

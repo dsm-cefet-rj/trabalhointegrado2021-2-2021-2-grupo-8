@@ -22,36 +22,36 @@ const authHeader = (token) => {
 
 export const fetchEventos = createAsyncThunk(
   "eventos/fetchEventos",
-  async (token) => {
-    return httpGet(baseUrl + "/eventos", authHeader(token));
+  async (payload, {getState}) => {
+    return httpGet(baseUrl + "/eventos", authHeader(getState().loggedUser.token));
   }
 );
 
 export const deleteEventoServer = createAsyncThunk(
   "eventos/deleteEventoServer",
-  async ({evento,token}) => {
-    await httpDelete(baseUrl + "/eventos/" + evento.id, authHeader(token));
+  async (evento, {getState}) => {
+    await httpDelete(baseUrl + "/eventos/" + evento.id, authHeader(getState().loggedUser.token));
     return evento.id;
   }
 );
 
 export const addEventoServer = createAsyncThunk(
   "eventos/addEventoServer",
-  async ({evento,token}) => {
-    return httpPost(baseUrl + "/eventos", evento, authHeader(token));
+  async (evento, {getState}) => {
+    return httpPost(baseUrl + "/eventos", evento, authHeader(getState().loggedUser.token));
   }
 );
 
 export const updateEventoServer = createAsyncThunk(
   "eventos/updateEventoServer",
-  async ({evento,token}) => {
-    return httpPut(baseUrl + "/eventos/" + evento.id, evento, authHeader(token));
+  async (evento, {getState}) => {
+    return httpPut(baseUrl + "/eventos/" + evento.id, evento, authHeader(getState().loggedUser.token));
   }
 );
 
 export const eventos = createSlice({
   name: "eventos",
-  initialState: initialState,
+  initialState,
   extraReducers(builder) {
     builder
       .addCase(fetchEventos.fulfilled, (state, action) => {

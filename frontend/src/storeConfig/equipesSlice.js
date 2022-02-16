@@ -22,31 +22,30 @@ const authHeader = (token) => {
 
 export const fetchEquipes = createAsyncThunk(
   "equipes/fetchEquipes",
-  async (token) => {
-    return httpGet(baseUrl + "/equipes", authHeader(token));
+  async (payload, {getState}) => {
+    return httpGet(baseUrl + "/equipes", authHeader(getState().loggedUser.token));
   }
 );
 
 export const deleteEquipeServer = createAsyncThunk(
   "equipes/deleteEquipeServer",
-  async ({equipeId, token}) => {
-    await httpDelete(baseUrl + "/equipes/" + equipeId, authHeader(token));
+  async (equipeId, {getState}) => {
+    await httpDelete(baseUrl + "/equipes/" + equipeId, authHeader(getState().loggedUser.token));
     return equipeId;
   }
 );
 
 export const addEquipeServer = createAsyncThunk(
   "equipes/addEquipeServer",
-  async ({equipe, token}) => {
-    return httpPost(baseUrl + "/equipes", equipe, authHeader(token));
+  async (equipe, {getState}) => {
+    return httpPost(baseUrl + "/equipes", equipe, authHeader(getState().loggedUser.token));
   }
 );
 
 export const updateEquipeServer = createAsyncThunk(
   "equipes/updateEquipeServer",
-  async ({equipe, token}) => {
-    console.log(equipe,token)
-    return httpPut(baseUrl + "/equipes/" + equipe.id, equipe, authHeader(token));
+  async (equipe, {getState}) => {
+    return httpPut(baseUrl + "/equipes/" + equipe.id, equipe, authHeader(getState().loggedUser.token));
   }
 );
 

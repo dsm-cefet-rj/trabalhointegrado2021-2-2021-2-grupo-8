@@ -17,8 +17,6 @@ function AtribuirTarefa() {
   const location = useLocation();
   const { tarefa } = location.state;
 
-  const token = useSelector((state) => state.loggedUser.token);
-
   let busca = "";
 
   useEffect(() => {
@@ -34,7 +32,7 @@ function AtribuirTarefa() {
 
   const handleAtribuirTarefa = (idUser) => {
     const novaTarefa = { ...tarefa, responsavel: idUser };
-    dispatch(updateTarefaServer({ tarefa: novaTarefa, token }));
+    dispatch(updateTarefaServer(novaTarefa));
   };
 
   return (

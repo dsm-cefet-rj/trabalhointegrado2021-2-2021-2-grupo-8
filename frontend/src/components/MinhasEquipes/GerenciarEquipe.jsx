@@ -30,7 +30,6 @@ function GerenciarEquipe() {
   const equipe = useSelector((state) =>
     selectEquipeById(state, equipeAtiva.equipe.id)
   );
-  const token = useSelector(state => state.loggedUser.token)
 
   const handleExcluirMembro = (m) => {
     tarefas
@@ -38,7 +37,7 @@ function GerenciarEquipe() {
       .forEach((t) => {
         if (t.responsavel === m.id) {
           let novaTarefa = { ...t, responsavel: 0 };
-          dispatch(updateTarefaServer({tarefa: novaTarefa, token}));
+          dispatch(updateTarefaServer(novaTarefa));
         }
       });
 
@@ -47,7 +46,7 @@ function GerenciarEquipe() {
       membros: equipe.membros.filter((id) => id !== m.id),
     };
 
-    dispatch(updateEquipeServer({equipe:equipeAtualizada, token}));
+    dispatch(updateEquipeServer(equipeAtualizada));
     dispatch(removeMember(m.id));
   };
 

@@ -22,31 +22,30 @@ const authHeader = (token) => {
 
 export const fetchTarefas = createAsyncThunk(
   "tarefas/fetchTarefas",
-  async (token) => {
-    return httpGet(baseUrl + "/tarefas", authHeader(token));
+  async (payload, {getState}) => {
+    return httpGet(baseUrl + "/tarefas", authHeader(getState().loggedUser.token));
   }
 );
 
 export const deleteTarefaServer = createAsyncThunk(
   "tarefas/deleteTarefaServer",
-  async ({tarefa, token}) => {
-    await httpDelete(baseUrl + "/tarefas/" + tarefa.id, authHeader(token));
+  async (tarefa,{getState}) => {
+    await httpDelete(baseUrl + "/tarefas/" + tarefa.id, authHeader(getState().loggedUser.token));
     return tarefa.id;
   }
 );
 
 export const addTarefaServer = createAsyncThunk(
   "tarefas/addTarefaServer",
-  async ({tarefa, token}) => {
-    console.log(tarefa, token);
-    return httpPost(baseUrl + "/tarefas", tarefa, authHeader(token));
+  async (tarefa, {getState}) => {
+    return httpPost(baseUrl + "/tarefas", tarefa, authHeader(getState().loggedUser.token));
   }
 );
 
 export const updateTarefaServer = createAsyncThunk(
   "tarefas/updateTarefaServer",
-  async ({tarefa, token}) => {
-    return httpPut(baseUrl + "/tarefas/" + tarefa.id, tarefa, authHeader(token));
+  async (tarefa, {getState}) => {
+    return httpPut(baseUrl + "/tarefas/" + tarefa.id, tarefa, authHeader(getState().loggedUser.token));
   }
 );
 

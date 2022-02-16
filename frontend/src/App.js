@@ -27,19 +27,18 @@ import FormCadastro from "./components/LoginPage/FormUsuario";
 function App() {
   const dispatch = useDispatch();
   const idUser = useSelector((state) => state.loggedUser.id);
-  const token = useSelector((state) => state.loggedUser.token);
   const usuarios = useSelector((state) => state.usuarios);
   const equipes = useSelector((state) => state.equipes);
 
   useEffect(() => {
     if ((usuarios.status === "idle" || usuarios.status === "updated") && idUser) {
-      dispatch(fetchUsuarios(token));
+      dispatch(fetchUsuarios());
     }
   }, [usuarios, idUser, dispatch]);
 
   useEffect(() => {
     if ((equipes.status === "idle" || equipes.status === "updated") && idUser) {
-      dispatch(fetchEquipes(token));
+      dispatch(fetchEquipes());
     }
   }, [equipes, idUser, dispatch]);
 

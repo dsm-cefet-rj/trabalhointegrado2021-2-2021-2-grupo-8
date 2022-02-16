@@ -18,8 +18,7 @@ function FormTarefa() {
 
   const dispatch = useDispatch();
   const equipeAtiva = useSelector(getEquipeAtiva);
-  const token = useSelector(state => state.loggedUser.token)
-
+  
   const {
     register,
     handleSubmit,
@@ -43,10 +42,10 @@ function FormTarefa() {
     if (novaTarefa.id === -1) {
       novaTarefa.equipe = equipeAtiva.equipe.id;
       novaTarefa.responsavel = 0; 
-      dispatch(addTarefaServer({tarefa:novaTarefa, token}))
+      dispatch(addTarefaServer(novaTarefa))
       navigate(-1)
     } else {
-      dispatch(updateTarefaServer({tarefa:novaTarefa, token}))
+      dispatch(updateTarefaServer(novaTarefa))
       navigate(-2)
     }
   };

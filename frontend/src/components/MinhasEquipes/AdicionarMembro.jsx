@@ -18,7 +18,6 @@ function AdicionarMembro() {
     selectEquipeById(state, equipeAtiva.equipe.id)
   );
   const usuarios = useSelector(selectAllUsuarios);
-  const token = useSelector(state => state.loggedUser.token)
   const navigate = useNavigate();
 
   const [resultado, setResultado] = useState([]);
@@ -45,8 +44,7 @@ function AdicionarMembro() {
       ...equipe,
       membros: [...equipe.membros, member.id],
     };
-    console.log(member, equipeAtualizada)
-    dispatch(updateEquipeServer({equipe: equipeAtualizada, token}));
+    dispatch(updateEquipeServer(equipeAtualizada));
     dispatch(addMember(member))
     navigate(-1);
   };

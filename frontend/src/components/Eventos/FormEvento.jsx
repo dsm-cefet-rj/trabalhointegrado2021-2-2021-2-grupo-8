@@ -17,7 +17,6 @@ function FormEvento() {
 
   const dispatch = useDispatch();
   const equipeAtiva = useSelector(getEquipeAtiva);
-  const token = useSelector((state) => state.loggedUser.token);
   let [novoEvento] = useState(
     evento.id !== undefined ? evento : eventoSchema.cast({})
   );
@@ -40,9 +39,9 @@ function FormEvento() {
     novoEvento.tipo = data.tipo;
     if (novoEvento.id === -1) {
       novoEvento.equipe = equipeAtiva.equipe.id;
-      dispatch(addEventoServer(novoEvento, token));
+      dispatch(addEventoServer(novoEvento));
     } else {
-      dispatch(updateEventoServer(novoEvento, token));
+      dispatch(updateEventoServer(novoEvento));
     }
     navigate(-1);
   };

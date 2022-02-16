@@ -16,7 +16,6 @@ function FormEquipe() {
 
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.loggedUser.id);
-  const token = useSelector((state) => state.loggedUser.token);
 
   const {
     register,
@@ -35,10 +34,10 @@ function FormEquipe() {
     novaEquipe.descricao = data.descricao;
     if (novaEquipe.id === -1) {
       novaEquipe.gerente = userId;
-      dispatch(addEquipeServer({ equipe: novaEquipe, token: token }));
+      dispatch(addEquipeServer(novaEquipe));
       navigate(-1);
     } else {
-      dispatch(updateEquipeServer({ equipe: novaEquipe, token: token }));
+      dispatch(updateEquipeServer(novaEquipe));
       navigate(-3);
     }
   };
