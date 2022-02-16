@@ -18,12 +18,14 @@ function Eventos() {
   const isGerente = useSelector(getIsGerente);
   const allEventos = useSelector(selectAllEventos);
   const statusEventos = useSelector((state) => state.eventos.status);
-
+  const token = useSelector((state) => state.loggedUser.token);
   const [display, setDisplay] = useState("");
+
+
 
   useEffect(() => {
     if (statusEventos === "idle" || statusEventos === "updated") {
-      dispatch(fetchEventos());
+      dispatch(fetchEventos(token));
     }
   }, [statusEventos, dispatch]);
 
@@ -32,7 +34,7 @@ function Eventos() {
   }, [isGerente]);
 
   const handleExcluirEvento = (e) => {
-    dispatch(deleteEventoServer(e));
+    dispatch(deleteEventoServer(e, token));
   };
 
   const mapEventos = () => {

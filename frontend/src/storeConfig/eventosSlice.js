@@ -22,30 +22,30 @@ const authHeader = (token) => {
 
 export const fetchEventos = createAsyncThunk(
   "eventos/fetchEventos",
-  async () => {
-    return httpGet(baseUrl + "/eventos");
+  async (token) => {
+    return httpGet(baseUrl + "/eventos", authHeader(token));
   }
 );
 
 export const deleteEventoServer = createAsyncThunk(
   "eventos/deleteEventoServer",
-  async (evento) => {
-    await httpDelete(baseUrl + "/eventos/" + evento.id);
+  async ({evento,token}) => {
+    await httpDelete(baseUrl + "/eventos/" + evento.id, authHeader(token));
     return evento.id;
   }
 );
 
 export const addEventoServer = createAsyncThunk(
   "eventos/addEventoServer",
-  async (evento) => {
-    return httpPost(baseUrl + "/eventos", evento);
+  async ({evento,token}) => {
+    return httpPost(baseUrl + "/eventos", evento, authHeader(token));
   }
 );
 
 export const updateEventoServer = createAsyncThunk(
   "eventos/updateEventoServer",
-  async (evento) => {
-    return httpPut(baseUrl + "/eventos/" + evento.id, evento);
+  async ({evento,token}) => {
+    return httpPut(baseUrl + "/eventos/" + evento.id, evento, authHeader(token));
   }
 );
 
