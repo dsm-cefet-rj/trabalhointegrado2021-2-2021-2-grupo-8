@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import {
@@ -10,6 +10,7 @@ import {
   getEquipeAtiva,
   getIsGerente,
 } from "../../storeConfig/loggedUserSlice";
+import ConfirmationModal from "../Reusable/ConfirmationModal";
 
 function Eventos() {
   const navigate = useNavigate();
@@ -19,8 +20,6 @@ function Eventos() {
   const allEventos = useSelector(selectAllEventos);
   const statusEventos = useSelector((state) => state.eventos.status);
   const [display, setDisplay] = useState("");
-
-
 
   useEffect(() => {
     if (statusEventos === "idle" || statusEventos === "updated") {
@@ -36,6 +35,8 @@ function Eventos() {
     dispatch(deleteEventoServer(e));
   };
 
+  const [modalShow, setModalShow] = useState("");
+
   const mapEventos = () => {
     if (statusEventos === "succeeded" || statusEventos === "updated") {
       let arrayEventos = allEventos.filter(
@@ -44,39 +45,51 @@ function Eventos() {
 
       if (arrayEventos.length > 0) {
         return arrayEventos.map((e) => (
-          <div className="card card-evento mb-3" key={e.id}>
-            <div className={`card-header ${e.tipo}`}>{e.nome}</div>
-            <div className="card-body">
-              <p className="card-text">
-                Início: {e.dataInicio} às {e.horaInicio}
-              </p>
-              <p className="card-text">
-                Fim: {e.dataFim} às {e.horaFim}
-              </p>
-              <br />
-              <p className="card-text">{e.descricao}</p>
-            </div>
+          <Fragment key={e.id}>
+            <ConfirmationModal
+              show={modalShow === e.id ? true : false}
+              handleClose={() => {
+                setModalShow("");
+              }}
+              callBack={() => {
+                handleExcluirEvento(e);
+              }}
+              msg={"Deseja Excluir o evento " + e.nome + "?"}
+            />
+            <div className="card card-evento mb-3">
+              <div className={`card-header ${e.tipo}`}>{e.nome}</div>
+              <div className="card-body">
+                <p className="card-text">
+                  Início: {e.dataInicio} às {e.horaInicio}
+                </p>
+                <p className="card-text">
+                  Fim: {e.dataFim} às {e.horaFim}
+                </p>
+                <br />
+                <p className="card-text">{e.descricao}</p>
+              </div>
 
-            <section className={`menu ${display}`}>
-              <span
-                className="btn btn-danger mb-1 "
-                onClick={() => {
-                  handleExcluirEvento(e);
-                }}
-              >
-                Excluir Evento
-              </span>
-              <Link
-                className={`${display}`}
-                to={"/" + equipeAtiva.equipe.id + "/eventos/formEvento"}
-                state={{ evento: e }}
-              >
-                <button type="button" className="btn btn-primary">
-                  Editar Evento
-                </button>
-              </Link>
-            </section>
-          </div>
+              <section className={`menu ${display}`}>
+                <span
+                  className="btn btn-danger mb-1 "
+                  onClick={() => {
+                    setModalShow(e.id);
+                  }}
+                >
+                  Excluir Evento
+                </span>
+                <Link
+                  className={`${display}`}
+                  to={"/" + equipeAtiva.equipe.id + "/eventos/formEvento"}
+                  state={{ evento: e }}
+                >
+                  <button type="button" className="btn btn-primary">
+                    Editar Evento
+                  </button>
+                </Link>
+              </section>
+            </div>
+          </Fragment>
         ));
       } else {
         return <div className="p-6">Não há eventos no momento</div>;
