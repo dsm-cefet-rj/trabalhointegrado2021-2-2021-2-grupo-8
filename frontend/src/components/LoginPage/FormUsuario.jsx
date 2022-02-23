@@ -26,7 +26,7 @@ function FormCadastro() {
   };
 
   useEffect(()=>{
-    if (signupMsg === "Registration Successful! Redirecting..."){
+    if (signupMsg === "Registrado com sucesso! Redirecionando..."){
       setTimeout(() => {
         dispatch(resetErrors())
         navigate("/login")
