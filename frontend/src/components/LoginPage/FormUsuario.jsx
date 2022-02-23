@@ -94,7 +94,7 @@ function FormCadastro() {
             <div className="d-flex">
               <div className="d-flex flex-column me-4">
                 <label htmlFor="password" className="form-label mt-2">
-                  Password
+                  Senha
                 </label>
                 <input
                   type="password"
@@ -107,7 +107,7 @@ function FormCadastro() {
               </div>
               <div className="d-flex flex-column">
                 <label htmlFor="password2" className="form-label mt-2">
-                  Confirm Password
+                  Confirme sua senha
                 </label>
                 <input
                   type="password"

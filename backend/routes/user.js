@@ -24,7 +24,12 @@ router.post("/signup", (req, res, next) => {
         if (err.code === 11000) {
           res.json({
             name: "EmailExistingError",
-            message: "The given email is already in use",
+            message: "O email já está em uso",
+          });
+        } else if (err.name === "UserExistsError") {
+          res.json({
+            name: "UserExistsError",
+            message: "O username escolhido já está em uso",
           });
         } else {
           res.json(err);
@@ -43,12 +48,6 @@ router.post("/login", passport.authenticate("local"), (req, res) => {
   var token = authenticate.getToken({ _id: req.user._id });
   res.statusCode = 200;
   res.json({ id: req.user._id, token: token });
-});
-
-router.post("/logout", (req, res, next) => {
-  req.logout();
-  res.statusCode = 200;
-  res.json({ success: true, status: "Logout Successful!" });
 });
 
 router

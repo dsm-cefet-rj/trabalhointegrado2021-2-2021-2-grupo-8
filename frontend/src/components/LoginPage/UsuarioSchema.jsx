@@ -11,6 +11,6 @@ export let userSchema = object().shape({
   password: string().required(),
   passwordConfirmation: string().oneOf(
     [ref("password"), null],
-    "Passwords must match"
+    "Confirmação de senha inválida"
   ),
 });
