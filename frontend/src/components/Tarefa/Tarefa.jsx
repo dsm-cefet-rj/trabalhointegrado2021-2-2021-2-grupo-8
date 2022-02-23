@@ -17,7 +17,6 @@ function Tarefa() {
   const equipeAtiva = useSelector(getEquipeAtiva);
   const isGerente = useSelector(getIsGerente);
   const [responsavel, setResponsavel] = useState({});
-  
 
   useEffect(() => {
     if (tarefa.responsavel !== "0") {
@@ -57,7 +56,7 @@ function Tarefa() {
           </div>
         </section>
 
-        {tarefa.responsavel !== "0" && isGerente &&(
+        {tarefa.responsavel !== "0" && isGerente && (
           <div className="d-flex justify-content-center mt-2">
             <div className="card card-membro">
               <p className="text-center py-1">Responsável</p>

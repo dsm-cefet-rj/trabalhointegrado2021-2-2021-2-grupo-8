@@ -30,9 +30,7 @@ function FormTarefa() {
   let [novaTarefa] = useState(
     tarefa.id !== undefined ? tarefa : tarefaSchema.cast({})
   );
-
-  console.log(novaTarefa)
-
+  
   const onSubmit = (data) => {
     novaTarefa.dataPrazo = data.dataPrazo;
     novaTarefa.descricao = data.descricao;
