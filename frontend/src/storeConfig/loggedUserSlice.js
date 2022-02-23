@@ -61,7 +61,7 @@ export const loggedUser = createSlice({
         state.loginError = "Usuário ou senha inválidos!";
       })
       .addCase(signup.fulfilled, (state, action) => {
-        state.signupMsg = action.payload.status + " Redirecting...";
+        state.signupMsg = action.payload.status + " Redirecionando...";
       })
       .addCase(signup.rejected, (state, action) => {
         state.signupMsg = action.error.message;
