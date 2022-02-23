@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import semFoto from "../../assets/sem-foto-homem.jpg";
@@ -20,6 +20,7 @@ import {
   selectAllTarefas,
   updateTarefaServer,
 } from "../../storeConfig/tarefasSlice";
+import ConfirmationModal from "../Reusable/ConfirmationModal";
 
 function GerenciarEquipe() {
   const navigate = useNavigate();
@@ -64,72 +65,108 @@ function GerenciarEquipe() {
     dispatch(deleteEquipeServer(equipeAtiva.equipe.id));
   };
 
+  const [modalShow, setModalShow] = useState("");
+  const [modalEquipe, setModalEquipe] = useState(false);
+
   return (
-    <div className="corpo">
-      <header className="container cabecalho">
-        <h1 className="app-name">Project Simple</h1>
-      </header>
+    <>
+      <ConfirmationModal
+        show={modalEquipe}
+        handleClose={() => {
+          setModalEquipe(false);
+        }}
+        callBack={() => {
+          handleExcluirEquipe();
+          navigate("/minhasEquipes")
+        }}
+        msg={
+          "Deseja Excluir a equipe " +
+          equipeAtiva.equipe.nome +
+          " definitivamente?"
+        }
+      />
+      <div className="corpo">
+        <header className="container cabecalho">
+          <h1 className="app-name">Project Simple</h1>
+        </header>
 
-      <main className="container">
-        <h3 className="text-center my-3">Gerencie sua equipe</h3>
-        <section className="d-flex flex-wrap justify-content-evenly">
-          {equipeAtiva.equipe.membros.map((m) => {
-            return (
-              <div className="card card-membro" key={m.id}>
-                <img className="img-fluid" src={semFoto} alt="foto membro" />
-
-                <div className="text-center pt-2">
-                  <p className="">ID: {m.id}</p>
-                  <p className="">{m.nome}</p>
-                  <p className="">{m.email}</p>
-                  <p className="">{m.tel}</p>
-                </div>
-                <hr />
-                <div className="text-center">
-                  <span
-                    className="btn btn-danger"
-                    onClick={() => {
+        <main className="container">
+          <h3 className="text-center my-3">Gerencie sua equipe</h3>
+          <section className="d-flex flex-wrap justify-content-evenly">
+            {equipeAtiva.equipe.membros.map((m) => {
+              return (
+                <Fragment key={m.id}>
+                  <ConfirmationModal
+                    show={modalShow === m.id ? true : false}
+                    handleClose={() => {
+                      setModalShow("");
+                    }}
+                    callBack={() => {
                       handleExcluirMembro(m);
                     }}
-                  >
-                    Excluir Membro
-                  </span>
-                </div>
-              </div>
-            );
-          })}
-        </section>
+                    msg={"Deseja Excluir o membro " + m.nome + "?"}
+                  />
+                  <div className="card card-membro">
+                    <img
+                      className="img-fluid"
+                      src={semFoto}
+                      alt="foto membro"
+                    />
 
-        <section className="menu">
-          <Link to={"addMembro"}>
-            <button type="button" className="btn btn-primary">
-              Adicionar membro
-            </button>
-          </Link>
-          <Link to={"/"}>
+                    <div className="text-center pt-2">
+                      <p className="">ID: {m.id}</p>
+                      <p className="">{m.nome}</p>
+                      <p className="">{m.email}</p>
+                      <p className="">{m.tel}</p>
+                    </div>
+                    <hr />
+                    <div className="text-center">
+                      <span
+                        className="btn btn-danger"
+                        onClick={() => {
+                          setModalShow(m.id);
+                        }}
+                      >
+                        Excluir Membro
+                      </span>
+                    </div>
+                  </div>
+                </Fragment>
+              );
+            })}
+          </section>
+
+          <section className="menu">
+            <Link to={"addMembro"}>
+              <button type="button" className="btn btn-primary">
+                Adicionar membro
+              </button>
+            </Link>
             <button
               type="button"
               className="btn btn-danger"
-              onClick={handleExcluirEquipe}
+              onClick={() => {
+                setModalEquipe(true);
+              }}
             >
               Excluir equipe
             </button>
-          </Link>
-          <Link to={"/formEquipe"} state={{ equipe: equipe }}>
-            <span className="btn btn-primary">Editar equipe</span>
-          </Link>
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            Voltar
-          </button>
-        </section>
-      </main>
-    </div>
+            <Link to={"/formEquipe"} state={{ equipe: equipe }}>
+              <span className="btn btn-primary">Editar equipe</span>
+            </Link>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              Voltar
+            </button>
+          </section>
+        </main>
+      </div>
+    </>
   );
 }
 
