@@ -38,7 +38,7 @@ function LoginPage() {
                 type="text"
                 name="username"
                 id="username"
-                placeholder="Username"
+                placeholder="Usuário"
                 onInput={(e) => {
                   setLoginInfo({ ...loginInfo, username: e.target.value });
                 }}
@@ -50,7 +50,7 @@ function LoginPage() {
                 type="password"
                 name="password"
                 id="pwd"
-                placeholder="Password"
+                placeholder="Senha"
                 onInput={(e) => {
                   setLoginInfo({ ...loginInfo, password: e.target.value });
                 }}
