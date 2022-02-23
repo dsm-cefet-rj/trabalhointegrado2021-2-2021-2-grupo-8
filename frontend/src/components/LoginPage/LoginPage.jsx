@@ -69,9 +69,9 @@ function LoginPage() {
                 e.preventDefault();
               }}
             >
-              Forget password?
+              Recuperar senha
             </a>
-            {" or "}
+            {" ou "}
             <a
               href=""
               onClick={(e) => {
