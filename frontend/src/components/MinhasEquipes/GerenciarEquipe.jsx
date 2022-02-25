@@ -138,10 +138,15 @@ function GerenciarEquipe() {
 
           <section className="menu">
             <Link to={"addMembro"}>
-              <button type="button" className="btn btn-primary">
+              <button type="button" className="btn btn-success">
                 Adicionar membro
               </button>
             </Link>
+            
+            <Link to={"/formEquipe"} state={{ equipe: equipe }}>
+              <span className="btn btn-primary">Editar equipe</span>
+            </Link>
+
             <button
               type="button"
               className="btn btn-danger"
@@ -151,9 +156,7 @@ function GerenciarEquipe() {
             >
               Excluir equipe
             </button>
-            <Link to={"/formEquipe"} state={{ equipe: equipe }}>
-              <span className="btn btn-primary">Editar equipe</span>
-            </Link>
+
             <button
               type="button"
               className="btn btn-secondary"
