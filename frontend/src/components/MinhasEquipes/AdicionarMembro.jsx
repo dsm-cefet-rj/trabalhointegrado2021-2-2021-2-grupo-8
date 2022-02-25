@@ -67,9 +67,13 @@ function AdicionarMembro() {
               busca = e.target.value;
             }}
           />
-          <span className="btn btn-primary" onClick={handleBusca}>
-            Buscar
-          </span>
+          <section className="menu">
+            <button type="button" className="btn btn-primary" onClick={handleBusca}>
+              Buscar
+            </button>
+
+          </section>
+          
         </section>
 
         <section className="d-flex flex-wrap justify-content-evenly">
@@ -99,16 +103,18 @@ function AdicionarMembro() {
             );
           })}
         </section>
-        <section className="menu">
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            Voltar
-          </button>
+        <section className="container mb-3 text-center">
+          <section className="menu">
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              Voltar
+            </button>
+          </section>
         </section>
       </main>
     </div>

@@ -52,7 +52,7 @@ function QuadroTarefas() {
 
   return (
     <Fragment>
-      <section className="mb-2">
+      <section className="mb-4">
         <div className="nome-tabela">
           <h2>Tarefas Disponíveis</h2>
         </div>
@@ -60,7 +60,7 @@ function QuadroTarefas() {
           {quadro("disponiveis")}
         </div>
       </section>
-      <section className={`mb-2 ${display}`}>
+      <section className={`mb-4 ${display}`}>
         <div className="nome-tabela">
           <h2>Tarefas em Andamento</h2>
         </div>
