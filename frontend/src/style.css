@@ -7,7 +7,8 @@
 }
 
 .cabecalho {
-  background-color: #0094FF;
+  /* background-color: #0094FF; */
+  background-image: linear-gradient(#5abaff, #0084e2);
   padding: 10px;
 }
 
@@ -134,17 +135,22 @@
 }
 
 .reuniao {
-  background-color: purple !important;
+  /* background-color: purple !important; */
+  background-image: linear-gradient(rgb(227, 133, 255), rgb(107, 96, 255)) !important;
   color: azure;
 }
 
 .deadline {
-  background-color: orangered !important;
+  /* background-color: orangered !important; */
+  background-image: linear-gradient( rgb(255, 197, 88), rgb(250, 97, 41)) !important;
+
   color: azure;
 }
 
 .aniversario {
-  background-color: green !important;
+  /* background-color: green !important; */
+  background-image: linear-gradient(rgb(44, 226, 165), rgb(28, 145, 44)) !important;
+  
   color: azure;
 }
 
