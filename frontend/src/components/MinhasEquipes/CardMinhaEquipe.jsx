@@ -21,7 +21,7 @@ function CardMinhaEquipe({ equipe }) {
         return (
           <div key={membro.id} className="card card-equipe-membro mb-2">
             <img className="card-img-top" src={semFoto} alt="foto membro" />
-            <p className="pt-1">{membro.nome}</p>
+            <h7 className="pt-1">{membro.nome}</h7>
           </div>
         );
       });
@@ -41,13 +41,13 @@ function CardMinhaEquipe({ equipe }) {
             <div className="card">
               <h6 className="mt-2">Gerente</h6>
               <img className="img-fluid p-2" src={semFoto} alt="" />
-              <p className="pb-1">{equipe.gerente.nome}</p>
+              <h6 className="pb-1">{equipe.gerente.nome}</h6>
             </div>
           </div>
           <div className="col d-flex flex-column">
-            <p className="card-text">Data de criação: {equipe.dataCriacao}</p>
+            <h7 className="card-text">Data de criação: {equipe.dataCriacao}</h7>
             <br />
-            <p className="card-text">{equipe.descricao}</p>
+            <h7 className="card-text">{equipe.descricao}</h7>
           </div>
         </div>
         <hr />
